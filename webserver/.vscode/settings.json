@@ -1,0 +1,17 @@
+{
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 80,
+    "editor.fontSize": 17,
+    "terminal.integrated.fontSize": 15,
+    // "code-runner.runInTerminal": false,
+    // 运行代码之前清除之前的输出
+    "code-runner.clearPreviousOutput": true,
+    //"code-runner.fileDirectoryAsCwd": true,
+    "code-runner.executorMap": {
+        "cpp": "g++ $fileName -o $workspaceRoot/build/$fileNameWithoutExt.exe && $workspaceRoot/build/$fileNameWithoutExt.exe",
+        // g++ $fileName -o build/$fileNameWithoutExt && .\\build\\$fileNameWithoutExt
+        //"rust": "rustc $fullFileName -o $workspaceRoot/build/$fileNameWithoutExt && $workspaceRoot/build/$fileNameWithoutExt",
+        "rust": "cargo run",
+        "bf": "bfc $fullFileName | echo '' && mv -f a.out $workspaceRoot/build/ > /dev/null && $workspaceRoot/build/a.out",
+    },
+}
