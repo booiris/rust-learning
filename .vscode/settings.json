@@ -7,5 +7,16 @@
             "-src",
             "-*_test",
         ]
-    }
+    },
+    "code-runner.runInTerminal": true,
+    // 运行代码之前清除之前的输出
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.fileDirectoryAsCwd": true,
+    "code-runner.executorMap": {
+        "cpp": "g++ $fileName -o $workspaceRoot/build/$fileNameWithoutExt.exe && $workspaceRoot/build/$fileNameWithoutExt.exe",
+        // g++ $fileName -o build/$fileNameWithoutExt && .\\build\\$fileNameWithoutExt
+        "rust": "rustc $fileName -o $workspaceRoot/build/$fileNameWithoutExt && $workspaceRoot/build/$fileNameWithoutExt",
+    },
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.preserveFocus": false,
 }
