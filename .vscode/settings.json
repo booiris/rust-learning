@@ -1,0 +1,11 @@
+{
+    "editor.fontSize": 15,
+    "terminal.integrated.fontSize": 15,
+    "gopls": {
+        "directoryFilters": [
+            "-top_author",
+            "-src",
+            "-*_test",
+        ]
+    }
+}
