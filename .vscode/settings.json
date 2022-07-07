@@ -23,6 +23,6 @@
         "build": true,
         "target": true,
         "Cargo.lock": true,
-        "Cargo.toml": true,
+        // "Cargo.toml": true,
     },
 }

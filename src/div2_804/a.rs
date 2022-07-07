@@ -1,13 +1,7 @@
-use std::io::stdin;
-static mut INPUT: String = String::new();
-macro_rules! cin {
-    ($type:ty) => {{
-        stdin().read_line(&mut INPUT).expect("failed to read_line");
-        let x = INPUT.trim().parse::<$type>().unwrap();
-        x
-    }};
-}
+#[allow(unused_imports)]
+use text_io::read;
 pub fn main() {
     let mut input = String::new();
-    let mut x = cin!(i32);
+    let mut x: i32 = read!();
+    println!("{x}");
 }
