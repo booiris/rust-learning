@@ -21,28 +21,44 @@ echo "pub mod e;" >>$dir/mod.rs
 main_context=$'#![allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
+use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
-#[derive(Default)]
-struct Scanner {
-    buffer: Vec<String>,
+pub fn main() {
+    let stdin = io::stdin();
+    let stdout = io::stdout();
+    let mut sc = Scanner::new(stdin.lock());
+    let mut out = io::BufWriter::new(stdout.lock());
 }
-impl Scanner {
-    fn next<T: std::str::FromStr>(&mut self) -> T {
-        loop {
-            if let Some(token) = self.buffer.pop() {
-                return token.parse().ok().expect("Failed parse");
-            }
-            let mut input = String::new();
-            stdin().read_line(&mut input).expect("Failed read");
-            self.buffer = input.split_whitespace().rev().map(String::from).collect();
+pub struct Scanner<B> {
+    reader: B,
+    buf_str: Vec<u8>,
+    buf_iter: std::str::SplitWhitespace<\'static>,
+}
+impl<B: BufRead> Scanner<B> {
+    pub fn new(reader: B) -> Self {
+        Self {
+            reader,
+            buf_str: Vec::new(),
+            buf_iter: "".split_whitespace(),
         }
     }
-}
-pub fn main() {
-    let mut scan = Scanner::default();
-    let t = scan.next::<i32>();
+    pub fn sc<T: std::str::FromStr>(&mut self) -> T {
+        loop {
+            if let Some(token) = self.buf_iter.next() {
+                return token.parse().ok().expect("Failed parse");
+            }
+            self.buf_str.clear();
+            self.reader
+                .read_until(b\'\\n\', &mut self.buf_str)
+                .expect("Failed read");
+            self.buf_iter = unsafe {
+                let slice = std::str::from_utf8_unchecked(&self.buf_str);
+                std::mem::transmute(slice.split_whitespace())
+            }
+        }
+    }
 }
 '
 echo "$main_context" >$dir/a.rs
