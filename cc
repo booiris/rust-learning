@@ -18,7 +18,7 @@ echo "pub mod c;" >>$dir/mod.rs
 echo "pub mod d;" >>$dir/mod.rs
 echo "pub mod e;" >>$dir/mod.rs
 
-main_context=$'pub fn main(){\n\n}\n'
+main_context=$'use std::io::stdin;\npub fn main(){\nlet mut input = String::new();\n}\n'
 echo "$main_context" >$dir/a.rs
 echo "$main_context" >$dir/b.rs
 echo "$main_context" >$dir/c.rs
