@@ -18,7 +18,7 @@ echo "pub mod c;" >>$dir/mod.rs
 echo "pub mod d;" >>$dir/mod.rs
 echo "pub mod e;" >>$dir/mod.rs
 
-main_context=$'pub fn main(){\n\n}\n'
+main_context=$'#[allow(dead_code)]\npub fn main(){\n\n}\n'
 echo "$main_context" >$dir/a.rs
 echo "$main_context" >$dir/b.rs
 echo "$main_context" >$dir/c.rs
