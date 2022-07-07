@@ -19,4 +19,10 @@
     },
     "code-runner.saveFileBeforeRun": true,
     "code-runner.preserveFocus": false,
+    "files.exclude": {
+        "build": true,
+        "target": true,
+        "Cargo.lock": true,
+        "Cargo.toml": true,
+    },
 }
