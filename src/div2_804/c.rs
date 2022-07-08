@@ -5,6 +5,8 @@ use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
+const c_mod: i32 = 1e9 as i32 + 7;
+
 pub fn main() {
     let stdin = io::stdin();
     let stdout = io::stdout();
