@@ -10,6 +10,15 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
+    let t: usize = sc.sc();
+    let mut a = vec![0; 10005];
+    for _ in 0..t {
+        let n: usize = sc.sc();
+        for i in 0..n {
+            a[i] = sc.sc();
+        }
+        
+    }
 }
 pub struct Scanner<B> {
     reader: B,
