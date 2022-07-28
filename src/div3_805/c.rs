@@ -10,6 +10,44 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
+    let t = sc.sc();
+    let mut key1 = HashMap::<i32, usize>::new();
+    let mut key2 = HashMap::<i32, usize>::new();
+    for _ in 0..t {
+        let n = sc.sc();
+        let m = sc.sc();
+        let ini: Vec<i32> = (0..n).map(|_| sc.sc()).collect();
+        let q: Vec<(i32, i32)> = (0..m).map(|_| (sc.sc(), sc.sc())).collect();
+        key1.clear();
+        key2.clear();
+        for (i, x) in ini.iter().enumerate() {
+            if let Some(index) = key1.get(x) {
+                if i < *index {
+                    key1.insert(*x, i);
+                }
+            } else {
+                key1.insert(*x, i);
+            }
+            if let Some(index) = key2.get(x) {
+                if i > *index {
+                    key2.insert(*x, i);
+                }
+            } else {
+                key2.insert(*x, i);
+            }
+        }
+        for x in q.iter() {
+            if let (Some(l), Some(r)) = (key1.get(&x.0), key2.get(&x.1)) {
+                if l <= r {
+                    writeln!(out, "YES").unwrap();
+                } else {
+                    writeln!(out, "NO").unwrap();
+                }
+            } else {
+                writeln!(out, "NO").unwrap();
+            }
+        }
+    }
 }
 pub struct Scanner<B> {
     reader: B,
@@ -40,4 +78,3 @@ impl<B: BufRead> Scanner<B> {
         }
     }
 }
-
