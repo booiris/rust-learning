@@ -1,0 +1,36 @@
+#!/bin/bash
+
+f="l"$1".rs"
+
+file=src/code/$f
+
+if test -f $file; then
+    echo "$file exist"
+    exit 0
+fi
+
+
+touch $file
+content=$'#[allow(dead_code)]
+#[allow(unused_imports)]
+use std::collections::*;
+
+struct Solution;
+
+macro_rules! hashmap {
+    ($( $key: expr => $val: expr ),*) => {{
+         let mut map = ::std::collections::HashMap::new();
+         $( map.insert($key, $val); )*
+         map
+    }}
+}
+
+#[cfg(test)]
+pub fn main() {
+    println!("res:");
+}
+
+'
+
+echo "pub mod l$1;" >>src/code/mod.rs
+echo "$content" >$file
