@@ -23,7 +23,6 @@ use std::collections::*;
 use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
-
 struct Solution;
 
 macro_rules! hashmap {
