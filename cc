@@ -20,8 +20,6 @@ echo "pub mod d;" >>$dir/mod.rs
 main_context=$'#![allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
-use std::io::{self, prelude::*};
-use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 struct Solution;
 

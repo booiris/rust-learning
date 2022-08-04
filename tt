@@ -14,8 +14,6 @@ touch $file
 content=$'#[allow(dead_code)]
 #[allow(unused_imports)]
 use std::cmp::*;
-use std::collections::*;
-use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
