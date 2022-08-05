@@ -12,37 +12,46 @@ macro_rules! hashmap {
     }}
 }
 
-fn dfs(now: i32, nowcolor: i32, key: Vec<Vec<i32>>, mut color: Vec<i32>) {
+fn dfs(
+    now: i32,
+    nowcolor: &i32,
+    key: &Vec<Vec<i32>>,
+    vis: &mut Vec<bool>,
+    colorcnt: &mut Vec<i32>,
+) {
     for nxt in key[now as usize].iter() {
-        if color[*nxt as usize] == 0 {
-            color[*nxt as usize] = nowcolor;
-            dfs(*nxt, nowcolor, key, color);
+        if !vis[*nxt as usize] {
+            vis[*nxt as usize] = true;
+            colorcnt[*nowcolor as usize] += 1;
+            dfs(*nxt, nowcolor, key, vis, colorcnt);
         }
     }
 }
 
 impl Solution {
     pub fn count_pairs(n: i32, edges: Vec<Vec<i32>>) -> i64 {
-        let mut color = vec![0; n as usize];
+        let mut vis = vec![false; n as usize];
         let mut nowcolor = 1;
         let mut key: Vec<Vec<i32>> = vec![vec![]; n as usize];
+        let mut colorcnt = vec![0; (n + 1) as usize];
         for edge in edges.iter() {
             key[edge[0] as usize].push(edge[1]);
             key[edge[1] as usize].push(edge[0]);
         }
         for now in 0..n {
-            if color[now as usize] != 0 {
+            if vis[now as usize] {
                 continue;
             }
-            color[now as usize] = nowcolor;
-            dfs(now, nowcolor, key, color);
+            vis[now as usize] = true;
+            colorcnt[nowcolor as usize] += 1;
+            dfs(now, &nowcolor, &key, &mut vis, &mut colorcnt);
             nowcolor += 1;
         }
         let mut res: i64 = 0;
         for i in 1..nowcolor {
-            res += (n - color[i as usize]) as i64 * color[i as usize] as i64;
+            res += (n - colorcnt[i as usize]) as i64 * colorcnt[i as usize] as i64;
         }
-        res
+        res / 2
     }
 }
 
