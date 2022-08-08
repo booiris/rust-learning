@@ -1,10 +1,9 @@
-use std::cell::RefCell;
+use std::borrow::Borrow;
 #[allow(dead_code)]
 #[allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
-use std::rc::Rc;
 struct Solution;
 
 macro_rules! hashmap {
@@ -34,12 +33,22 @@ impl TreeNode {
     }
 }
 
+fn dfs(now: Option<Rc<RefCell<TreeNode>>>, res: &mut i32) -> i32 {
+    if let Some(x) = now {
+        println!("{}",x.as_ref().val)
+        // dfs(x.borrow().left.clone(), res);
+        // dfs(x.borrow().right.clone(), res);
+    }
+    return 1;
+}
+
+use std::cell::RefCell;
+use std::rc::Rc;
 impl Solution {
-    pub fn add_one_row(
-        root: Option<Rc<RefCell<TreeNode>>>,
-        val: i32,
-        depth: i32,
-    ) -> Option<Rc<RefCell<TreeNode>>> {
+    pub fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+        let mut res;
+        dfs(root, &mut res);
+        res
     }
 }
 
