@@ -28,7 +28,4 @@
     "rust-analyzer.cargo.features": [
         "local",
     ],
-    // "rust-analyzer.cargo.unsetTest": [
-    //     "core",
-    // ],
 }
