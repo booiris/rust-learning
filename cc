@@ -21,6 +21,7 @@ main_context=$'#![allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
+#[cfg(feature = "local")]
 struct Solution;
 
 macro_rules! hashmap {
@@ -31,7 +32,7 @@ macro_rules! hashmap {
     }}
 }
 
-#[cfg(test)]
+#[cfg(feature = "local")]
 pub fn main() {
     println!("res:");
 }

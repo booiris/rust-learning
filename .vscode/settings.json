@@ -15,7 +15,7 @@
     "code-runner.executorMap": {
         "cpp": "g++ $fileName -o $workspaceRoot/build/$fileNameWithoutExt.exe && $workspaceRoot/build/$fileNameWithoutExt.exe",
         // g++ $fileName -o build/$fileNameWithoutExt && .\\build\\$fileNameWithoutExt
-        "rust": "rustc --cfg test $fileName -o $workspaceRoot/build/$fileNameWithoutExt -A unused_imports -A unused_macros&& RUST_BACKTRACE=1 $workspaceRoot/build/$fileNameWithoutExt",
+        "rust": "rustc --cfg feature=\\\"local\\\" $fileName -o $workspaceRoot/build/$fileNameWithoutExt -A unused_imports -A unused_macros&& RUST_BACKTRACE=1 $workspaceRoot/build/$fileNameWithoutExt",
     },
     "code-runner.saveFileBeforeRun": true,
     "code-runner.preserveFocus": false,
@@ -25,8 +25,10 @@
         "Cargo.lock": true,
         // "Cargo.toml": true,
     },
-    "rust-analyzer.cargo.unsetTest": [
-        "core",
-        "#[cfg(test)]"
+    "rust-analyzer.cargo.features": [
+        "local",
     ],
+    // "rust-analyzer.cargo.unsetTest": [
+    //     "core",
+    // ],
 }
