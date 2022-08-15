@@ -31,26 +31,25 @@ impl TreeNode {
         }
     }
 }
-
-fn dfs(root: Option<Rc<RefCell<TreeNode>>>, res: &mut i32) -> i32 {
-    if let Some(x) = root {
-        let dp1 = dfs(x.borrow().left.clone(), res);
-        let dp2 = dfs(x.borrow().right.clone(), res);
-        let dpmax = max(dp1, dp2) + 1;
-        *res = max(*res, dpmax);
-        dpmax
-    } else {
-        0
-    }
-}
-
 use std::cell::RefCell;
 use std::rc::Rc;
 impl Solution {
-    pub fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-        let mut res = 0;
-        dfs(root, &mut res);
-        res
+    pub fn is_unival_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
+        fn is_val(root: Option<Rc<RefCell<TreeNode>>>, val: i32) -> bool {
+            if let Some(x) = root {
+                // RefCell.borrow()不会转移所有权
+                // x.borrow().left不clone()的话，会报error[E0507]错误
+                // x.borrow().val == val
+                //     && is_val(x.borrow().left.clone(), val)
+                //     && is_val(x.borrow().right.clone(), val)
+                false
+            } else {
+                true
+            }
+        }
+        //unwrap()调用会转移所有权，所以先clone()
+        let val = root.clone().unwrap().borrow().val;
+        is_val(root, val)
     }
 }
 

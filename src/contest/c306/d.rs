@@ -1,18 +1,4 @@
-#!/bin/bash
-
-f="l"$1".rs"
-
-file=src/code/$f
-
-if test -f $file; then
-    echo "$file exist"
-    exit 0
-fi
-
-
-touch $file
-content=$'#[allow(dead_code)]
-#[allow(unused_imports)]
+#![allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
@@ -27,12 +13,15 @@ macro_rules! hashmap {
     }}
 }
 
+impl Solution {
+    pub fn count_special_numbers(n: i32) -> i32 {
+
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
     println!("res:");
 }
 
-'
 
-echo "pub mod l$1;" >>src/code/mod.rs
-echo "$content" >$file
