@@ -35,7 +35,8 @@ impl TreeNode {
 
 fn dfs(now: Option<Rc<RefCell<TreeNode>>>, res: &mut i32) -> i32 {
     if let Some(x) = now {
-        println!("{}",x.as_ref().val)
+        let a: &Rc<RefCell<TreeNode>> = x.borrow();
+        println!("{}", a.borrow().val);
         // dfs(x.borrow().left.clone(), res);
         // dfs(x.borrow().right.clone(), res);
     }
@@ -47,7 +48,7 @@ use std::rc::Rc;
 impl Solution {
     pub fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         let mut res;
-        dfs(root, &mut res);
+        dfs(&root, &mut res);
         res
     }
 }
