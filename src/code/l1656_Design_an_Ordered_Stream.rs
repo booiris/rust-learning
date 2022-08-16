@@ -4,6 +4,7 @@ use std::borrow::Borrow;
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
+use std::process::id;
 #[cfg(feature = "local")]
 struct Solution;
 
@@ -30,7 +31,7 @@ struct Node {
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl OrderedStream {
-    fn new(n: i32) -> Self {
+    fn new(_n: i32) -> Self {
         OrderedStream {
             head: Some(Box::new(Node {
                 nxt: None,
@@ -42,21 +43,22 @@ impl OrderedStream {
     }
 
     fn insert(&mut self, id_key: i32, value: String) -> Vec<String> {
-        let now = self.head.take();
-        let pre = &now;
+        let mut now = self.head.take();
+        let mut pre = now.take();
         loop {
             match now {
-                Some(x) => {
+                Some(ref x) => {
                     if x.id > id_key {
                         break;
                     }
+                    pre = now.take();
+                    now = x.nxt;
                 }
                 None => break,
             }
-            pre = &now;
         }
         let new_node = Box::new(Node {
-            nxt: now,
+            nxt: now.take(),
             id: id_key,
             val: value,
         });
@@ -64,19 +66,19 @@ impl OrderedStream {
         pre.unwrap().nxt = Some(new_node);
 
         let res = vec![];
-        now = self.head.unwrap().nxt;
-        loop {
-            match now {
-                Some(x) => {
-                    if x.id == self.index {
-                        res.push(x.val);
-                        self.index += 1;
-                    }
-                    now = x.nxt;
-                }
-                None => break,
-            }
-        }
+        // now = self.head.unwrap().nxt;
+        // loop {
+        //     match now {
+        //         Some(x) => {
+        //             if x.id == self.index {
+        //                 res.push(x.val);
+        //                 self.index += 1;
+        //             }
+        //             now = x.nxt;
+        //         }
+        //         None => break,
+        //     }
+        // }
 
         res
     }
