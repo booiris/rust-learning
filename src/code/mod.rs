@@ -5,3 +5,4 @@ pub mod l623_Add_One_Row_to_Tree;
 pub mod loffer_55_I;
 pub mod l965_Univalued_Binary_Tree;
 pub mod l1422_Maximum_Score_After_Splitting_a_String;
+pub mod l641_Design_Circular_Deque;
