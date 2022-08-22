@@ -1,6 +1,18 @@
 #!/bin/bash
 
-f="l"$1".rs"
+index=1 
+filename=""
+for arg in $*                     
+do
+    if [ $index -eq 1 ]
+    then
+        arg=${arg%.*}
+    fi
+    filename=$filename"_"$arg
+    let index+=1
+done
+
+f="l"$filename".rs"
 
 file=src/code/$f
 
@@ -34,5 +46,5 @@ pub fn main() {
 
 '
 
-echo "pub mod l$1;" >>src/code/mod.rs
+echo "pub mod l$filename;" >>src/code/mod.rs
 echo "$content" >$file

@@ -107,7 +107,7 @@ impl OrderedStream {
         }
     }
 
-    fn insert(&mut self, mut id_key: i32, value: String) -> Vec<String> {
+    fn insert(&mut self, id_key: i32, value: String) -> Vec<String> {
         self.data[id_key as usize] = Some(value);
         let mut res = vec![];
         while let Some(ref x) = self.data[self.index] {
