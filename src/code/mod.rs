@@ -14,3 +14,5 @@ pub mod l654_Maximum_Binary_Tree;
 pub mod l_1455_Check_If_a_Word_Occurs_As_a_Prefix_of_Any_Word_in_a_Sentence;
 pub mod l_1460_Make_Two_Arrays_Equal_by_Reversing_Sub_arrays;
 pub mod l_1464_Maximum_Product_of_Two_Elements_in_an_Array;
+pub mod l_662_Maximum_Width_of_Binary_Tree;
+pub mod l_793_Preimage_Size_of_Factorial_Zeroes_Function;
