@@ -1,4 +1,5 @@
-#![allow(unused_imports)]
+#[allow(dead_code)]
+#[allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
@@ -14,16 +15,11 @@ macro_rules! hashmap {
 }
 
 impl Solution {
-    pub fn build_matrix(
-        k: i32,
-        row_conditions: Vec<Vec<i32>>,
-        col_conditions: Vec<Vec<i32>>,
-    ) -> Vec<Vec<i32>> {
-        let mut res = vec![vec![0; k as usize]; k as usize];
-        for x in row_conditions {
-            
-        }
-        res
+    pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
+        nums.iter()
+            .zip(nums.iter().skip(n as usize))
+            .flat_map(|(&x, &y)| [x, y])
+            .collect()
     }
 }
 
