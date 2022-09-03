@@ -18,3 +18,4 @@ pub mod l_662_Maximum_Width_of_Binary_Tree;
 pub mod l_793_Preimage_Size_of_Factorial_Zeroes_Function;
 pub mod l_1470_Shuffle_the_Array;
 pub mod l_687_Longest_Univalue_Path;
+pub mod l_646_Maximum_Length_of_Pair_Chain;
