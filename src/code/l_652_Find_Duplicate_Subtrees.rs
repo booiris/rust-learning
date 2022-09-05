@@ -32,12 +32,47 @@ impl TreeNode {
         }
     }
 }
+#[derive(PartialEq, Eq, Hash)]
+struct KeyS(i32, i32, i32);
+
+fn dfs(
+    now: &Option<Rc<RefCell<TreeNode>>>,
+    index: &mut i32,
+    key: &mut HashMap<KeyS, i32>,
+    res: &mut HashSet<i32>,
+    vis: &mut HashMap<i32, Rc<RefCell<TreeNode>>>,
+) -> i32 {
+    if let Some(x) = now {
+        let temp = KeyS(
+            x.borrow().val,
+            dfs(&x.borrow().left, index, key, res, vis),
+            dfs(&x.borrow().right, index, key, res, vis),
+        );
+        if let Some(x) = key.get(&temp) {
+            res.insert(*x);
+            return *x;
+        } else {
+            key.insert(temp, *index);
+            vis.insert(*index, x.clone());
+            *index += 1;
+            return *index - 1;
+        }
+    }
+    0
+}
+
 use std::cell::RefCell;
 use std::rc::Rc;
 impl Solution {
     pub fn find_duplicate_subtrees(
         root: Option<Rc<RefCell<TreeNode>>>,
     ) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
+        let mut index = 1;
+        let mut key = HashMap::new();
+        let mut res = HashSet::new();
+        let mut vis = HashMap::new();
+        dfs(&root, &mut index, &mut key, &mut res, &mut vis);
+        res.iter().map(|x| Some(vis[x].clone())).collect()
     }
 }
 
