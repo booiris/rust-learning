@@ -14,16 +14,8 @@ macro_rules! hashmap {
 }
 
 impl Solution {
-    pub fn remove_stars(s: String) -> String {
-        let mut res = "".to_string();
-        for x in s.chars() {
-            if x == '*' {
-                res.pop();
-            } else {
-                res.push(x);
-            }
-        }
-        res
+    pub fn is_strictly_palindromic(n: i32) -> bool {
+        false
     }
 }
 

@@ -14,16 +14,15 @@ macro_rules! hashmap {
 }
 
 impl Solution {
-    pub fn remove_stars(s: String) -> String {
-        let mut res = "".to_string();
-        for x in s.chars() {
-            if x == '*' {
-                res.pop();
-            } else {
-                res.push(x);
+    pub fn find_subarrays(nums: Vec<i32>) -> bool {
+        let mut key = HashSet::<i32>::new();
+        for i in 1..nums.len() {
+            if key.get(&(nums[i] + nums[i - 1])).is_some() {
+                return true;
             }
+            key.insert(nums[i] + nums[i - 1]);
         }
-        res
+        false
     }
 }
 

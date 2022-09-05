@@ -17,7 +17,7 @@ echo "pub mod b;" >>$dir/mod.rs
 echo "pub mod c;" >>$dir/mod.rs
 echo "pub mod d;" >>$dir/mod.rs
 
-main_context=$'#![allow(unused_imports)]
+main_context=$'#![allow(dead_code, unused_imports, unused_macros)]
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;

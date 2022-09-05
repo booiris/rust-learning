@@ -1,4 +1,4 @@
-#![allow(unused_imports)]
+#![allow(dead_code, unused_imports, unused_macros)]
 use std::borrow::Borrow;
 use std::cmp::*;
 use std::collections::*;

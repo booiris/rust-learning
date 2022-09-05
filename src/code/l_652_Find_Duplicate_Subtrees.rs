@@ -14,9 +14,8 @@ macro_rules! hashmap {
 }
 
 // Definition for a binary tree node.
-
-#[derive(Debug, PartialEq, Eq)]
 #[cfg(feature = "local")]
+#[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
     pub val: i32,
     pub left: Option<Rc<RefCell<TreeNode>>>,
@@ -33,35 +32,12 @@ impl TreeNode {
         }
     }
 }
-
-fn dfs(mut father: Option<Rc<RefCell<TreeNode>>>, is_left: bool, nums: Vec<i32>, index: usize) {
-    let mut now;
-    let mut maxnum = -1;
-    if is_left {
-        for i in 0..index {
-            if maxnum < nums[i] {
-                maxnum = nums[i];
-                now = i;
-            }
-        }
-        let temp = Some(TreeNode::new(maxnum));
-        father = temp;
-        dfs(temp.borrow())
-    } else {
-        for i in index + 1..nums.len() {
-            if maxnum < nums[i] {
-                maxnum = nums[i];
-                now = i;
-            }
-        }
-    }
-}
-
 use std::cell::RefCell;
 use std::rc::Rc;
 impl Solution {
-    pub fn construct_maximum_binary_tree(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-        None
+    pub fn find_duplicate_subtrees(
+        root: Option<Rc<RefCell<TreeNode>>>,
+    ) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
     }
 }
 

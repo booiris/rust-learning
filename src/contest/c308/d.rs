@@ -1,4 +1,4 @@
-#![allow(unused_imports)]
+#![allow(dead_code, unused_imports, unused_macros)]
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
@@ -20,9 +20,7 @@ impl Solution {
         col_conditions: Vec<Vec<i32>>,
     ) -> Vec<Vec<i32>> {
         let mut res = vec![vec![0; k as usize]; k as usize];
-        for x in row_conditions {
-            
-        }
+        for x in row_conditions {}
         res
     }
 }

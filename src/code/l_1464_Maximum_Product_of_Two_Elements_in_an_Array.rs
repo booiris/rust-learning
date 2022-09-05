@@ -1,5 +1,4 @@
-#[allow(dead_code)]
-#[allow(unused_imports)]
+#![allow(dead_code, unused_imports, unused_macros)]
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;

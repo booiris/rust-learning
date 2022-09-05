@@ -1,6 +1,5 @@
+#![allow(dead_code, unused_imports, unused_macros)]
 use std::cell::RefCell;
-#[allow(dead_code)]
-#[allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;

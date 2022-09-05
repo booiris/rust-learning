@@ -1,4 +1,4 @@
-#![allow(unused_imports)]
+#![allow(dead_code, unused_imports, unused_macros)]
 use std::cmp::*;
 use std::collections::*;
 use std::io::{self, prelude::*};
@@ -18,5 +18,3 @@ macro_rules! hashmap {
 pub fn main() {
     println!("res:");
 }
-
-

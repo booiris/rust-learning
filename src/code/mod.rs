@@ -20,3 +20,5 @@ pub mod l_1470_Shuffle_the_Array;
 pub mod l_687_Longest_Univalue_Path;
 pub mod l_646_Maximum_Length_of_Pair_Chain;
 pub mod l_1475_Final_Prices_With_a_Special_Discount_in_a_Shop;
+pub mod l_1582_Special_Positions_in_a_Binary_Matrix;
+pub mod l_652_Find_Duplicate_Subtrees;
