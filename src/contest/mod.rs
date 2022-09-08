@@ -4,4 +4,3 @@ pub mod c306;
 pub mod c307;
 pub mod c308;
 pub mod cc86;
-pub mod temp;
