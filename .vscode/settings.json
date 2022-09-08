@@ -18,7 +18,7 @@
   "files.exclude": {
     "build": true,
     "Cargo.lock": true,
-    "**/mod.rs": true,
+    // "**/mod.rs": true,
     "target": true
   },
   "rust-analyzer.cargo.features": [
