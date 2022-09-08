@@ -24,3 +24,4 @@ pub mod l_1582_Special_Positions_in_a_Binary_Matrix;
 pub mod l_652_Find_Duplicate_Subtrees;
 pub mod l_828_Count_Unique_Characters_of_All_Substrings_of_a_Given_String;
 pub mod l_1592_Rearrange_Spaces_Between_Words;
+pub mod l_667_Beautiful_Arrangement_II;
