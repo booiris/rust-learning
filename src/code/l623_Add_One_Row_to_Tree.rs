@@ -4,6 +4,7 @@ use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
 use std::rc::Rc;
+#[cfg(feature = "local")]
 struct Solution;
 
 macro_rules! hashmap {
@@ -14,6 +15,7 @@ macro_rules! hashmap {
     }}
 }
 
+#[cfg(feature = "local")]
 // Definition for a binary tree node.
 #[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
@@ -21,7 +23,7 @@ pub struct TreeNode {
     pub left: Option<Rc<RefCell<TreeNode>>>,
     pub right: Option<Rc<RefCell<TreeNode>>>,
 }
-
+#[cfg(feature = "local")]
 impl TreeNode {
     #[inline]
     pub fn new(val: i32) -> Self {
