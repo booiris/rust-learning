@@ -41,10 +41,50 @@ impl Solution {
         val: i32,
         depth: i32,
     ) -> Option<Rc<RefCell<TreeNode>>> {
+        if depth == 1 {
+            let now = Rc::new(RefCell::new(TreeNode::new(val)));
+            now.borrow_mut().left = root;
+            return Some(now);
+        }
+
+        let mut key = VecDeque::new();
+        key.push_front(root.as_ref().unwrap().clone());
+        let mut d = 1;
+        while !key.is_empty() {
+            if depth - 1 == d {
+                while !key.is_empty() {
+                    let now = key.pop_front().unwrap();
+                    let temp = Rc::new(RefCell::new(TreeNode::new(val)));
+                    if now.borrow().left.is_some() {
+                        temp.borrow_mut().left = Some(now.borrow().left.as_ref().unwrap().clone());
+                    }
+                    now.borrow_mut().left = Some(temp.clone());
+                    let temp = Rc::new(RefCell::new(TreeNode::new(val)));
+                    if now.borrow().right.is_some() {
+                        temp.borrow_mut().right =
+                            Some(now.borrow().right.as_ref().unwrap().clone());
+                    }
+                    now.borrow_mut().right = Some(temp.clone());
+                }
+                break;
+            }
+            let len = key.len();
+            for _ in 0..len {
+                let now = key.pop_front().unwrap();
+                if now.borrow().left.is_some() {
+                    key.push_back(now.borrow().left.as_ref().unwrap().clone());
+                }
+                if now.borrow().right.is_some() {
+                    key.push_back(now.borrow().right.as_ref().unwrap().clone());
+                }
+            }
+            d += 1;
+        }
+        root
     }
 }
 
-#[cfg(test)]
+#[cfg(feature = "local")]
 pub fn main() {
     println!("res:");
 }
