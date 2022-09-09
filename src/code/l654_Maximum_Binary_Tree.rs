@@ -34,34 +34,28 @@ impl TreeNode {
     }
 }
 
-fn dfs(mut father: Option<Rc<RefCell<TreeNode>>>, is_left: bool, nums: Vec<i32>, index: usize) {
-    let mut now;
-    let mut maxnum = -1;
-    if is_left {
-        for i in 0..index {
-            if maxnum < nums[i] {
-                maxnum = nums[i];
-                now = i;
-            }
-        }
-        let temp = Some(TreeNode::new(maxnum));
-        father = temp;
-        dfs(temp.borrow())
-    } else {
-        for i in index + 1..nums.len() {
-            if maxnum < nums[i] {
-                maxnum = nums[i];
-                now = i;
-            }
-        }
-    }
-}
-
 use std::cell::RefCell;
 use std::rc::Rc;
 impl Solution {
     pub fn construct_maximum_binary_tree(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-        None
+        let mut sta: Vec<usize> = vec![];
+        let mut key: Vec<Rc<RefCell<TreeNode>>> = vec![];
+        for (i, &x) in nums.iter().enumerate() {
+            let now = Rc::new(RefCell::new(TreeNode::new(x)));
+            while let Some(y) = sta.last() {
+                if nums[*y] > x {
+                    break;
+                }
+                now.borrow_mut().left = Some(key[*y].clone());
+                sta.pop();
+            }
+            if let Some(y) = sta.last() {
+                key[*y].borrow_mut().right = Some(now.clone());
+            }
+            key.push(now.clone());
+            sta.push(i);
+        }
+        Some(key[*sta.first().unwrap()].clone())
     }
 }
 
