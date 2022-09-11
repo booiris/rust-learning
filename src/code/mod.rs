@@ -27,3 +27,4 @@ pub mod l_1592_Rearrange_Spaces_Between_Words;
 pub mod l_667_Beautiful_Arrangement_II;
 pub mod l_1598_Crawler_Log_Folder;
 pub mod l_669_Trim_a_Binary_Search_Tree;
+pub mod l_857_Minimum_Cost_to_Hire_K_Workers;
