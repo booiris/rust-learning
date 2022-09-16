@@ -32,3 +32,4 @@ pub mod l_1608_Special_Array_With_X_Elements_Greater_Than_or_Equal_X;
 pub mod l_670_Maximum_Swap;
 pub mod l_1619_Mean_of_Array_After_Removing_Some_Elements;
 pub mod l_672_Bulb_Switcher_II;
+pub mod l_1624_Largest_Substring_Between_Two_Equal_Characters;
