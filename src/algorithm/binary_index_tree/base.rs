@@ -6,7 +6,7 @@ impl Bitree {
     #[inline]
     pub fn new(ini: &Vec<i32>) -> Self {
         let mut res = Bitree {
-            tree: vec![0; ini.len() * 4 + 1],
+            tree: vec![0; ini.len() * 4 + 5],
             len: ini.len(),
         };
         for (index, v) in ini.iter().enumerate() {
