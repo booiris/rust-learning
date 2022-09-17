@@ -18,8 +18,6 @@ echo "pub mod c;" >>$dir/mod.rs
 echo "pub mod d;" >>$dir/mod.rs
 
 main_context=$'#![allow(dead_code, unused_imports, unused_macros)]
-#[cfg(feature = "local")]
-use crate::code::tree_struct::TreeNode;
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;

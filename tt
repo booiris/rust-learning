@@ -24,8 +24,6 @@ fi
 
 touch $file
 content=$'#![allow(dead_code, unused_imports, unused_macros)]
-#[cfg(feature = "local")]
-use crate::code::tree_struct::TreeNode;
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
