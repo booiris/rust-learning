@@ -13,11 +13,11 @@ macro_rules! hashmap {
     }}
 }
 
-impl Solution {
-    pub fn sum_prefix_scores(words: Vec<String>) -> Vec<i32> {}
-}
+// impl Solution {
+//     pub fn sum_prefix_scores(words: Vec<String>) -> Vec<i32> {}
+// }
 
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    println!("res:{}", i32::max(1, 2));
 }
