@@ -34,3 +34,4 @@ pub mod l_828_Count_Unique_Characters_of_All_Substrings_of_a_Given_String;
 pub mod l_857_Minimum_Cost_to_Hire_K_Workers;
 pub mod loffer_55_I;
 pub mod tree_struct;
+pub mod l_827_Making_A_Large_Island;
