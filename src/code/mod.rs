@@ -35,3 +35,4 @@ pub mod l_857_Minimum_Cost_to_Hire_K_Workers;
 pub mod loffer_55_I;
 pub mod tree_struct;
 pub mod l_827_Making_A_Large_Island;
+pub mod l_1636_Sort_Array_by_Increasing_Frequency;

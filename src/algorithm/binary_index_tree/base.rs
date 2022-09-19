@@ -6,7 +6,7 @@ impl Bitree {
     #[inline]
     pub fn new(ini: &Vec<i32>) -> Self {
         let mut res = Bitree {
-            tree: vec![0; ini.len() * 4 + 5],
+            tree: vec![0; ini.len() + 1],
             len: ini.len(),
         };
         for (index, v) in ini.iter().enumerate() {
@@ -22,7 +22,7 @@ impl Bitree {
 
     fn update(&mut self, index: usize, v: i32) {
         let mut pos = index;
-        while pos < self.len {
+        while pos <= self.len {
             self.tree[pos] += v;
             pos += Self::lowbit(pos);
         }
