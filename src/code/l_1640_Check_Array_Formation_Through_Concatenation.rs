@@ -15,7 +15,7 @@ macro_rules! hashmap {
 
 impl Solution {
     pub fn can_form_array(arr: Vec<i32>, pieces: Vec<Vec<i32>>) -> bool {
-        let mut key: HashMap<i32, usize> = HashMap::new();
+        let mut key = HashMap::new();
         arr.iter().enumerate().for_each(|(i, &x)| {
             key.insert(x, i);
         });
