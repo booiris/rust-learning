@@ -37,3 +37,4 @@ pub mod tree_struct;
 pub mod l_827_Making_A_Large_Island;
 pub mod l_1636_Sort_Array_by_Increasing_Frequency;
 pub mod l_1640_Check_Array_Formation_Through_Concatenation;
+pub mod l_698_Partition_to_K_Equal_Sum_Subsets;
