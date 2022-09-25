@@ -44,7 +44,6 @@ impl Solution {
                 key1.entry(aim - x).and_modify(|c| *c += 1).or_insert(1);
             }
         }
-        true
     }
 }
 

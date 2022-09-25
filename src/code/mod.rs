@@ -38,3 +38,5 @@ pub mod l_827_Making_A_Large_Island;
 pub mod l_1636_Sort_Array_by_Increasing_Frequency;
 pub mod l_1640_Check_Array_Formation_Through_Concatenation;
 pub mod l_698_Partition_to_K_Equal_Sum_Subsets;
+pub mod l_707_Design_Linked_List;
+pub mod l_1652_Defuse_the_Bomb;
