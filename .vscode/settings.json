@@ -4,7 +4,7 @@
   "gopls": {
     "directoryFilters": ["-top_author", "-src", "-*_test"]
   },
-  "code-runner.runInTerminal": true,
+  "code-runner.runInTerminal": false,
   // 运行代码之前清除之前的输出
   "code-runner.clearPreviousOutput": true,
   "code-runner.fileDirectoryAsCwd": true,

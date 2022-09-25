@@ -49,5 +49,5 @@ fn main() {
     let a = vec![0, 1, 3, 5, 3, 2, 1, 3, 4];
     let solve = Bitree::new(&a);
     println!("{:?}", solve.tree);
-    println!("{}", solve.query(1, 5))
+    assert_eq!(solve.query(1, 5), 12);
 }
