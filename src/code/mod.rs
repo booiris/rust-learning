@@ -43,3 +43,4 @@ pub mod l_1652_Defuse_the_Bomb;
 pub mod l_788_Rotated_Digits;
 pub mod l_interview_17_19_Missing_Two_LCCI;
 pub mod l_interview_1_2_Check_Permutation_LCCI;
+pub mod l_interview_17_9_Get_Kth_Magic_Number_LCCI;
