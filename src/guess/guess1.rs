@@ -12,8 +12,9 @@ impl<'a> Player<'a> {
 }
 
 impl<'a> Guess<'a> for Player<'a> {
-    fn guess(&self, _now: &Vec<char>) -> char {
+    fn guess(&mut self, _now: &Vec<char>) -> char {
         let mut rng = rand::thread_rng();
         rng.gen_range('a' as u8, 'z' as u8 + 1) as char
     }
+    fn end(&mut self) {}
 }
