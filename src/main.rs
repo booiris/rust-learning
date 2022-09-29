@@ -8,6 +8,7 @@ use std::fs::File;
 use std::{thread, time};
 
 static DEBUG: bool = false;
+static GUESSFUNC: fn(&Vec<char>) -> char = guess1::guess;
 
 fn main() {
     let data = get_data();
@@ -50,7 +51,7 @@ fn game(word: &String) -> bool {
     let mut wrong_cnt = 0;
 
     while wrong_cnt < 6 && now != char_list {
-        let c = guess1::guess(&now);
+        let c = GUESSFUNC(&now);
 
         if DEBUG {
             println!(
