@@ -3,16 +3,17 @@
 use std::io::BufRead;
 use std::io::BufReader;
 // use std::ops::Bound::*;
+use guess_word::guess::guess::Guess;
 use guess_word::guess::*;
 use std::fs::File;
 use std::{thread, time};
 
 static DEBUG: bool = false;
-static GUESSFUNC: fn(&Vec<char>) -> char = guess1::guess;
 
 fn main() {
     let data = get_data();
-    let (correct, wrong, sum) = simulate(&data);
+    let player = guess2::Player { data: &data };
+    let (correct, wrong, sum) = simulate(&data, &player);
     println!("{} {} {}", correct, wrong, sum);
     println!("final: {}%", correct as f64 / sum as f64 * 100.0);
 }
@@ -25,7 +26,7 @@ fn get_data() -> Vec<String> {
         .collect::<Vec<_>>()
 }
 
-fn simulate(data: &Vec<String>) -> (i32, i32, i32) {
+fn simulate<'a>(data: &Vec<String>, player: &impl Guess<'a>) -> (i32, i32, i32) {
     let (mut correct, mut wrong, mut sum) = (0, 0, 0);
     for word in data {
         sum += 1;
@@ -37,7 +38,7 @@ fn simulate(data: &Vec<String>) -> (i32, i32, i32) {
             );
         }
 
-        match game(word) {
+        match game(word, player) {
             true => correct += 1,
             false => wrong += 1,
         }
@@ -45,13 +46,13 @@ fn simulate(data: &Vec<String>) -> (i32, i32, i32) {
     (correct, wrong, sum)
 }
 
-fn game(word: &String) -> bool {
+fn game<'a>(word: &String, guess: &impl Guess<'a>) -> bool {
     let char_list = word.chars().into_iter().collect::<Vec<_>>();
     let mut now = vec!['_'; char_list.len()];
     let mut wrong_cnt = 0;
 
     while wrong_cnt < 6 && now != char_list {
-        let c = GUESSFUNC(&now);
+        let c = guess.guess(&now);
 
         if DEBUG {
             println!(
