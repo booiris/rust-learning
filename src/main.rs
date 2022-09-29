@@ -12,7 +12,9 @@ static DEBUG: bool = false;
 
 fn main() {
     let data = get_data();
-    let player = guess2::Player { data: &data };
+
+    let player = guess1::Player::new(&data);
+
     let (correct, wrong, sum) = simulate(&data, &player);
     println!("{} {} {}", correct, wrong, sum);
     println!("final: {}%", correct as f64 / sum as f64 * 100.0);
