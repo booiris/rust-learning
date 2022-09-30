@@ -1,20 +1,60 @@
 // use std::cmp::*;
 // use std::collections::*;
+extern crate num_cpus;
 use std::io::BufRead;
 use std::io::BufReader;
 // use std::ops::Bound::*;
 use guess_word::guess::guess::Guess;
 use guess_word::guess::*;
 use std::fs::File;
+use std::sync::mpsc;
+use std::sync::Arc;
 use std::{thread, time};
 
 static DEBUG: bool = false;
+
+static mut PRIOD: i32 = 10;
 fn main() {
-    let data = get_data();
+    let cpu_num = num_cpus::get() - 1;
+    let data = Arc::new(get_data());
+    let len = data.len() / cpu_num;
+    let (mut s, mut e) = (0 as usize, len);
+    let (tx, rx) = mpsc::channel();
 
-    let mut player = guess2::Player::new(&data);
+    unsafe {
+        if DEBUG {
+            PRIOD = 1;
+        }
+    }
 
-    let (correct, wrong, sum) = simulate(&data, &mut player);
+    for i in 0..cpu_num {
+        if i == cpu_num - 1 {
+            e = data.len();
+        }
+
+        let share_data = Arc::clone(&data);
+        let sub_data = data[s..e].to_vec();
+        let thread_tx = tx.clone();
+
+        thread::spawn(move || {
+            let mut player = guess2::Player::new(&share_data);
+            let mut cnt = 0;
+            let (correct, wrong, sum) = simulate(&sub_data, &mut player, i, &mut cnt);
+
+            thread_tx.send((correct, wrong, sum)).unwrap();
+        });
+
+        // handles.push(handle);
+        (s, e) = (s + len, e + len);
+    }
+
+    let (mut correct, mut wrong, mut sum) = (0, 0, 0);
+    for _ in 0..cpu_num {
+        let res = rx.recv().unwrap();
+        correct += res.0;
+        wrong += res.1;
+        sum += res.2;
+    }
     println!("{} {} {}", correct, wrong, sum);
     println!("final: {}%", correct as f64 / sum as f64 * 100.0);
 }
@@ -27,25 +67,25 @@ fn get_data() -> Vec<String> {
         .collect::<Vec<_>>()
 }
 
-static mut PRIOD: i32 = 10;
-static mut CNT: i32 = 1;
-fn simulate<'a>(data: &Vec<String>, player: &mut impl Guess<'a>) -> (i32, i32, i32) {
+fn simulate<'a>(
+    data: &Vec<String>,
+    player: &mut impl Guess<'a>,
+    cpu_index: usize,
+    cnt: &mut i32,
+) -> (i32, i32, i32) {
     let (mut correct, mut wrong, mut sum) = (0, 0, 0);
     for word in data {
         sum += 1;
 
         unsafe {
-            if DEBUG {
-                PRIOD = 1;
-            }
-            if CNT == PRIOD {
+            if *cnt == PRIOD {
                 println!(
-                    "{} times Game! win!: {}  lose!: {}  word: {}",
-                    sum, correct, wrong, word
+                    "cpu_index: {}; {} times Game! win!: {}  lose!: {} ",
+                    cpu_index, sum, correct, wrong
                 );
-                CNT = 0;
+                *cnt = 0;
             }
-            CNT += 1;
+            *cnt += 1;
         }
 
         match game(word, player) {
