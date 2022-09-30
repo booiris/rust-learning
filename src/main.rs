@@ -1,5 +1,5 @@
 // use std::cmp::*;
-// use std::collections::*;
+use std::collections::*;
 extern crate num_cpus;
 use std::io::BufRead;
 use std::io::BufReader;
@@ -11,13 +11,38 @@ use std::sync::mpsc;
 use std::sync::Arc;
 use std::{thread, time};
 
-static DEBUG: bool = false;
+static DEBUG: bool = true;
 
 static mut PRIOD: i32 = 10;
 fn main() {
-    let cpu_num = num_cpus::get() - 1;
-    let data = Arc::new(get_data());
-    let len = data.len() / cpu_num;
+    let train_data = get_data("../data/data.txt");
+    let test_data = get_data("../data/test.txt");
+    let s1 = HashSet::<_>::from_iter(train_data.into_iter().clone());
+    let s2 = HashSet::<_>::from_iter(test_data.into_iter().clone());
+    let s = s1
+        .intersection(&s2)
+        .map(|x| x.clone())
+        .collect::<HashSet<_>>();
+    let key = s2.difference(&s).map(|x| x.clone()).collect::<Vec<_>>();
+    println!(
+        "{} {} {} {} {}",
+        s.len(),
+        key.len(),
+        s1.len(),
+        s2.len(),
+        s.len() as f64 / s2.len() as f64 * 100.0
+    );
+
+    let mut cpu_num = num_cpus::get();
+
+    if DEBUG {
+        cpu_num = 1;
+    }
+
+    let train_data = Arc::new(get_data("../data/data.txt"));
+    let test_data = Arc::new(key);
+
+    let len = test_data.len() / cpu_num;
     let (mut s, mut e) = (0 as usize, len);
     let (tx, rx) = mpsc::channel();
 
@@ -29,22 +54,21 @@ fn main() {
 
     for i in 0..cpu_num {
         if i == cpu_num - 1 {
-            e = data.len();
+            e = test_data.len();
         }
 
-        let share_data = Arc::clone(&data);
-        let sub_data = data[s..e].to_vec();
+        let share_data = Arc::clone(&train_data);
+        let sub_data = test_data[s..e].to_vec();
         let thread_tx = tx.clone();
 
         thread::spawn(move || {
-            let mut player = guess2::Player::new(&share_data);
+            let mut player = guess4::Player::new(&share_data);
             let mut cnt = 0;
             let (correct, wrong, sum) = simulate(&sub_data, &mut player, i, &mut cnt);
 
             thread_tx.send((correct, wrong, sum)).unwrap();
         });
 
-        // handles.push(handle);
         (s, e) = (s + len, e + len);
     }
 
@@ -59,8 +83,8 @@ fn main() {
     println!("final: {}%", correct as f64 / sum as f64 * 100.0);
 }
 
-fn get_data() -> Vec<String> {
-    let file = File::open("../data/data.txt").expect("no such file");
+fn get_data(file_path: &str) -> Vec<String> {
+    let file = File::open(file_path).expect("no such file");
     let buf = BufReader::new(file);
     buf.lines()
         .map(|l| l.expect("Could not parse line"))
