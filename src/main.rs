@@ -19,7 +19,7 @@ static mut PRIOD: i32 = 10;
 fn main() {
     let train_data = get_data("../data/data.txt");
 
-    let p_len = 11;
+    let p_len = 3;
     let mut pre = HashMap::<String, i32>::new();
     for x in &train_data {
         if x.len() < p_len {
@@ -42,16 +42,18 @@ fn main() {
     }
 
     let pre = pre.iter().collect::<Vec<_>>();
-    let mut pre = pre.iter().filter(|x| *x.1 > 50).collect::<Vec<_>>();
+    let mut pre = pre.iter().filter(|x| *x.1 > 5).collect::<Vec<_>>();
     let end = end.iter().collect::<Vec<_>>();
-    let mut end = end.iter().filter(|x| *x.1 > 50).collect::<Vec<_>>();
+    let mut end = end.iter().filter(|x| *x.1 > 5).collect::<Vec<_>>();
 
     println!("{} {}", pre.len(), end.len());
     pre.sort_by_key(|x| Reverse(x.1));
     end.sort_by_key(|x| Reverse(x.1));
 
     println!("{:?}", &pre[0..pre.len().min(30)]);
+    println!("{:?}", &pre[0.max(pre.len() - 30)..pre.len()]);
     println!("{:?}", &end[0..end.len().min(30)]);
+    println!("{:?}", &pre[0.max(end.len() - 30)..end.len()]);
 }
 
 fn main1() {
