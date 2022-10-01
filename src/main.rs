@@ -1,3 +1,4 @@
+use std::cmp::Reverse;
 // use std::cmp::*;
 use std::collections::*;
 extern crate num_cpus;
@@ -11,10 +12,49 @@ use std::sync::mpsc;
 use std::sync::Arc;
 use std::{thread, time};
 
-static DEBUG: bool = true;
+static DEBUG: bool = false;
 
 static mut PRIOD: i32 = 10;
+
 fn main() {
+    let train_data = get_data("../data/data.txt");
+
+    let p_len = 11;
+    let mut pre = HashMap::<String, i32>::new();
+    for x in &train_data {
+        if x.len() < p_len {
+            continue;
+        }
+        pre.entry(x[0..p_len].to_string())
+            .and_modify(|c| *c += 1)
+            .or_insert(1);
+    }
+
+    let mut end = HashMap::<String, i32>::new();
+    for x in &train_data {
+        let len = x.len();
+        if len < p_len {
+            continue;
+        }
+        end.entry(x[len - p_len..len].to_string())
+            .and_modify(|c| *c += 1)
+            .or_insert(1);
+    }
+
+    let pre = pre.iter().collect::<Vec<_>>();
+    let mut pre = pre.iter().filter(|x| *x.1 > 50).collect::<Vec<_>>();
+    let end = end.iter().collect::<Vec<_>>();
+    let mut end = end.iter().filter(|x| *x.1 > 50).collect::<Vec<_>>();
+
+    println!("{} {}", pre.len(), end.len());
+    pre.sort_by_key(|x| Reverse(x.1));
+    end.sort_by_key(|x| Reverse(x.1));
+
+    println!("{:?}", &pre[0..pre.len().min(30)]);
+    println!("{:?}", &end[0..end.len().min(30)]);
+}
+
+fn main1() {
     let train_data = get_data("../data/data.txt");
     let test_data = get_data("../data/test.txt");
     let s1 = HashSet::<_>::from_iter(train_data.into_iter().clone());

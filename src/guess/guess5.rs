@@ -1,5 +1,5 @@
 use counter::Counter;
-use std::collections::*;
+use regex::Regex;
 
 use super::guess::Guess;
 pub struct Player<'a> {
@@ -29,50 +29,21 @@ impl<'a> Player<'a> {
 impl<'a> Guess<'a> for Player<'a> {
     fn guess(&mut self, now: &Vec<char>) -> char {
         let mut new_dict = Vec::<String>::new();
-        let mut now = now.iter().collect::<HashSet<_>>();
-        now.remove(&'.');
-
-        let mut cnt = HashMap::<char, i32>::new();
+        let now = now.iter().collect::<String>();
+        let re = Regex::new(&now).unwrap();
         let len = now.len();
         for word in &self.dict {
-            if len != word.len() {
-                continue;
-            }
-            let mut flag = true;
-            for c in &now {
-                if !word.contains(**c) {
-                    flag = false;
-                    break;
-                }
-            }
-            if flag {
-                let temp = word.chars().collect::<HashSet<_>>();
-                for c in temp {
-                    cnt.entry(c).and_modify(|c| *c += 1).or_insert(1);
-                }
+            if word.len() == len && re.is_match(word) {
                 new_dict.push(word.clone());
             }
         }
-
-        let mut key = vec![];
-        let len = new_dict.len();
-        if len != 0 {
-            for x in cnt {
-                if x.1 == 0 {
-                    continue;
-                }
-                if x.1 == len as i32 {
-                    key.push((x.0, 100000000.0));
-                    continue;
-                }
-                let aim = x.1 as f64 / len as f64;
-                let aim = -aim * aim.log2() - (1.0 - aim) * (1.0 - aim).log2();
-                key.push((x.0, aim));
-            }
-            key.sort_unstable_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
-        }
-
+        let key = new_dict
+            .join("")
+            .chars()
+            .collect::<Counter<_>>()
+            .most_common();
         let mut res = '!';
+
         for (letter, _) in key {
             if self.guessed_letter.iter().find(|&&x| x == letter).is_none() {
                 res = letter;
