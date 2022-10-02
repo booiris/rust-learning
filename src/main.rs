@@ -12,14 +12,39 @@ use std::sync::mpsc;
 use std::sync::Arc;
 use std::{thread, time};
 
-static DEBUG: bool = false;
+pub static DEBUG: bool = false;
 
 static mut PRIOD: i32 = 10;
 
-fn main() {
+fn _main() {
     let train_data = get_data("../data/data.txt");
 
-    let p_len = 3;
+    let mut letter_map = HashMap::new();
+    for word in &train_data {
+        for letter in 'a'..='z' {
+            if word.contains(letter) {
+                letter_map
+                    .entry(letter)
+                    .and_modify(|c| *c += 1)
+                    .or_insert(1);
+            }
+        }
+    }
+    let mut letters = letter_map.iter().map(|(x, y)| (*x, *y)).collect::<Vec<_>>();
+    letters.sort_by_key(|x| Reverse(x.1));
+    println!("{:?}", letters);
+    let len = train_data.len() as f64;
+    let mut letters = letters
+        .iter()
+        .map(|(x, y)| {
+            let temp = *y as f64 / len;
+            (x, -temp * temp.log2() - (1.0 - temp) * (1.0 - temp).log2())
+        })
+        .collect::<Vec<_>>();
+    letters.sort_by(|x, y| y.1.partial_cmp(&x.1).unwrap());
+    println!("{:?}", letters);
+
+    let p_len = 4;
     let mut pre = HashMap::<String, i32>::new();
     for x in &train_data {
         if x.len() < p_len {
@@ -56,7 +81,7 @@ fn main() {
     println!("{:?}", &pre[0.max(end.len() - 30)..end.len()]);
 }
 
-fn main1() {
+fn main() {
     let train_data = get_data("../data/data.txt");
     let test_data = get_data("../data/test.txt");
     let s1 = HashSet::<_>::from_iter(train_data.into_iter().clone());
@@ -104,7 +129,7 @@ fn main1() {
         let thread_tx = tx.clone();
 
         thread::spawn(move || {
-            let mut player = guess4::Player::new(&share_data);
+            let mut player = guess5::Player::new(&share_data);
             let mut cnt = 0;
             let (correct, wrong, sum) = simulate(&sub_data, &mut player, i, &mut cnt);
 
@@ -151,6 +176,9 @@ fn simulate<'a>(
                 );
                 *cnt = 0;
             }
+            if DEBUG {
+                println!("word: {}", word);
+            }
             *cnt += 1;
         }
 
@@ -171,11 +199,11 @@ fn game<'a>(word: &String, guess: &mut impl Guess<'a>) -> bool {
         let c = guess.guess(&now);
 
         if DEBUG {
-            println!(
-                "now guess: {}, now get: {}",
-                c,
-                now.iter().collect::<String>()
-            );
+            // println!(
+            //     "now guess: {}, now get: {}",
+            //     c,
+            //     now.iter().collect::<String>()
+            // );
             thread::sleep(time::Duration::from_secs_f32(0.5));
         }
 
@@ -189,6 +217,7 @@ fn game<'a>(word: &String, guess: &mut impl Guess<'a>) -> bool {
         if !guess_right {
             wrong_cnt += 1;
         }
+        guess.get_res(c, guess_right);
     }
 
     guess.end();

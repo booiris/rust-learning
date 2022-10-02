@@ -9,8 +9,8 @@ pub struct Player<'a> {
     key: Vec<(char, usize)>,
     dict: Vec<String>,
     guessed_letter: Vec<char>,
-    key_dict: HashMap<String, i32>,
-    vowel: Vec<char>,
+    _key_dict: HashMap<String, i32>,
+    _vowel: Vec<char>,
     times: i32,
 }
 
@@ -53,8 +53,8 @@ impl<'a> Player<'a> {
             key,
             dict: data.clone(),
             guessed_letter: vec![],
-            key_dict,
-            vowel,
+            _key_dict: key_dict,
+            _vowel: vowel,
             times: 0,
         }
     }
