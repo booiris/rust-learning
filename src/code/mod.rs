@@ -48,3 +48,4 @@ pub mod l_interview_1_9_String_Rotation_LCCI;
 pub mod l_interview_1_8_Zero_Matrix_LCCI;
 pub mod l_1694_Reformat_Phone_Number;
 pub mod l_777_Swap_Adjacent_in_LR_String;
+pub mod l_1784_Check_if_Binary_String_Has_at_Most_One_Segment_of_Ones;
