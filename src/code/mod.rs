@@ -45,3 +45,6 @@ pub mod l_interview_17_19_Missing_Two_LCCI;
 pub mod l_interview_1_2_Check_Permutation_LCCI;
 pub mod l_interview_17_9_Get_Kth_Magic_Number_LCCI;
 pub mod l_interview_1_9_String_Rotation_LCCI;
+pub mod l_interview_1_8_Zero_Matrix_LCCI;
+pub mod l_1694_Reformat_Phone_Number;
+pub mod l_777_Swap_Adjacent_in_LR_String;
