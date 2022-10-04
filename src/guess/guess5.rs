@@ -29,6 +29,8 @@ impl<'a> Player<'a> {
         }
         let mut key = letter_map.iter().map(|(x, y)| (*x, *y)).collect::<Vec<_>>();
         key.sort_by_key(|x| Reverse(x.1));
+        println!("{:?}", &Player::get_pre(data)[0..30]);
+        println!("{:?}", &Player::get_back(data)[0..30]);
         Player {
             data,
             key,
@@ -55,7 +57,7 @@ impl<'a> Player<'a> {
             .into_iter()
             .collect::<Vec<_>>()
             .into_iter()
-            .filter(|x| x.1 > 0)
+            .filter(|x| x.1 > 5)
             .collect::<Vec<_>>();
         pre.sort_by_key(|x| Reverse(x.1));
         pre
@@ -75,7 +77,7 @@ impl<'a> Player<'a> {
             .into_iter()
             .collect::<Vec<_>>()
             .into_iter()
-            .filter(|x| x.1 > 0)
+            .filter(|x| x.1 > 5)
             .collect::<Vec<_>>();
         back.sort_by_key(|x| Reverse(x.1));
         back
@@ -125,9 +127,10 @@ impl<'a> Player<'a> {
         }
     }
 
-    fn use_pre_back(&self, res: &mut char, now: &Vec<char>) {
+    fn use_pre_back(&mut self, res: &mut char, now: &Vec<char>) {
         let mut key = HashMap::<char, i32>::new();
 
+        let mut pre = vec![];
         for x in &self.pre {
             if x.0.len() > now.len() {
                 continue;
@@ -136,11 +139,14 @@ impl<'a> Player<'a> {
             if x.0.contains(&self.bad_letters[..]) || !re.is_match(&x.0) {
                 continue;
             }
+            pre.push(x.clone());
             for w in x.0.chars() {
                 key.entry(w).and_modify(|c| *c += 1).or_insert(1);
             }
         }
+        self.pre = pre;
 
+        let mut back = vec![];
         for x in &self.back {
             if x.0.len() > now.len() {
                 continue;
@@ -154,13 +160,20 @@ impl<'a> Player<'a> {
             if x.0.contains(&self.bad_letters[..]) || !re.is_match(&x.0) {
                 continue;
             }
+            back.push(x.clone());
             for w in x.0.chars() {
+                // if used.get(&w).is_some() {
+                //     continue;
+                // }
                 key.entry(w).and_modify(|c| *c += 1).or_insert(1);
+                // used.insert(w);
             }
         }
+        self.back = back;
 
         let mut key = key.into_iter().collect::<Vec<_>>();
         key.sort_by_key(|x| Reverse(x.1));
+        println!("{:?}", &key[0..30.min(key.len())]);
         for (letter, _) in &key {
             if self.guessed_letter.iter().find(|&x| x == letter).is_none() {
                 *res = *letter;
@@ -205,12 +218,12 @@ impl<'a> Guess<'a> for Player<'a> {
     fn guess(&mut self, now: &Vec<char>) -> char {
         let mut res = '!';
 
-        // println!(
-        //     "{:?} {} {}",
-        //     self.res,
-        //     self.chance,
-        //     now.iter().collect::<String>()
-        // );
+        println!(
+            "{:?} {} {}",
+            self.res,
+            self.chance,
+            now.iter().collect::<String>()
+        );
 
         let mut new_dict = Vec::<String>::new();
         for word in &self.dict {
@@ -249,6 +262,8 @@ impl<'a> Guess<'a> for Player<'a> {
         self.res = ('#', false);
         self.chance = 6;
         self.bad_letters = vec![];
+        self.pre = Player::get_pre(self.data);
+        self.back = Player::get_back(self.data);
     }
 
     fn get_res(&mut self, letter: char, res: bool) {

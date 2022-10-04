@@ -12,7 +12,7 @@ use std::sync::mpsc;
 use std::sync::Arc;
 use std::{thread, time};
 
-pub static DEBUG: bool = false;
+pub static DEBUG: bool = true;
 
 static mut PRIOD: i32 = 10;
 
@@ -90,7 +90,8 @@ fn main() {
         .intersection(&s2)
         .map(|x| x.clone())
         .collect::<HashSet<_>>();
-    let key = s2.difference(&s).map(|x| x.clone()).collect::<Vec<_>>();
+    let mut key = s2.difference(&s).map(|x| x.clone()).collect::<Vec<_>>();
+    key.sort();
     println!(
         "{} {} {} {} {}",
         s.len(),
@@ -107,7 +108,7 @@ fn main() {
     }
 
     let train_data = Arc::new(get_data("../data/data.txt"));
-    let test_data = Arc::new(key);
+    let test_data = Arc::new(get_data("../data/t.txt"));
 
     let len = test_data.len() / cpu_num;
     let (mut s, mut e) = (0 as usize, len);
