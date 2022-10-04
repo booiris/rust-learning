@@ -2,7 +2,11 @@
   "editor.fontSize": 15,
   "terminal.integrated.fontSize": 15,
   "gopls": {
-    "directoryFilters": ["-top_author", "-src", "-*_test"]
+    "directoryFilters": [
+      "-top_author",
+      "-src",
+      "-*_test"
+    ]
   },
   "code-runner.runInTerminal": false,
   // 运行代码之前清除之前的输出

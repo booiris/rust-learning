@@ -14,42 +14,49 @@ macro_rules! hashmap {
     }}
 }
 
+fn dfs(nums: &Vec<i32>, state: i32, aim: i32, now: i32, vis: &mut HashMap<i32, bool>) -> bool {
+    if state == 0 {
+        return true;
+    }
+    if let Some(x) = vis.get(&state) {
+        return *x;
+    }
+    for i in 0..nums.len() {
+        if nums[i] + now > aim {
+            break;
+        }
+        if (state >> i) & 1 == 1 && vis.get(&(state ^ (1 << i))).is_none() {
+            let state = state ^ (1 << i);
+            let res = dfs(nums, state, aim, (now + nums[i]) % aim, vis);
+            vis.insert(state, res);
+            if res {
+                return true;
+            }
+        }
+    }
+    false
+}
+
 impl Solution {
-    pub fn can_partition_k_subsets(nums: Vec<i32>, k: i32) -> bool {
-        let sum = nums.iter().sum::<i32>();
-        if sum % k != 0 {
+    pub fn can_partition_k_subsets(mut nums: Vec<i32>, k: i32) -> bool {
+        if nums.iter().sum::<i32>() % k != 0 {
             return false;
         }
-        let aim = sum / k;
-        let mut key = HashMap::new();
-        let mut key1 = HashMap::new();
-        nums.iter().for_each(|&x| {
-            key.entry(x).and_modify(|c| *c += 1).or_insert(1);
-        });
-        for x in nums.iter() {
-            if let Some(x) = key1.get_mut(x) {
-                if *x > 0 {
-                    *x -= 1;
-                    continue;
-                }
-            }
-            key.entry(*x).and_modify(|c| *c -= 1);
-            if aim == *x {
-                continue;
-            }
-            if key.get(&(aim - x)).is_none() || key[&(aim - x)] == 0 {
-                return false;
-            } else {
-                key.entry(*x).and_modify(|c| *c -= 1);
-                key1.entry(aim - x).and_modify(|c| *c += 1).or_insert(1);
-            }
+        let aim = nums.iter().sum::<i32>() / k;
+        if nums.iter().max().unwrap() > &aim {
+            return false;
         }
+        let mut vis = HashMap::new();
+        nums.sort_unstable();
+        dfs(&nums, (1 << nums.len()) - 1, aim, 0, &mut vis)
     }
 }
 
 #[cfg(feature = "local")]
 pub fn main() {
     //[1,1,1,1,2,2,2,2] 2
-    let a = vec![1, 1, 1, 1, 2, 2, 2, 2];
-    println!("res:{}", Solution::can_partition_k_subsets(a, 2));
+    let a = vec![
+        129, 17, 74, 57, 1421, 99, 92, 285, 1276, 218, 1588, 215, 369, 117, 153, 22,
+    ];
+    println!("res:{}", Solution::can_partition_k_subsets(a, 3));
 }
