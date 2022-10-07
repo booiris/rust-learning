@@ -38,7 +38,7 @@ impl Bitree {
         res
     }
 
-    /// `query` 下标从`1`开始
+    /// `query` 下标从`1`开始 查询范围 [l,r]
     pub fn query(&self, l: usize, r: usize) -> i32 {
         self.get(r) - self.get(l - 1)
     }

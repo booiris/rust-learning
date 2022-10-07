@@ -52,3 +52,4 @@ pub mod l_1784_Check_if_Binary_String_Has_at_Most_One_Segment_of_Ones;
 pub mod l_921_Minimum_Add_to_Make_Parentheses_Valid;
 pub mod l_811_Subdomain_Visit_Count;
 pub mod l_927_Three_Equal_Parts;
+pub mod l_1800_Maximum_Ascending_Subarray_Sum;

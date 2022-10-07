@@ -34,7 +34,7 @@ impl Bitree {
         }
     }
 
-    /// `query` 下标从`1`开始
+    /// `query` 下标从`1`开始 查询范围 [l,r]
     pub fn query(&self, mut l: i32, mut r: i32) -> i32 {
         let mut res = 0;
         l = max(1, l);
