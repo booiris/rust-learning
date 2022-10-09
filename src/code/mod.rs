@@ -53,3 +53,5 @@ pub mod l_921_Minimum_Add_to_Make_Parentheses_Valid;
 pub mod l_811_Subdomain_Visit_Count;
 pub mod l_927_Three_Equal_Parts;
 pub mod l_1800_Maximum_Ascending_Subarray_Sum;
+pub mod l_870_Advantage_Shuffle;
+pub mod l_856_Score_of_Parentheses;
