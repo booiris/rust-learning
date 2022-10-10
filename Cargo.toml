@@ -1,5 +1,5 @@
 [package]
-name = "rust-game"
+name = "rust-game-booiris"
 version = "0.1.0"
 authors = ["booiris <954520770@qq.com>"]
 edition = "2018"
