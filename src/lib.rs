@@ -1,6 +1,5 @@
 mod utils;
 
-use std::{thread, time};
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -8,11 +7,6 @@ use wasm_bindgen::prelude::*;
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
-#[wasm_bindgen]
-extern "C" {
-    fn alert(s: &str);
-}
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -36,8 +30,8 @@ impl Universe {
 
     fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
         let mut count = 0;
-        for delta_row in [self.height - 1, 0, 1].iter().cloned() {
-            for delta_col in [self.width - 1, 0, 1].iter().cloned() {
+        for delta_row in [self.height - 1, 0, 1] {
+            for delta_col in [self.width - 1, 0, 1] {
                 if delta_row == 0 && delta_col == 0 {
                     continue;
                 }
@@ -55,7 +49,7 @@ impl Universe {
 #[wasm_bindgen]
 impl Universe {
     pub fn tick(&mut self) {
-        let mut next = self.cells.clone();
+        let mut next = vec![Cell::Dead; self.cells.len()];
 
         for row in 0..self.height {
             for col in 0..self.width {
@@ -88,7 +82,13 @@ impl Universe {
         let height = 120;
 
         let cells = (0..width * height)
-            .map(|i| if i % 7 == 0 { Cell::Alive } else { Cell::Dead })
+            .map(|_| {
+                if js_sys::Math::random() < 0.1 {
+                    Cell::Alive
+                } else {
+                    Cell::Dead
+                }
+            })
             .collect();
 
         Universe {
@@ -96,10 +96,6 @@ impl Universe {
             height,
             cells,
         }
-    }
-
-    pub fn render(&self) -> String {
-        self.to_string()
     }
 
     pub fn width(&self) -> u32 {
@@ -112,20 +108,5 @@ impl Universe {
 
     pub fn cells(&self) -> *const Cell {
         self.cells.as_ptr()
-    }
-}
-
-use std::fmt;
-
-impl fmt::Display for Universe {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        for line in self.cells.as_slice().chunks(self.width as usize) {
-            for &cell in line {
-                let symbol = if cell == Cell::Dead { "0" } else { "1" };
-                write!(f, "{}", symbol)?;
-            }
-            write!(f, "\n")?;
-        }
-        Ok(())
     }
 }
