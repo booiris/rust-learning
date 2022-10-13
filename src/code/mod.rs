@@ -57,3 +57,4 @@ pub mod l_870_Advantage_Shuffle;
 pub mod l_856_Score_of_Parentheses;
 pub mod l_1790_Check_if_One_String_Swap_Can_Make_Strings_Equal;
 pub mod l_817_Linked_List_Components;
+pub mod l_769_Max_Chunks_To_Make_Sorted;
