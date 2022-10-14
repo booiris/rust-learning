@@ -47,7 +47,7 @@ const run = () => {
     }
   };
 
-  const CELL_SIZE = 5; // px
+  const CELL_SIZE = 10; // px
   const GRID_COLOR = "#CCCCCC";
   const DEAD_COLOR = "#FFFFFF";
   const ALIVE_COLOR = "#022222";
