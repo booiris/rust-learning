@@ -76,7 +76,6 @@ impl Universe {
 #[wasm_bindgen]
 impl Universe {
     pub fn tick(&mut self) {
-        let _timer = Timer::new("Universe::tick");
         let mut next = vec![Cell::Dead; self.cells.len()];
 
         for row in 0..self.height {
