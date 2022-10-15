@@ -59,3 +59,4 @@ pub mod l_1790_Check_if_One_String_Swap_Can_Make_Strings_Equal;
 pub mod l_817_Linked_List_Components;
 pub mod l_769_Max_Chunks_To_Make_Sorted;
 pub mod l_940_Distinct_Subsequences_II;
+pub mod l_1441_Build_an_Array_With_Stack_Operations;
