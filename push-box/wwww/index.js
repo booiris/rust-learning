@@ -42,17 +42,40 @@ const run = () => {
     canvas.style.width = `${trueWidth}px`
     canvas.style.height = `${trueHeight}px`
 
+    let iter = 0
 
     const renderLoop = () => {
-        drawGrid();
-        drawMap();
 
-        game.tick();
+        while (true) {
+            if (game.game_over()) {
+                if (iter % 500 == 0) {
+                    console.log(iter + 2 + " begin!")
+                }
 
+                iter += 1;
+                game.restart()
+            }
 
-        setTimeout(() => {
-            requestAnimationFrame(renderLoop);
-        }, 100);
+            if (iter > 10000) {
+                console.log("end!!!!")
+                break
+            }
+
+            game.tick();
+
+            if (iter % 500 == 0) {
+                drawGrid();
+                drawMap();
+
+                game.set_is_log(true)
+                setTimeout(() => {
+                    requestAnimationFrame(renderLoop);
+                }, 100);
+                break
+            } else {
+                game.set_is_log(false)
+            }
+        }
 
     };
 
@@ -111,6 +134,7 @@ const run = () => {
     }
 
     drawGrid();
+    drawMap();
     renderLoop();
 
 };
