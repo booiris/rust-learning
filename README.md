@@ -15,13 +15,6 @@ apis are broken).
 Quickstart:
 
 ```sh
-# cli dependencies:
-# TEMPORARY - get the arena branch of the cargo-screeps tool, which supports arena
-git clone https://github.com/rustyscreeps/cargo-screeps.git
-git checkout arena
-cd cargo-screeps
-cargo install --path .
-cd ..
 # TEMPORARY once arena is merged, go back to simply:
 cargo install cargo-screeps
 
