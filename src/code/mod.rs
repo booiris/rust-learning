@@ -60,3 +60,4 @@ pub mod l_817_Linked_List_Components;
 pub mod l_769_Max_Chunks_To_Make_Sorted;
 pub mod l_940_Distinct_Subsequences_II;
 pub mod l_1441_Build_an_Array_With_Stack_Operations;
+pub mod l_886_Possible_Bipartition;
