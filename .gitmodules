@@ -1,0 +1,3 @@
+[submodule "screeps-arena-game-api"]
+	path = screeps-arena-game-api
+	url = https://github.com/rustyscreeps/screeps-arena-game-api.git
