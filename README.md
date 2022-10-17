@@ -15,8 +15,14 @@ apis are broken).
 Quickstart:
 
 ```sh
+
+
+
 # TEMPORARY once arena is merged, go back to simply:
-cargo install cargo-screeps
+# cargo install cargo-screeps
+git clone https://github.com/rustyscreeps/cargo-screeps.git
+cd cargo-screeps
+cargo install --path .
 
 # clone:
 git clone https://github.com/rustyscreeps/screeps-arena-starter-rust.git

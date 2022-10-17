@@ -25,7 +25,11 @@
     "Cargo.lock": true,
     // "**/mod.rs": true,
     "target": true,
-    "screeps-arena-game-api": true
+    "screeps-arena-game-api": true,
+    "example-screeps.toml": true,
+    ".gitmodules": true,
+    "LICENSE": true,
+    "javascript": true,
   },
   // "rust-analyzer.cargo.features": [
   //   "local"
