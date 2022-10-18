@@ -60,9 +60,14 @@ pub fn tick() {
         //     }
         // }
 
-        let tower = game::utils::get_objects_by_prototype(prototypes::STRUCTURE_TOWER)
-            .first()
-            .unwrap();
+        let towers = game::utils::get_objects_by_prototype(prototypes::STRUCTURE_TOWER);
+        let tower = towers.first().unwrap();
+
+        if tower.store().get(ResourceType::Energy).unwrap()< 10u32{
+
+        }else{
+            
+        }
 
         // if tower.store().get(ResourceType::Energy).as_ref().unwrap() < &10u32 {}
 
