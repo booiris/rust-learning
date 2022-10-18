@@ -1,5 +1,5 @@
 [package]
-name = "screeps-arena-starter-rust"
+name = "screeps-arena"
 version = "0.0.0"
 authors = []
 edition = "2021"

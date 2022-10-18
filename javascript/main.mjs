@@ -1,4 +1,4 @@
-import { initSync } from "./rust-screeps";
-import wasm_bytes from "./rust-screeps_bg.wasm.bin";
+import { initSync } from "./screeps-arena";
+import wasm_bytes from "./screeps-arena_bg.wasm.bin";
 initSync(wasm_bytes);
-export * from "./rust-screeps";
+export * from "./screeps-arena";

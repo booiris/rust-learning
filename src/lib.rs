@@ -4,6 +4,7 @@ mod logging;
 pub mod swamp;
 mod utils;
 
+use js_sys::Array;
 use screeps_arena::{
     constants::{prototypes, Part, ResourceType, ReturnCode},
     game,
@@ -34,6 +35,7 @@ pub fn tick() {
 
     #[cfg(feature = "tutorial")]
     {
+        // tutorial4
         // let creeps = game::utils::get_objects_by_prototype(prototypes::CREEP);
         // let (my_creeps, other_creeps) = split_creep(&creeps);
         // let enemy_creep = other_creeps[0];
@@ -60,19 +62,40 @@ pub fn tick() {
         //     }
         // }
 
-        let towers = game::utils::get_objects_by_prototype(prototypes::STRUCTURE_TOWER);
-        let tower = towers.first().unwrap();
-
-        if tower.store().get(ResourceType::Energy).unwrap()< 10u32{
-
-        }else{
-            
-        }
-
-        // if tower.store().get(ResourceType::Energy).as_ref().unwrap() < &10u32 {}
-
-        // if my_creeps[0].attack(other_creeps[0]) == ReturnCode::NotInRange {
-        //     my_creeps[0].move_to(other_creeps[0], None);
+        // tutorial5
+        // let towers = game::utils::get_objects_by_prototype(prototypes::STRUCTURE_TOWER);
+        // let creeps = game::utils::get_objects_by_prototype(prototypes::CREEP);
+        // let (my_creeps, enemys) = split_creep(&creeps);
+        // let tower = towers.first().unwrap();
+        // if tower.store().get(ResourceType::Energy).unwrap() < 10u32 {
+        //     let my_creep = my_creeps[0];
+        //     if my_creep.store().get(ResourceType::Energy).unwrap() == 0 {
+        //         let containers =
+        //             game::utils::get_objects_by_prototype(prototypes::STRUCTURE_CONTAINER);
+        //         let container = containers.first().unwrap();
+        //         let res = my_creep.withdraw(container, ResourceType::Energy, None);
+        //         log!("{:?}", res);
+        //     } else {
+        //         my_creep.move_to(tower, None);
+        //         let res = my_creep.transfer(tower, ResourceType::Energy, None);
+        //         log!("{:?}", res);
+        //     }
+        // } else {
+        //     let target = enemys[0];
+        //     tower.attack(target);
         // }
+
+        // tutorial6
+        // let creeps = game::utils::get_objects_by_prototype(prototypes::CREEP);
+        // let flags = game::utils::get_objects_by_prototype(prototypes::FLAG)
+        //     .iter()
+        //     .collect::<Array>();
+        // for creep in creeps {
+        //     let flag = creep.find_closest_by_path(&flags, None).unwrap();
+        //     creep.move_to(&JsValue::from(flag), None);
+        // }
+
+        // tutorial7
+        
     }
 }
