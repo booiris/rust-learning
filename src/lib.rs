@@ -1,12 +1,17 @@
-use log::*;
+pub mod collect;
+pub mod ctf;
+mod logging;
+pub mod swamp;
+mod utils;
+
 use screeps_arena::{
-    constants::{prototypes, Part},
+    constants::{prototypes, Part, ResourceType, ReturnCode},
     game,
     prelude::*,
+    Creep,
 };
+use utils::*;
 use wasm_bindgen::prelude::*;
-
-mod logging;
 
 fn setup() {
     logging::setup_logging(logging::Info);
@@ -21,38 +26,48 @@ pub fn tick() {
     if tick == 1 {
         setup();
     }
-    warn!("hello arena! {}", tick);
 
-    let info = game::arena_info();
-    warn!("arena_info: {:?}", info);
+    log!("now tick: {}", tick);
 
-    // strategy for spawn and swamp arena, which will conditionally compile in
-    // only when this feature is enabled for the crate
-    #[cfg(feature = "arena-spawn-and-swamp")]
+    // let info = game::arena_info();
+    // info!("arena_info: {:?}", info);
+
+    #[cfg(feature = "tutorial")]
     {
-        let mut enemy_spawn = None;
-        let spawns = game::utils::get_objects_by_prototype(prototypes::STRUCTURE_SPAWN);
-        warn!("spawns {}", spawns.len());
-        for spawn in spawns {
-            if spawn.my().unwrap_or(false) {
-                spawn.spawn_creep(&[Part::Move, Part::Attack]);
-            } else {
-                enemy_spawn = Some(spawn);
-            }
-        }
+        // let creeps = game::utils::get_objects_by_prototype(prototypes::CREEP);
+        // let (my_creeps, other_creeps) = split_creep(&creeps);
+        // let enemy_creep = other_creeps[0];
 
-        let creeps = game::utils::get_objects_by_prototype(prototypes::CREEP);
-        warn!("creeps {}", creeps.len());
-        for creep in creeps {
-            if creep.my() {
-                match &enemy_spawn {
-                    Some(t) => {
-                        creep.move_to(t.as_ref(), None);
-                        creep.attack(t);
-                    }
-                    None => {}
-                }
-            }
-        }
+        // for creep in &my_creeps {
+        //     let parts = creep.body();
+        //     if parts.iter().find(|x| x.part() == Part::Attack).is_some() {
+        //         creep.move_to(enemy_creep, None);
+        //         creep.attack(enemy_creep);
+        //     }
+        //     if parts
+        //         .iter()
+        //         .find(|x| x.part() == Part::RangedAttack)
+        //         .is_some()
+        //     {
+        //         creep.move_to(enemy_creep, None);
+        //         creep.ranged_attack(enemy_creep);
+        //     }
+        //     if parts.iter().find(|x| x.part() == Part::Heal).is_some() {
+        //         if let Some(heart_creep) = my_creeps.iter().find(|x| x.hits() < x.hits_max()) {
+        //             creep.move_to(heart_creep, None);
+        //             creep.heal(heart_creep);
+        //         }
+        //     }
+        // }
+
+        let tower = game::utils::get_objects_by_prototype(prototypes::STRUCTURE_TOWER)
+            .first()
+            .unwrap();
+
+        // if tower.store().get(ResourceType::Energy).as_ref().unwrap() < &10u32 {}
+
+        // if my_creeps[0].attack(other_creeps[0]) == ReturnCode::NotInRange {
+        //     my_creeps[0].move_to(other_creeps[0], None);
+        // }
     }
 }
