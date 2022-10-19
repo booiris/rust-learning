@@ -18,7 +18,7 @@ module.exports.loop = function() {
             }
             
             // replace this initialize function on the module
-            wasm_module = require("screeps-starter-rust");
+            wasm_module = require("screeps-world");
             // load the wasm instance!
             wasm_module.initialize_instance();
             // run the setup function, which configures logging
