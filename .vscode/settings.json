@@ -29,7 +29,7 @@
     "example-screeps.toml": true,
     ".gitmodules": true,
     "LICENSE": true,
-    "javascript": true,
+    // "javascript": true,
     "pkg": true
   },
   // "rust-analyzer.cargo.features": [
