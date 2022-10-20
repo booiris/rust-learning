@@ -1,4 +1,5 @@
-pub mod main_loop;
 mod logging;
-mod utils;
+pub mod main_loop;
 mod model;
+mod role;
+mod utils;

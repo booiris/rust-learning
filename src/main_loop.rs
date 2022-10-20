@@ -1,8 +1,11 @@
+use crate::model::long_memory::{CreepLongMemory, Role};
 use crate::model::memory::*;
 use std::cell::RefCell;
 use std::collections::HashMap;
 
+use crate::role::*;
 use crate::utils::reload::Action;
+use crate::utils::utils::*;
 use log::*;
 use screeps::*;
 use wasm_bindgen::prelude::*;
@@ -81,14 +84,26 @@ fn run_creep(creep: &Creep, memorys: &mut HashMap<RawObjectId, CreepMemory>) {
 
     let room = creep.room().expect("couldn't resolve creep room");
     let mut mem = memorys.entry(id).or_insert(CreepMemory::new());
+    let mut long_mem: CreepLongMemory = js_value_to_struct(creep.memory());
+    if let Some(role) = long_mem.role {
+        match role {
+            Role::Harvester => {}
+            Role::Builder => {}
+            Role::Upgrader => {}
+            Role::Nobody => {}
+        }
+    } else {
+        long_mem.role = Some(Role::Nobody);
+    }
+
     if creep.store().get_used_capacity(Some(ResourceType::Energy)) > 0 {
         for structure in room.find(find::STRUCTURES).iter() {
             if let StructureObject::StructureController(controller) = structure {
-                creep.custom_move(controller, &mut mem);
+                creep.custom_move(&controller, controller.raw_id(), &mut mem);
             }
         }
     } else if let Some(source) = room.find(find::SOURCES_ACTIVE).get(0) {
-        creep.custom_move(source.to_owned(), &mut mem);
+        creep.custom_move(source, source.raw_id(), &mut mem);
     }
 
     // let target = creep_targets.remove(&id);

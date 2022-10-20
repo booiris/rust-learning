@@ -1,4 +1,4 @@
-use js_sys::JsString;
+use js_sys::{JsString, Math::random};
 use screeps::*;
 
 use std::collections::HashMap;
@@ -8,6 +8,7 @@ pub struct CreepMemory {
     pub target: Option<RawObjectId>,
     pub stay_times: u8,
     pub pre_pos: Option<Position>,
+    pub max_stay_times: u8,
 }
 
 impl CreepMemory {
@@ -17,6 +18,7 @@ impl CreepMemory {
             target: None,
             stay_times: 0,
             pre_pos: None,
+            max_stay_times: if random() > 0.5 { 3 } else { 2 }, 
         }
     }
 }
