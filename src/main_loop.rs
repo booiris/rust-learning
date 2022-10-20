@@ -6,7 +6,7 @@ use std::collections::HashMap;
 use log::*;
 use screeps::{
     find, game, memory, prelude::*, Creep, ObjectId, Part, RawObjectId, ResourceType, ReturnCode,
-    RoomObjectProperties, Source, StructureController, StructureObject,
+    Room, RoomObjectProperties, Source, StructureController, StructureObject,
 };
 use wasm_bindgen::prelude::*;
 
@@ -73,6 +73,10 @@ fn run_creep(creep: &Creep, creep_targets: &mut HashMap<RawObjectId, CreepMemory
         return;
     }
     let id = creep.try_raw_id().unwrap();
+
+
+    // let a = serde_wasm_bindgen::to_value(&creep.name()).unwrap();
+    // creep.set_memory(&a);
 
     // let mem = creep.memory();
     // info!("{:?}", mem);

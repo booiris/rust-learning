@@ -14,6 +14,7 @@ pub enum CreepTarget {
 
 pub struct CreepMemory {
     pub target: CreepTarget,
+    // pub path: i32,
 }
 
 pub struct RoomMemory {}
