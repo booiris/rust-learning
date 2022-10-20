@@ -2,7 +2,7 @@ use crate::model::memory::*;
 use std::cell::RefCell;
 use std::collections::HashMap;
 
-use crate::reload::Action;
+use crate::utils::reload::Action;
 use log::*;
 use screeps::*;
 use wasm_bindgen::prelude::*;
