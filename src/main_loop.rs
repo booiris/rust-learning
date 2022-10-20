@@ -88,7 +88,7 @@ fn run_creep(creep: &Creep, memorys: &mut HashMap<RawObjectId, CreepMemory>) {
             }
         }
     } else if let Some(source) = room.find(find::SOURCES_ACTIVE).get(0) {
-        creep.custom_move(source, &mut mem);
+        creep.custom_move(source.to_owned(), &mut mem);
     }
 
     // let target = creep_targets.remove(&id);

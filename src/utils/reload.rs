@@ -8,9 +8,9 @@ use wasm_bindgen::JsValue;
 use crate::model::memory::CreepMemory;
 
 pub trait Action {
-    fn custom_move<T>(&self, target: &T, mem: &mut CreepMemory)
+    fn custom_move<T>(&self, target: T, mem: &mut CreepMemory)
     where
-        T: HasPosition;
+        T: HasPosition + HasId;
 }
 
 // fn find_func(room_name: local::RoomName) -> pathfinder::MultiRoomCostResult {
@@ -30,23 +30,41 @@ pub trait Action {
 // }
 
 impl Action for Creep {
-    fn custom_move<T>(&self, target: &T, mem: &mut CreepMemory)
+    fn custom_move<T>(&self, target: T, mem: &mut CreepMemory)
     where
-        T: HasPosition,
+        T: HasPosition + HasId,
     {
         let path;
-        if let Some(mem_path) = &mem.path {
-            path = JsValue::from(mem_path);
+        if let Some(mem_target) = mem.target {
+            if mem_target == target.raw_id() {
+                if let Some(mem_path) = &mem.path {
+                    path = JsValue::from(mem_path);
+                } else {
+                    path = JsValue::from(find_path(self, target.pos(), mem));
+                }
+            } else {
+                mem.target = Some(target.raw_id());
+                path = JsValue::from(find_path(self, target.pos(), mem));
+            }
         } else {
+            mem.target = Some(target.raw_id());
             path = JsValue::from(find_path(self, target.pos(), mem));
         }
 
-        let res = self.move_by_path(&path);
-        debug!("{:?}", res);
-        if res != ReturnCode::Ok {
+        self.move_by_path(&path);
+
+        if let Some(pre_pos) = mem.pre_pos {
+            if pre_pos == self.pos() {
+                mem.stay_times += 1;
+            } else {
+                mem.stay_times = 0;
+            }
+        }
+        if mem.stay_times > 3 {
             let path = find_path(self, target.pos(), mem);
             self.move_by_path(&path);
         }
+        mem.pre_pos = Some(self.pos());
     }
 }
 #[derive(Serialize, Deserialize)]

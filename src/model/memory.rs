@@ -6,6 +6,8 @@ use std::collections::HashMap;
 pub struct CreepMemory {
     pub path: Option<JsString>,
     pub target: Option<RawObjectId>,
+    pub stay_times: u8,
+    pub pre_pos: Option<Position>,
 }
 
 impl CreepMemory {
@@ -13,6 +15,8 @@ impl CreepMemory {
         CreepMemory {
             path: None,
             target: None,
+            stay_times: 0,
+            pre_pos: None,
         }
     }
 }
