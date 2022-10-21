@@ -3,6 +3,7 @@ use screeps::*;
 
 use std::collections::HashMap;
 
+#[derive(Debug)]
 pub struct CreepMemory {
     pub path: Option<JsString>,
     pub target: Option<RawObjectId>,
@@ -18,7 +19,7 @@ impl CreepMemory {
             target: None,
             stay_times: 0,
             pre_pos: None,
-            max_stay_times: if random() > 0.5 { 3 } else { 2 }, 
+            max_stay_times: if random() > 0.6 { 4 } else { 2 },
         }
     }
 }

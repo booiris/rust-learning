@@ -1,10 +1,10 @@
-use crate::model::long_memory::{CreepLongMemory, Role};
+use crate::model::long_memory::CreepLongMemory;
 use crate::model::memory::*;
+use crate::role::role_action::RoleAction;
 use std::cell::RefCell;
 use std::collections::HashMap;
 
-use crate::role::*;
-use crate::utils::reload::Action;
+use crate::role::{self, *};
 use crate::utils::utils::*;
 use log::*;
 use screeps::*;
@@ -12,7 +12,6 @@ use wasm_bindgen::prelude::*;
 
 use crate::logging;
 
-// add wasm_bindgen to any function you would like to expose for call from js
 #[wasm_bindgen]
 pub fn setup() {
     logging::setup_logging(logging::Info);
@@ -45,23 +44,23 @@ fn run(memory: &mut Memory) {
     }
 
     let mut additional = 0;
+
     for spawn in game::spawns().values() {
         debug!("running spawn {}", String::from(spawn.name()));
 
         let body = [Part::Move, Part::Move, Part::Carry, Part::Work];
         if spawn.room().unwrap().energy_available() >= body.iter().map(|p| p.cost()).sum() {
-            // create a unique name, spawn.
             let time = game::time();
             let name = format!("{}-{}", time, additional);
-            // note that this bot has a fatal flaw; spawning a creep
-            // creates Memory.creeps[creep_name] which will build up forever;
-            // these memory entries should be prevented (todo doc link on how) or cleaned up
             let res = spawn.spawn_creep(&body, &name);
-
-            // todo once fixed in branch this should be ReturnCode::Ok instead of this i8 grumble grumble
             if res != ReturnCode::Ok {
                 warn!("couldn't spawn: {:?}", res);
             } else {
+                let role = Role::Harvester;
+                game::creeps()
+                    .get(name)
+                    .unwrap()
+                    .set_memory(&struct_to_js_value(CreepLongMemory::new(role)));
                 additional += 1;
             }
         }
@@ -74,37 +73,31 @@ fn run_creep(creep: &Creep, memorys: &mut HashMap<RawObjectId, CreepMemory>) {
     }
     let id = creep.try_raw_id().unwrap();
 
-    // let a = serde_wasm_bindgen::to_value(&creep.name()).unwrap();
-    // creep.set_memory(&a);
-
-    // let mem = creep.memory();
-    // info!("{:?}", mem);
-    // let a: Result<CreepLongMemory, serde_wasm_bindgen::Error> = serde_wasm_bindgen::from_value(mem);
-    // info!("{:?}", a);
-
-    let room = creep.room().expect("couldn't resolve creep room");
     let mut mem = memorys.entry(id).or_insert(CreepMemory::new());
     let mut long_mem: CreepLongMemory = js_value_to_struct(creep.memory());
-    if let Some(role) = long_mem.role {
+    if let Some(role) = &long_mem.role {
         match role {
-            Role::Harvester => {}
-            Role::Builder => {}
-            Role::Upgrader => {}
-            Role::Nobody => {}
+            Role::Harvester => {
+                role::harvester::Harvester::new(creep, &mut mem, &mut long_mem).run()
+            }
+            Role::Builder => role::builder::Builder::new(creep, &mut mem, &mut long_mem).run(),
+            Role::Upgrader => role::upgrader::Upgrader::new(creep, &mut mem, &mut long_mem).run(),
         }
     } else {
-        long_mem.role = Some(Role::Nobody);
+        long_mem.role = Some(Role::Builder);
     }
+    creep.set_memory(&struct_to_js_value(long_mem));
 
-    if creep.store().get_used_capacity(Some(ResourceType::Energy)) > 0 {
-        for structure in room.find(find::STRUCTURES).iter() {
-            if let StructureObject::StructureController(controller) = structure {
-                creep.custom_move(&controller, controller.raw_id(), &mut mem);
-            }
-        }
-    } else if let Some(source) = room.find(find::SOURCES_ACTIVE).get(0) {
-        creep.custom_move(source, source.raw_id(), &mut mem);
-    }
+    // let room = creep.room().expect("couldn't resolve creep room");
+    // if creep.store().get_used_capacity(Some(ResourceType::Energy)) > 0 {
+    //     for structure in room.find(find::STRUCTURES).iter() {
+    //         if let StructureObject::StructureController(controller) = structure {
+    //             creep.custom_move(&controller, controller.raw_id(), &mut mem);
+    //         }
+    //     }
+    // } else if let Some(source) = room.find(find::SOURCES_ACTIVE).get(0) {
+    //     creep.custom_move(source, source.raw_id(), &mut mem);
+    // }
 
     // let target = creep_targets.remove(&id);
     // match target {
