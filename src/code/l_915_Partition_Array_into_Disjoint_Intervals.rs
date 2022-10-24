@@ -14,7 +14,7 @@ macro_rules! hashmap {
 }
 
 impl Solution {
-    pub fn partition_disjoint(nums: Vec<i32>) -> i32 {
+    pub fn partition_disjoint1(nums: Vec<i32>) -> i32 {
         let mut maxn = vec![-1; nums.len() + 1];
         let mut minn = vec![i32::MAX; nums.len() + 1];
         for i in 1..=nums.len() {
@@ -29,6 +29,22 @@ impl Solution {
             }
         }
         0
+    }
+}
+
+impl Solution {
+    pub fn partition_disjoint(nums: Vec<i32>) -> i32 {
+        let mut res = 1;
+        let mut leftmax = nums[0];
+        let mut curmax = nums[0];
+        for i in 1..nums.len() - 1 {
+            curmax = curmax.max(nums[i]);
+            if nums[i] < leftmax {
+                res = i + 1;
+                leftmax = curmax;
+            }
+        }
+        res as i32
     }
 }
 
