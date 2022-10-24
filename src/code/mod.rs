@@ -68,3 +68,4 @@ pub mod l_1700_Number_of_Students_Unable_to_Eat_Lunch;
 pub mod l_1235_Maximum_Profit_in_Job_Scheduling;
 pub mod l_801_Minimum_Swaps_To_Make_Sequences_Increasing;
 pub mod l_1768_Merge_Strings_Alternately;
+pub mod l_915_Partition_Array_into_Disjoint_Intervals;
