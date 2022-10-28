@@ -71,3 +71,5 @@ pub mod l_1768_Merge_Strings_Alternately;
 pub mod l_915_Partition_Array_into_Disjoint_Intervals;
 pub mod l_934_Shortest_Bridge;
 pub mod l_862_Shortest_Subarray_with_Sum_at_Least_K;
+pub mod l_1822_Sign_of_the_Product_of_an_Array;
+pub mod l_907_Sum_of_Subarray_Minimums;
