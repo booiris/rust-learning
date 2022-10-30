@@ -73,3 +73,5 @@ pub mod l_934_Shortest_Bridge;
 pub mod l_862_Shortest_Subarray_with_Sum_at_Least_K;
 pub mod l_1822_Sign_of_the_Product_of_an_Array;
 pub mod l_907_Sum_of_Subarray_Minimums;
+pub mod l_1773_Count_Items_Matching_a_Rule;
+pub mod l_784_Letter_Case_Permutation;
