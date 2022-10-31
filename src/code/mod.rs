@@ -76,3 +76,4 @@ pub mod l_907_Sum_of_Subarray_Minimums;
 pub mod l_1773_Count_Items_Matching_a_Rule;
 pub mod l_784_Letter_Case_Permutation;
 pub mod l_481_Magical_String;
+pub mod l_1662_Check_If_Two_String_Arrays_are_Equivalent;
