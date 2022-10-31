@@ -75,3 +75,4 @@ pub mod l_1822_Sign_of_the_Product_of_an_Array;
 pub mod l_907_Sum_of_Subarray_Minimums;
 pub mod l_1773_Count_Items_Matching_a_Rule;
 pub mod l_784_Letter_Case_Permutation;
+pub mod l_481_Magical_String;
