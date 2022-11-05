@@ -78,3 +78,6 @@ pub mod l_784_Letter_Case_Permutation;
 pub mod l_481_Magical_String;
 pub mod l_1662_Check_If_Two_String_Arrays_are_Equivalent;
 pub mod l_1620_Coordinate_With_Maximum_Network_Quality;
+pub mod l_1668_Maximum_Repeating_Substring;
+pub mod l_754_Reach_a_Number;
+pub mod l_1106_Parsing_A_Boolean_Expression;
