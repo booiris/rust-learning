@@ -81,3 +81,4 @@ pub mod l_1620_Coordinate_With_Maximum_Network_Quality;
 pub mod l_1668_Maximum_Repeating_Substring;
 pub mod l_754_Reach_a_Number;
 pub mod l_1106_Parsing_A_Boolean_Expression;
+pub mod l_1678_Goal_Parser_Interpretation;
