@@ -82,3 +82,6 @@ pub mod l_1668_Maximum_Repeating_Substring;
 pub mod l_754_Reach_a_Number;
 pub mod l_1106_Parsing_A_Boolean_Expression;
 pub mod l_1678_Goal_Parser_Interpretation;
+pub mod l_816_Ambiguous_Coordinates;
+pub mod l_1684_Count_the_Number_of_Consistent_Strings;
+pub mod l_764_Largest_Plus_Sign;

@@ -11,3 +11,4 @@ pub mod c313;
 pub mod cc88;
 pub mod c314;
 pub mod c316;
+pub mod c318;
