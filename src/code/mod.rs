@@ -85,3 +85,4 @@ pub mod l_1678_Goal_Parser_Interpretation;
 pub mod l_816_Ambiguous_Coordinates;
 pub mod l_1684_Count_the_Number_of_Consistent_Strings;
 pub mod l_764_Largest_Plus_Sign;
+pub mod l_864_Shortest_Path_to_Get_All_Keys;
