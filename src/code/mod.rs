@@ -88,3 +88,4 @@ pub mod l_764_Largest_Plus_Sign;
 pub mod l_864_Shortest_Path_to_Get_All_Keys;
 pub mod l_1704_Determine_if_String_Halves_Are_Alike;
 pub mod l_790_Domino_and_Tromino_Tiling;
+pub mod l_791_Custom_Sort_String;
