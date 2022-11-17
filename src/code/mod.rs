@@ -89,3 +89,7 @@ pub mod l_864_Shortest_Path_to_Get_All_Keys;
 pub mod l_1704_Determine_if_String_Halves_Are_Alike;
 pub mod l_790_Domino_and_Tromino_Tiling;
 pub mod l_791_Custom_Sort_String;
+pub mod l_805_Split_Array_With_Same_Average;
+pub mod l_1710_Maximum_Units_on_a_Truck;
+pub mod l_775_Global_and_Local_Inversions;
+pub mod l_792_Number_of_Matching_Subsequences;
