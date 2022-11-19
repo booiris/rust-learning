@@ -30,5 +30,12 @@
   ],
   "explorer.sortOrder": "modified",
   "commentTranslate.source": "intellsmi.deepl-translate-deepl",
-  "commentTranslate.targetLanguage": "zh-CN"
+  "commentTranslate.targetLanguage": "zh-CN",
+  "github.copilot.enable": {
+    "rust": false,
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": false
+  }
 }
