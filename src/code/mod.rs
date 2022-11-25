@@ -96,3 +96,6 @@ pub mod l_792_Number_of_Matching_Subsequences;
 pub mod l_1732_Find_the_Highest_Altitude;
 pub mod l_891_Sum_of_Subsequence_Widths;
 pub mod l_799_Champagne_Tower;
+pub mod l_795_Number_of_Subarrays_with_Bounded_Maximum;
+pub mod l_809_Expressive_Words;
+pub mod l_1742_Maximum_Number_of_Balls_in_a_Box;
