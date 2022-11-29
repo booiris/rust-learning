@@ -99,3 +99,7 @@ pub mod l_799_Champagne_Tower;
 pub mod l_795_Number_of_Subarrays_with_Bounded_Maximum;
 pub mod l_809_Expressive_Words;
 pub mod l_1742_Maximum_Number_of_Balls_in_a_Box;
+pub mod l_882_Reachable_Nodes_In_Subdivided_Graph;
+pub mod l_1752_Check_if_Array_Is_Sorted_and_Rotated;
+pub mod l_813_Largest_Sum_of_Averages;
+pub mod l_1758_Minimum_Changes_To_Make_Alternating_Binary_String;
