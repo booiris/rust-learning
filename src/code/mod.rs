@@ -104,3 +104,4 @@ pub mod l_1752_Check_if_Array_Is_Sorted_and_Rotated;
 pub mod l_813_Largest_Sum_of_Averages;
 pub mod l_1758_Minimum_Changes_To_Make_Alternating_Binary_String;
 pub mod l_895_Maximum_Frequency_Stack;
+pub mod l_1779_Find_Nearest_Point_That_Has_the_Same_X_or_Y_Coordinate;
