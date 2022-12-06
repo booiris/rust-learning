@@ -108,3 +108,5 @@ pub mod l_1779_Find_Nearest_Point_That_Has_the_Same_X_or_Y_Coordinate;
 pub mod l_1769_Minimum_Number_of_Operations_to_Move_All_Balls_to_Each_Box;
 pub mod l_1796_Second_Largest_Digit_in_a_String;
 pub mod l_1774_Closest_Dessert_Cost;
+pub mod l_1687_Delivering_Boxes_from_Storage_to_Ports;
+pub mod l_1805_Number_of_Different_Integers_in_a_String;
