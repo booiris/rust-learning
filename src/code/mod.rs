@@ -115,3 +115,4 @@ pub mod l_1971_Find_if_Path_Exists_in_Graph;
 pub mod l_offer45;
 pub mod l_offer56;
 pub mod l_offer59;
+pub mod l_1760_Minimum_Limit_of_Balls_in_a_Bag;
