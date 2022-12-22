@@ -117,3 +117,4 @@ pub mod l_offer56;
 pub mod l_offer59;
 pub mod l_1760_Minimum_Limit_of_Balls_in_a_Bag;
 pub mod l_1753_Maximum_Score_From_Removing_Stones;
+pub mod l_1799_Maximize_Score_After_N_Operations;
