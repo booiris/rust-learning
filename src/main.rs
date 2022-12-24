@@ -186,6 +186,7 @@ fn main() {
                 .set(WindowPlugin {
                     window: WindowDescriptor {
                         title: "Flappy Bird!".to_string(),
+                        canvas: Some("#flappy-bird".into()),
                         width: 288.0, // 288.0,
                         height: 512.0,
                         ..default()
