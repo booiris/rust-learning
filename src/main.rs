@@ -139,9 +139,10 @@ fn clean_wall(mut commands: Commands, mut query: Query<(Entity, &Transform), Wit
 
 fn move_bird(
     keyboard_input: Res<Input<KeyCode>>,
+    mouse: Res<Input<MouseButton>>,
     mut query: Query<(&mut Velocity, &mut Transform), With<Bird>>,
 ) {
-    if keyboard_input.just_pressed(KeyCode::Space) {
+    if mouse.just_pressed(MouseButton::Left) || keyboard_input.just_pressed(KeyCode::Space) {
         let (mut v, mut t) = query.single_mut();
         (*v).linvel = Vec2::new(0.0, 150.0);
         (*t).rotation = Quat::from_rotation_z(0.55);
