@@ -27,8 +27,8 @@ struct WallBundle {
 impl WallBundle {
     fn new(asset_server: Res<AssetServer>) -> WallBundle {
         let mut rng = rand::thread_rng();
-        let x = rng.gen_range(0.9, 1.2);
-        let y = rng.gen_range(0.8, 1.8);
+        let x = rng.gen_range(0.9..1.2);
+        let y = rng.gen_range(0.8..1.8);
         let flip = rng.gen_bool(0.5);
         let ty = if flip { 200.0 } else { -200.0 };
         WallBundle {
