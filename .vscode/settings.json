@@ -37,7 +37,5 @@
     "yaml": false,
     "plaintext": false,
     "markdown": false
-  },
-  "terminal.integrated.allowChords": false,
-  "terminal.integrated.sendKeybindingsToShell": true
+  }
 }
