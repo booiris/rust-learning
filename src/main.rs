@@ -1,9 +1,11 @@
 use std::time::Duration;
 
-use bevy::prelude::*;
+use bevy::{prelude::*, diagnostic::{LogDiagnosticsPlugin, FrameTimeDiagnosticsPlugin}, time::FixedTimestep};
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_rapier2d::prelude::*;
 use rand::Rng;
+
+const TIME_STEP: f32 = 1.0 / 120.0;
 
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
@@ -118,7 +120,7 @@ fn spawn_wall_timer(
     asset_server: Res<AssetServer>,
 ) {
     config.timer.tick(time.delta());
-    if config.timer.finished() {
+    if config.timer.just_finished() {
         spawn_wall(commands, asset_server);
     }
 }
@@ -177,11 +179,15 @@ fn main() {
         .add_startup_system(setup)
         .add_startup_system(spawn_wall)
         .add_startup_system(setup_wall_spawning)
-        .add_system(spawn_wall_timer)
-        .add_system(game_over)
-        .add_system(clean_wall)
         .add_system(move_bird)
-        .add_system(animate_sprite)
+        .add_system(spawn_wall_timer)
+        .add_system(clean_wall)
+        .add_system_set(
+            SystemSet::new()
+                .with_run_criteria(FixedTimestep::step(TIME_STEP as f64))
+                .with_system(animate_sprite)
+                // .with_system(game_over)
+        )
         .add_plugins(
             DefaultPlugins
                 .set(WindowPlugin {
@@ -196,7 +202,10 @@ fn main() {
                 })
                 .set(ImagePlugin::default_nearest()),
         )
-        .add_plugin(RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(10.0))
+        // .add_plugin(RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(10.0))
+        .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
+        .add_plugin(LogDiagnosticsPlugin::default())
+        .add_plugin(FrameTimeDiagnosticsPlugin::default())
         // .add_plugin(RapierDebugRenderPlugin::default())
         // .add_plugin(WorldInspectorPlugin::new())
         .run();

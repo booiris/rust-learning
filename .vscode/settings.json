@@ -12,7 +12,7 @@
     "babel.config.js": true,
     // "**/src-tauri": true
   },
-  "code-runner.runInTerminal": false,
+  "code-runner.runInTerminal": true,
   // 运行代码之前清除之前的输出
   "code-runner.clearPreviousOutput": true,
   "code-runner.fileDirectoryAsCwd": true,
