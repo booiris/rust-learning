@@ -123,3 +123,4 @@ pub mod l_1739_Building_Boxes;
 pub mod l_1750_Minimum_Length_of_String_After_Deleting_Similar_Ends;
 pub mod l_2032_Two_Out_of_Three;
 pub mod l_2037_Minimum_Number_of_Moves_to_Seat_Everyone;
+pub mod l_2351_First_Letter_to_Appear_Twice;
