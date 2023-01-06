@@ -127,3 +127,4 @@ pub mod l_2037_Minimum_Number_of_Moves_to_Seat_Everyone;
 pub mod l_2351_First_Letter_to_Appear_Twice;
 pub mod l_2042_Check_if_Numbers_Are_Ascending_in_a_Sentence;
 pub mod l_1802_Maximum_Value_at_a_Given_Index_in_a_Bounded_Array;
+pub mod l_2180_Count_Integers_With_Even_Digit_Sum;
