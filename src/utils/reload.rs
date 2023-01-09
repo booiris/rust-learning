@@ -1,5 +1,5 @@
-use super::utils;
-use js_sys::Array;
+use js_sys::JsString;
+use screeps::Path::Vectorized;
 use screeps::*;
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::JsValue;
@@ -71,12 +71,22 @@ struct FindOptions {
     range: i32,
 }
 
-fn find_path(creep: &Creep, to: Position, mem: &mut CreepMemory) -> Array {
-    let path = creep.room().unwrap().find_path(
-        &creep.pos().into(),
-        &to.into(),
-        Some(&utils::struct_to_object(FindOptions { range: 1 })),
-    );
-    mem.path = Some(Room::serialize_path(&path));
-    path
+fn find_path(creep: &Creep, to: Position, mem: &mut CreepMemory) -> JsString {
+    let option = FindPathOptions::<_, SingleRoomCostResult>::new()
+        .range(1)
+        .serialize(true);
+    let path = creep
+        .room()
+        .unwrap()
+        .find_path(&creep.pos().into(), &to.into(), Some(option));
+    match path {
+        Vectorized(path) => {
+            let path = Room::serialize_path(&path);
+            mem.path = Some(path.clone().into());
+            path.into()
+        }
+        _ => {
+            panic!()
+        }
+    }
 }
