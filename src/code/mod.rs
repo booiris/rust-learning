@@ -131,3 +131,4 @@ pub mod l_2180_Count_Integers_With_Even_Digit_Sum;
 pub mod l_2185_Counting_Words_With_a_Given_Prefix;
 pub mod l_2287_Rearrange_Characters_to_Make_Target_String;
 pub mod l_1819_Number_of_Different_Subsequences_GCDs;
+pub mod l_2293_Min_Max_Game;
