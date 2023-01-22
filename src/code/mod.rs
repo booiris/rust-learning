@@ -133,3 +133,7 @@ pub mod l_1813_Sentence_Similarity_III;
 pub mod l_1814_Count_Nice_Pairs_in_an_Array;
 pub mod l_2299_Strong_Password_Checker_II;
 pub mod l_1817_Finding_the_Users_Active_Minutes;
+pub mod l_2185_Counting_Words_With_a_Given_Prefix;
+pub mod l_2287_Rearrange_Characters_to_Make_Target_String;
+pub mod l_1819_Number_of_Different_Subsequences_GCDs;
+pub mod l_2293_Min_Max_Game;
