@@ -128,3 +128,8 @@ pub mod l_2351_First_Letter_to_Appear_Twice;
 pub mod l_2042_Check_if_Numbers_Are_Ascending_in_a_Sentence;
 pub mod l_1802_Maximum_Value_at_a_Given_Index_in_a_Bounded_Array;
 pub mod l_2180_Count_Integers_With_Even_Digit_Sum;
+pub mod l_1824_Minimum_Sideway_Jumps;
+pub mod l_1813_Sentence_Similarity_III;
+pub mod l_1814_Count_Nice_Pairs_in_an_Array;
+pub mod l_2299_Strong_Password_Checker_II;
+pub mod l_1817_Finding_the_Users_Active_Minutes;
