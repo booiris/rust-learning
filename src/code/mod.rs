@@ -139,3 +139,4 @@ pub mod l_1819_Number_of_Different_Subsequences_GCDs;
 pub mod l_2293_Min_Max_Game;
 pub mod l_2325_Decode_the_Message;
 pub mod l_1129_Shortest_Path_with_Alternating_Colors;
+pub mod l_2331_Evaluate_Boolean_Binary_Tree;
