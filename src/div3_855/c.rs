@@ -10,6 +10,21 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
+    let t: i32 = sc.sc();
+    for _ in 0..t {
+        let n: usize = sc.sc();
+        let mut ans: i64 = 0;
+        let mut key = BinaryHeap::<i32>::new();
+        for _ in 0..n {
+            let ini: i32 = sc.sc();
+            if ini == 0 && !key.is_empty() {
+                ans += key.pop().unwrap() as i64;
+            } else {
+                key.push(ini);
+            }
+        }
+        writeln!(out, "{ans}").unwrap();
+    }
 }
 pub struct Scanner<B> {
     reader: B,
@@ -40,4 +55,3 @@ impl<B: BufRead> Scanner<B> {
         }
     }
 }
-

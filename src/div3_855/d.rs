@@ -10,6 +10,20 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
+    let t: i32 = sc.sc();
+    for _ in 0..t {
+        let n: usize = sc.sc();
+        let ini: String = sc.sc();
+        let mut ans = 0;
+        let s = ini.as_bytes();
+        for i in 2..n {
+            if s[i] == s[i - 2] && (i + 1 < n && s[i + 1] == s[i - 1]) {
+            } else {
+                ans += 1;
+            }
+        }
+        writeln!(out, "{ans}").unwrap();
+    }
 }
 pub struct Scanner<B> {
     reader: B,
@@ -40,4 +54,3 @@ impl<B: BufRead> Scanner<B> {
         }
     }
 }
-
