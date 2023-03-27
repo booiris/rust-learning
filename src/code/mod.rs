@@ -142,3 +142,4 @@ pub mod l_1129_Shortest_Path_with_Alternating_Colors;
 pub mod l_2331_Evaluate_Boolean_Binary_Tree;
 pub mod l_temp;
 pub mod l_2347_Best_Poker_Hand;
+pub mod l_2469_Convert_the_Temperature;
