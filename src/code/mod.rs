@@ -143,3 +143,4 @@ pub mod l_2331_Evaluate_Boolean_Binary_Tree;
 pub mod l_temp;
 pub mod l_2347_Best_Poker_Hand;
 pub mod l_2469_Convert_the_Temperature;
+pub mod l_1641_Count_Sorted_Vowel_Strings;
