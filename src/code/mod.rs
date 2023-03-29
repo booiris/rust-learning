@@ -144,3 +144,4 @@ pub mod l_temp;
 pub mod l_2347_Best_Poker_Hand;
 pub mod l_2469_Convert_the_Temperature;
 pub mod l_1641_Count_Sorted_Vowel_Strings;
+pub mod l_1637_Widest_Vertical_Area_Between_Two_Points_Containing_No_Points;
