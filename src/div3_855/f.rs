@@ -1,28 +1,28 @@
 #![allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
+use std::io::StdinLock;
+use std::io::StdoutLock;
 use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
+
+fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
+    let n: usize = sc.sc();
+    let mut ini = Vec::<u64>::with_capacity(n);
+    for _ in 0..n {
+        let s: String = sc.sc();
+        
+    }
+
+}
 
 pub fn main() {
     let stdin = io::stdin();
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
-    let t: i32 = sc.sc();
-    for _ in 0..t {
-        let n: usize = sc.sc();
-        let ini: String = sc.sc();
-        let mut ans = 1;
-        let s = ini.as_bytes();
-        for i in 2..n {
-            if s[i] != s[i - 2] {
-                ans += 1;
-            }
-        }
-        writeln!(out, "{ans}").unwrap();
-    }
+    solve(&mut sc, &mut out);
 }
 pub struct Scanner<B> {
     reader: B,

@@ -1,0 +1,92 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "elements": [
+    {
+      "id": "t7GOQkU81oWRzEDOq-5Iz",
+      "type": "freedraw",
+      "x": 320.2734375,
+      "y": 427.625,
+      "width": 0,
+      "height": 0.4375,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": null,
+      "seed": 1550949818,
+      "version": 8,
+      "versionNonce": 906525946,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1678339329281,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.4375
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "pressures": [],
+      "simulatePressure": true,
+      "lastCommittedPoint": [
+        0.00390625,
+        0.44140625
+      ]
+    },
+    {
+      "id": "MTqO8_GxXgt_Inxn8ltO_",
+      "type": "text",
+      "x": 451.5625,
+      "y": 304.4921875,
+      "width": 57,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": null,
+      "seed": 2023935418,
+      "version": 7,
+      "versionNonce": 1592602618,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1678339339636,
+      "link": null,
+      "locked": false,
+      "text": "64*n*",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "baseline": 18,
+      "containerId": null,
+      "originalText": "64*n*"
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}

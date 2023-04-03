@@ -22,14 +22,24 @@ main_context=$'#![allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
 use std::io::{self, prelude::*};
+use std::io::StdinLock;
+use std::io::StdoutLock;
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
+
+fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
+
+}
 
 pub fn main() {
     let stdin = io::stdin();
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
+    let t:i32 = sc.sc();
+    for _ in 0..t {
+        solve(&mut sc,&mut out);
+    }
 }
 pub struct Scanner<B> {
     reader: B,
