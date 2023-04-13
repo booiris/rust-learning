@@ -148,3 +148,4 @@ pub mod l_1637_Widest_Vertical_Area_Between_Two_Points_Containing_No_Points;
 pub mod l_1039_Minimum_Score_Triangulation_of_Polygon;
 pub mod l_1053_Previous_Permutation_With_One_Swap;
 pub mod l_2427_Number_of_Common_Factors;
+pub mod l_1023_Camelcase_Matching;
