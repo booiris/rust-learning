@@ -149,3 +149,4 @@ pub mod l_1039_Minimum_Score_Triangulation_of_Polygon;
 pub mod l_1053_Previous_Permutation_With_One_Swap;
 pub mod l_2427_Number_of_Common_Factors;
 pub mod l_1023_Camelcase_Matching;
+pub mod l_1157_Online_Majority_Element_In_Subarray;
