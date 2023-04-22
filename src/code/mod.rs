@@ -151,3 +151,4 @@ pub mod l_2427_Number_of_Common_Factors;
 pub mod l_1023_Camelcase_Matching;
 pub mod l_1157_Online_Majority_Element_In_Subarray;
 pub mod l_1043_Partition_Array_for_Maximum_Sum;
+pub mod l_1027_Longest_Arithmetic_Subsequence;
