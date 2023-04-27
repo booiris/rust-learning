@@ -153,3 +153,4 @@ pub mod l_1157_Online_Majority_Element_In_Subarray;
 pub mod l_1043_Partition_Array_for_Maximum_Sum;
 pub mod l_1027_Longest_Arithmetic_Subsequence;
 pub mod l_1031_Maximum_Sum_of_Two_Non_Overlapping_Subarrays;
+pub mod l_1172_Dinner_Plate_Stacks;
