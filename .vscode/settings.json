@@ -25,4 +25,11 @@
         "Cargo.lock": true,
         // "Cargo.toml": true,
     },
+    "github.copilot.enable": {
+        "rust": false,
+        "*": true,
+        "yaml": false,
+        "plaintext": false,
+        "markdown": false
+    },
 }
