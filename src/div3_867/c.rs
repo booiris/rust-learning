@@ -9,7 +9,6 @@ use std::ops::Bound::*;
 
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
     let n: i32 = sc.sc();
-    
 }
 
 pub fn main() {
