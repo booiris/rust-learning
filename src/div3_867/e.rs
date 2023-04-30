@@ -1,13 +1,30 @@
-#![allow(unused_imports)]
+#![allow(unused_imports, unused_must_use)]
 use std::cmp::*;
 use std::collections::*;
-use std::io::{self, prelude::*};
 use std::io::StdinLock;
 use std::io::StdoutLock;
+use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
+    let n: usize = sc.sc();
+    let ini: String = sc.sc();
+    let ini = ini.chars().collect::<Vec<_>>();
+    if n % 2 == 1 {
+        writeln!(out, "-1");
+        return;
+    }
+    let mut cnt = HashMap::new();
+    let mut maxn = 0;
+    for x in &ini {
+        let temp = cnt.entry(*x).or_insert(0);
+        *temp += 1;
+        maxn = maxn.max(*temp);
+    }
+    if maxn > n / 2 {
+        writeln!(out, "-1");
+    }
 
 }
 
@@ -16,9 +33,9 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
-    let t:i32 = sc.sc();
+    let t: i32 = sc.sc();
     for _ in 0..t {
-        solve(&mut sc,&mut out);
+        solve(&mut sc, &mut out);
     }
 }
 pub struct Scanner<B> {
@@ -50,4 +67,3 @@ impl<B: BufRead> Scanner<B> {
         }
     }
 }
-

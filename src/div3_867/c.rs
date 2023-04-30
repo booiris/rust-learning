@@ -8,7 +8,9 @@ use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
-    let n: i32 = sc.sc();
+    let n: i64 = sc.sc();
+    let res = n + (n + 1) * n / 2 + n * (n - 1) / 2 + n + 2;
+    writeln!(out, "{}", res).unwrap();
 }
 
 pub fn main() {

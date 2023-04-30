@@ -1,14 +1,59 @@
 #![allow(unused_imports)]
 use std::cmp::*;
 use std::collections::*;
-use std::io::{self, prelude::*};
 use std::io::StdinLock;
 use std::io::StdoutLock;
+use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
-
+    let n: usize = sc.sc();
+    let mut res = vec![0; n];
+    res[0] = n;
+    let mut now = -1;
+    let mut low = 1;
+    let mut high = n - 1;
+    let mut sum = 0;
+    let mut key = HashSet::new();
+    for x in &mut res {
+        if *x == n {
+            continue;
+        }
+        if now > 0 {
+            if sum < low {
+                *x = low - sum;
+            } else if sum > low {
+                *x = n + low - sum;
+            } else {
+                writeln!(out, "-1").unwrap();
+                return;
+            }
+            low += 1;
+        } else {
+            if sum < high {
+                *x = high - sum;
+            } else if sum > high {
+                *x = n + high - sum;
+            } else {
+                writeln!(out, "-1").unwrap();
+                return;
+            }
+            high -= 1;
+        }
+        if key.contains(x) {
+            writeln!(out, "-1").unwrap();
+            return;
+        }
+        key.insert(*x);
+        sum += *x;
+        sum %= n;
+        now = -now;
+    }
+    for x in res {
+        write!(out, "{} ", x).unwrap();
+    }
+    writeln!(out).unwrap();
 }
 
 pub fn main() {
@@ -16,9 +61,9 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
-    let t:i32 = sc.sc();
+    let t: i32 = sc.sc();
     for _ in 0..t {
-        solve(&mut sc,&mut out);
+        solve(&mut sc, &mut out);
     }
 }
 pub struct Scanner<B> {
@@ -50,4 +95,3 @@ impl<B: BufRead> Scanner<B> {
         }
     }
 }
-
