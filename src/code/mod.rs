@@ -155,3 +155,4 @@ pub mod l_1027_Longest_Arithmetic_Subsequence;
 pub mod l_1031_Maximum_Sum_of_Two_Non_Overlapping_Subarrays;
 pub mod l_1172_Dinner_Plate_Stacks;
 pub mod l_2423_Remove_Letter_To_Equalize_Frequency;
+pub mod l_2432_The_Employee_That_Worked_on_the_Longest_Task;
