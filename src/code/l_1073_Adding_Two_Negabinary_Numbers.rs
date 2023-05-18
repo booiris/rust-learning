@@ -44,8 +44,12 @@ impl Solution {
         } else if now == -1 {
             res.extend([1, 1]);
         }
-        while let [_, .., 0] = res[..] {
+        while res.last() == Some(&0) {
             res.pop();
+        }
+
+        if res.is_empty() {
+            res = vec![0];
         }
 
         res.reverse();
