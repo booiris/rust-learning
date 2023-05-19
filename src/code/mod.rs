@@ -159,3 +159,4 @@ pub mod l_2432_The_Employee_That_Worked_on_the_Longest_Task;
 pub mod l_1003_Check_If_Word_Is_Valid_After_Substitutions;
 pub mod l_2446_Determine_if_Two_Events_Have_Conflict;
 pub mod l_1073_Adding_Two_Negabinary_Numbers;
+pub mod l_1079_Letter_Tile_Possibilities;
