@@ -160,3 +160,7 @@ pub mod l_1003_Check_If_Word_Is_Valid_After_Substitutions;
 pub mod l_2446_Determine_if_Two_Events_Have_Conflict;
 pub mod l_1073_Adding_Two_Negabinary_Numbers;
 pub mod l_1079_Letter_Tile_Possibilities;
+pub mod l_1373_Maximum_Sum_BST_in_Binary_Tree;
+pub mod l_2465_Number_of_Distinct_Averages;
+pub mod l_2517_Maximum_Tastiness_of_Candy_Basket;
+pub mod l_2460_Apply_Operations_to_an_Array;
