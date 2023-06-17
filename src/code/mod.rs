@@ -164,3 +164,4 @@ pub mod l_1373_Maximum_Sum_BST_in_Binary_Tree;
 pub mod l_2465_Number_of_Distinct_Averages;
 pub mod l_2517_Maximum_Tastiness_of_Candy_Basket;
 pub mod l_2460_Apply_Operations_to_an_Array;
+pub mod l_2481_Minimum_Cuts_to_Divide_a_Circle;
