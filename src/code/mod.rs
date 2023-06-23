@@ -167,3 +167,4 @@ pub mod l_2460_Apply_Operations_to_an_Array;
 pub mod l_2481_Minimum_Cuts_to_Divide_a_Circle;
 pub mod l_lcp41_flip_chess;
 pub mod l_interview_16_19_pond_sizes;
+pub mod l_2496_Maximum_Value_of_a_String_in_an_Array;
