@@ -172,3 +172,5 @@ pub mod l_1659_Maximize_Grid_Happiness;
 pub mod l_1401_Circle_and_Rectangle_Overlapping;
 pub mod l_2485_Find_the_Pivot_Integer;
 pub mod l_860_Lemonade_Change;
+pub mod l_771_Jewels_and_Stones;
+pub mod l_2500_Delete_Greatest_Value_in_Each_Row;
