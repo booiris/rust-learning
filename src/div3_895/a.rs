@@ -1,43 +1,16 @@
-#!/bin/bash
-
-# build codeforce contest
-
-dir=src/$1
-
-if test -f $dir/mod.rs; then
-    echo "$dir exist"
-    exit 0
-fi
-
-mkdir $dir
-
-touch $dir/mod.rs
-echo "pub mod a;" >>$dir/mod.rs
-echo "pub mod b;" >>$dir/mod.rs
-echo "pub mod c;" >>$dir/mod.rs
-echo "pub mod d;" >>$dir/mod.rs
-echo "pub mod e;" >>$dir/mod.rs
-
-main_context=$'#![allow(unused_imports,unused_must_use)]
+#![allow(unused_imports, unused_must_use)]
 use std::cmp::*;
 use std::collections::*;
-use std::io::{self, prelude::*};
 use std::io::StdinLock;
 use std::io::StdoutLock;
+use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
-fn _gcd<T: Default + std::marker::Copy + std::ops::Rem<Output = T> + std::cmp::PartialEq>(
-    a: T,
-    b: T,
-) -> T {
-    if b == T::default() {
-        return a;
-    }
-    _gcd(b, a % b)
-}
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
-
+    let (a, b, c): (i32, i32, u32) = (sc.sc(), sc.sc(), sc.sc());
+    let key = a.abs_diff(b);
+    writeln!(out, "{}", (((key + 1) / 2 + c - 1) / c)).unwrap();
 }
 
 pub fn main() {
@@ -45,15 +18,15 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
-    let t:i32 = sc.sc();
+    let t: i32 = sc.sc();
     for _ in 0..t {
-        solve(&mut sc,&mut out);
+        solve(&mut sc, &mut out);
     }
 }
 pub struct Scanner<B> {
     reader: B,
     buf_str: Vec<u8>,
-    buf_iter: std::str::SplitWhitespace<\'static>,
+    buf_iter: std::str::SplitWhitespace<'static>,
 }
 impl<B: BufRead> Scanner<B> {
     pub fn new(reader: B) -> Self {
@@ -70,7 +43,7 @@ impl<B: BufRead> Scanner<B> {
             }
             self.buf_str.clear();
             self.reader
-                .read_until(b\'\\n\', &mut self.buf_str)
+                .read_until(b'\n', &mut self.buf_str)
                 .expect("Failed read");
             self.buf_iter = unsafe {
                 let slice = std::str::from_utf8_unchecked(&self.buf_str);
@@ -79,11 +52,3 @@ impl<B: BufRead> Scanner<B> {
         }
     }
 }
-'
-echo "$main_context" >$dir/a.rs
-echo "$main_context" >$dir/b.rs
-echo "$main_context" >$dir/c.rs
-echo "$main_context" >$dir/d.rs
-echo "$main_context" >$dir/e.rs
-
-echo "pub mod $1;" >>src/lib.rs
