@@ -85,5 +85,7 @@ echo "$main_context" >$dir/b.rs
 echo "$main_context" >$dir/c.rs
 echo "$main_context" >$dir/d.rs
 echo "$main_context" >$dir/e.rs
+echo "$main_context" >$dir/f.rs
+echo "$main_context" >$dir/g.rs
 
 echo "pub mod $1;" >>src/lib.rs

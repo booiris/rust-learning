@@ -9,33 +9,51 @@ use std::ops::Bound::*;
 
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
     let n: usize = sc.sc();
-    let a = (0..n).map(|_| sc.sc()).collect::<Vec<i32>>();
-    let s: String = sc.sc();
-    let s = s.chars().collect::<Vec<_>>();
-    let mut key = 0;
-    let mut dp = vec![0; n + 1];
-    for i in 0..n {
-        dp[i + 1] = dp[i] ^ a[i];
-        if s[i] == '0' {
-            key ^= a[i];
+    let a = (0..n).map(|_| sc.sc()).collect::<Vec<i64>>();
+    let mut temp = 1;
+    let s: i64 = a.iter().sum();
+    for i in &a {
+        temp *= i;
+        if temp >= s * 2 {
+            let mut x = 0;
+            while x < a.len() && a[x] == 1 {
+                x += 1;
+            }
+            let mut y = n - 1;
+            while a[y] == 1 {
+                y -= 1;
+                if y == 0 {
+                    break;
+                }
+            }
+
+            writeln!(out, "{} {}", x + 1, y + 1);
+            return;
         }
     }
-    let q: usize = sc.sc();
-    for _ in 0..q {
-        let tp: i32 = sc.sc();
-        if tp == 1 {
-            let (l, r): (usize, usize) = (sc.sc(), sc.sc());
-            key ^= dp[r] ^ dp[l - 1];
-        } else {
-            let aim: i32 = sc.sc();
-            if aim == 0 {
-                write!(out, "{} ", key);
-            } else {
-                write!(out, "{} ", dp[n] ^ key);
+    let mut s = vec![0; n + 1];
+    let mut p = vec![0; n + 1];
+    p[0] = 1;
+    let mut key = vec![];
+    for i in 0..n {
+        s[i + 1] = s[i] + a[i];
+        p[i + 1] = p[i] * a[i];
+        if a[i] != 1 {
+            key.push(i);
+        }
+    }
+    let mut res = (0, 0);
+    let mut maxn = 0;
+    for i in 0..key.len() {
+        for j in i..key.len() {
+            let temp = s[key[i]] + s[n] - s[key[j] + 1] + p[key[j] + 1] / p[key[i]];
+            if temp > maxn {
+                maxn = temp;
+                res = (key[i], key[j]);
             }
         }
     }
-    writeln!(out);
+    writeln!(out, "{} {}", res.0 + 1, res.1 + 1);
 }
 
 pub fn main() {

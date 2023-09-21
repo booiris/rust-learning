@@ -18,7 +18,7 @@
         "rust": "rustc $fileName -o $workspaceRoot/build/$fileNameWithoutExt &&RUST_BACKTRACE=1 cat $workspaceRoot/ini | $workspaceRoot/build/$fileNameWithoutExt",
     },
     "code-runner.saveFileBeforeRun": true,
-    "code-runner.preserveFocus": false,
+    "code-runner.preserveFocus": true,
     "files.exclude": {
         "build": true,
         "target": true,
@@ -32,4 +32,9 @@
         "plaintext": false,
         "markdown": false
     },
+    "rust-analyzer.showUnlinkedFileNotification": false,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none",
 }

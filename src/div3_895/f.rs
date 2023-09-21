@@ -9,32 +9,53 @@ use std::ops::Bound::*;
 
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
     let n: usize = sc.sc();
-    let a = (0..n).map(|_| sc.sc()).collect::<Vec<i32>>();
-    let s: String = sc.sc();
-    let s = s.chars().collect::<Vec<_>>();
-    let mut key = 0;
-    let mut dp = vec![0; n + 1];
+    let a = (0..n)
+        .map(|_| sc.sc())
+        .map(|x: usize| x - 1)
+        .collect::<Vec<usize>>();
+    let c = (0..n).map(|_| sc.sc()).collect::<Vec<i32>>();
+    let mut inkey = vec![0; n];
     for i in 0..n {
-        dp[i + 1] = dp[i] ^ a[i];
-        if s[i] == '0' {
-            key ^= a[i];
+        inkey[a[i]] += 1;
+    }
+
+    let mut key = inkey
+        .iter()
+        .enumerate()
+        .filter(|(_, x)| x == &&0)
+        .map(|(i, _)| i)
+        .collect::<VecDeque<_>>();
+    while let Some(x) = key.pop_front() {
+        write!(out, "{} ", x + 1);
+        inkey[a[x]] -= 1;
+        if inkey[a[x]] == 0 {
+            key.push_back(a[x]);
         }
     }
-    let q: usize = sc.sc();
-    for _ in 0..q {
-        let tp: i32 = sc.sc();
-        if tp == 1 {
-            let (l, r): (usize, usize) = (sc.sc(), sc.sc());
-            key ^= dp[r] ^ dp[l - 1];
-        } else {
-            let aim: i32 = sc.sc();
-            if aim == 0 {
-                write!(out, "{} ", key);
-            } else {
-                write!(out, "{} ", dp[n] ^ key);
-            }
+    let mut s = inkey
+        .iter()
+        .enumerate()
+        .filter(|(_, x)| x != &&0)
+        .map(|(i, _)| (Reverse(c[i]), i))
+        .collect::<BinaryHeap<(Reverse<i32>, usize)>>();
+
+    let mut vis = vec![false; n];
+
+    while let Some(x) = s.pop() {
+        if vis[x.1] {
+            continue;
         }
+        let init = x.1;
+        let mut now = x.1;
+        vis[now] = true;
+        while a[now] != init {
+            write!(out, "{} ", a[now] + 1);
+            vis[a[now]] = true;
+            now = a[now];
+        }
+        write!(out, "{} ", init + 1);
     }
+
     writeln!(out);
 }
 
