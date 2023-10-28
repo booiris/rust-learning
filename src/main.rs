@@ -20,14 +20,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     log::info!("client init success");
 
     loop {
-        tokio::time::sleep(Duration::from_secs(5)).await;
-        if let Err(e) = handle_screep_resp(&client).await {
-            log::error!("error: {}", e);
-        }
+        tokio::time::sleep(Duration::from_secs(10)).await;
+        let client = client.clone();
+        tokio::spawn(async move {
+            if let Err(e) = handle_screep_resp(client).await {
+                log::error!("error: {}", e);
+            }
+        });
     }
 }
 
-async fn handle_screep_resp(client: &Client) -> Result<(), Box<dyn std::error::Error>> {
+async fn handle_screep_resp(client: Client) -> Result<(), Box<dyn std::error::Error>> {
     #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
     struct ScreepResponse {
         ok: i64,
@@ -49,12 +52,9 @@ async fn handle_screep_resp(client: &Client) -> Result<(), Box<dyn std::error::E
     let state = serde_json::from_str::<ScreepState>(&resp.data)?;
     log::debug!("{:?}", state);
 
-    let client: Client = client.clone();
-    tokio::spawn(async move {
-        if let Err(e) = save_to_db(state, client).await {
-            log::error!("save to db error: {}", e);
-        }
-    });
+    save_to_db(state, client)
+        .await
+        .map_err(|e| format!("save to db error: {}", e))?;
 
     Ok(())
 }
