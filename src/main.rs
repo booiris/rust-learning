@@ -12,7 +12,6 @@ mod model;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     setup_log()?;
-    dotenvy::dotenv()?;
 
     let client = reqwest::Client::builder()
         .timeout(Duration::from_secs(30))
