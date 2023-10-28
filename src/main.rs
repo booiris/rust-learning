@@ -60,9 +60,14 @@ async fn handle_screep_resp(client: &Client) -> Result<(), Box<dyn std::error::E
 }
 
 async fn save_to_db(state: ScreepState, client: Client) -> Result<(), Box<dyn std::error::Error>> {
-    const URL: &str = "http://127.0.0.1:12000/api/v2/write";
+    let mut host = "127.0.0.1".to_string();
+    if let Some(host_name) = std::env::args().nth(1) {
+        host = host_name;
+    }
+
+    let url = format!("http://{}:8086/api/v2/write", host);
     let resp = client
-        .post(URL)
+        .post(url)
         .body(convert_state_to_params(state))
         .header(
             "Authorization",
