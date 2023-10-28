@@ -1,0 +1,19 @@
+{
+    "code-runner.runInTerminal": false,
+    // 运行代码之前清除之前的输出
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.fileDirectoryAsCwd": true,
+    "code-runner.executorMap": {
+      // g++ $fileName -o build/$fileNameWithoutExt && .\\build\\$fileNameWithoutExt
+      "rust": "cd $workspaceRoot && cargo run"
+    },
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.preserveFocus": false,
+    "files.exclude": {
+      "build": true,
+      "Cargo.lock": true,
+      // "**/mod.rs": true,
+      "target": true
+    },
+    "commentTranslate.targetLanguage": "zh-CN",
+  }
