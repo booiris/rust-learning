@@ -1,6 +1,6 @@
 pub fn setup_log() -> Result<(), Box<dyn std::error::Error>> {
-    fern::Dispatch::new()
-        .level(log::LevelFilter::Debug)
+    let log = fern::Dispatch::new()
+        .level(log::LevelFilter::Info)
         .format(|out, message, record| {
             out.finish(format_args!(
                 "[{} {} {}] {}",
@@ -11,8 +11,12 @@ pub fn setup_log() -> Result<(), Box<dyn std::error::Error>> {
             ))
         })
         .chain(std::io::stdout())
-        .chain(fern::log_file("output.log")?)
-        .apply()?;
+        .chain(fern::log_file("output.log")?);
+
+    #[cfg(debug_assertions)]
+    let log = log.level(log::LevelFilter::Debug);
+
+    log.apply()?;
     Ok(())
 }
 
