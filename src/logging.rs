@@ -1,4 +1,8 @@
 pub fn setup_log() -> Result<(), Box<dyn std::error::Error>> {
+    if !std::path::Path::new("log/").exists() {
+        std::fs::create_dir("log")?;
+    }
+
     let log = fern::Dispatch::new()
         .level(log::LevelFilter::Info)
         .format(|out, message, record| {
@@ -11,7 +15,7 @@ pub fn setup_log() -> Result<(), Box<dyn std::error::Error>> {
             ))
         })
         .chain(std::io::stdout())
-        .chain(fern::log_file("output.log")?);
+        .chain(fern::log_file("./log/output.log")?);
 
     #[cfg(debug_assertions)]
     let log = log.level(log::LevelFilter::Debug);
