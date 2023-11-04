@@ -23,23 +23,40 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         tokio::time::sleep(Duration::from_secs(10)).await;
         let client = client.clone();
         tokio::spawn(async move {
-            if let Err(e) = handle_screep_resp(client).await {
-                log::error!("error: {}", e);
-            }
+            handle_screep_resp(client).await;
         });
     }
 }
 
-async fn handle_screep_resp(client: Client) -> Result<(), Box<dyn std::error::Error>> {
+async fn handle_screep_resp(client: Client) {
+    let handle = |url: &'static str, client: Client| async {
+        match get_state(url, &client).await {
+            Ok(state) => {
+                if let Err(e) = save_to_db(state, client).await {
+                    log::error!("save to db error: {}", e);
+                }
+            }
+            Err(e) => {
+                log::error!("get state error: {}", e);
+            }
+        }
+    };
+
+    handle("https://screeps.com/api/user/memory-segment", client).await;
+}
+
+async fn get_state(
+    url: &str,
+    client: &Client,
+) -> Result<ScreepState, Box<dyn std::error::Error + Send + Sync>> {
     #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
     struct ScreepResponse {
         ok: i64,
         data: String,
     }
 
-    const URL: &str = "https://screeps.com/api/user/memory-segment";
     let resp = client
-        .get(URL)
+        .get(url)
         .header("X-Token", dotenv!("SCREEP_TOKEN"))
         .query(&[("segment", "0"), ("shard", "shard3")])
         .send()
@@ -51,15 +68,13 @@ async fn handle_screep_resp(client: Client) -> Result<(), Box<dyn std::error::Er
         .map_err(|e| format!("unmarshal error: {}, code: {}", e, code))?;
     let state = serde_json::from_str::<ScreepState>(&resp.data)?;
     log::debug!("{:?}", state);
-
-    save_to_db(state, client)
-        .await
-        .map_err(|e| format!("save to db error: {}", e))?;
-
-    Ok(())
+    Ok(state)
 }
 
-async fn save_to_db(state: ScreepState, client: Client) -> Result<(), Box<dyn std::error::Error>> {
+async fn save_to_db(
+    state: ScreepState,
+    client: Client,
+) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let mut host = "127.0.0.1".to_string();
     if let Some(host_name) = std::env::args().nth(1) {
         host = host_name;
@@ -157,6 +172,15 @@ mod unit {
             .timeout(Duration::from_secs(30))
             .build()
             .expect("build client error")
+    }
+
+    #[tokio::test]
+    async fn test_get_state() {
+        let client = get_client();
+        let url = "https://screeps.com/api/user/memory-segment";
+        if let Err(e) = super::get_state(url, &client).await {
+            panic!("get state error: {}", e);
+        }
     }
 
     #[tokio::test]
