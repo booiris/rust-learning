@@ -1,26 +1,4 @@
-#!/bin/bash
-
-# build codeforce contest
-
-dir=src/$1
-
-if test -f $dir/mod.rs; then
-    echo "$dir exist"
-    exit 0
-fi
-
-mkdir $dir
-
-touch $dir/mod.rs
-echo "pub mod a;" >>$dir/mod.rs
-echo "pub mod b;" >>$dir/mod.rs
-echo "pub mod c;" >>$dir/mod.rs
-echo "pub mod d;" >>$dir/mod.rs
-echo "pub mod e;" >>$dir/mod.rs
-echo "pub mod f;" >>$dir/mod.rs
-echo "pub mod g;" >>$dir/mod.rs
-
-main_context=$'#![allow(unused_imports,unused_must_use)]
+#![allow(unused_imports,unused_must_use)]
 use std::cmp::*;
 use std::collections::*;
 use std::io::{self, prelude::*};
@@ -55,7 +33,7 @@ pub fn main() {
 pub struct Scanner<B> {
     reader: B,
     buf_str: Vec<u8>,
-    buf_iter: std::str::SplitWhitespace<\'static>,
+    buf_iter: std::str::SplitWhitespace<'static>,
 }
 impl<B: BufRead> Scanner<B> {
     pub fn new(reader: B) -> Self {
@@ -72,7 +50,7 @@ impl<B: BufRead> Scanner<B> {
             }
             self.buf_str.clear();
             self.reader
-                .read_until(b\'\\n\', &mut self.buf_str)
+                .read_until(b'\n', &mut self.buf_str)
                 .expect("Failed read");
             self.buf_iter = unsafe {
                 let slice = std::str::from_utf8_unchecked(&self.buf_str);
@@ -81,13 +59,4 @@ impl<B: BufRead> Scanner<B> {
         }
     }
 }
-'
-echo "$main_context" >$dir/a.rs
-echo "$main_context" >$dir/b.rs
-echo "$main_context" >$dir/c.rs
-echo "$main_context" >$dir/d.rs
-echo "$main_context" >$dir/e.rs
-echo "$main_context" >$dir/f.rs
-echo "$main_context" >$dir/g.rs
 
-echo "pub mod $1;" >>src/lib.rs
