@@ -25,7 +25,7 @@ fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
         })
         .collect::<HashMap<_, _>>();
     let m = sc.sc();
-    (0..m).for_each(|_| {
+    (0..m).map(|_| {
         let q = sc.sc::<String>();
         let now = ini.get(&q).unwrap();
         writeln!(out, "{} {}", now.0, now.1);
@@ -37,7 +37,10 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
-    solve(&mut sc, &mut out);
+    let t: i32 = sc.sc();
+    for _ in 0..t {
+        solve(&mut sc, &mut out);
+    }
 }
 pub struct Scanner<B> {
     reader: B,

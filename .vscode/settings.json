@@ -15,7 +15,8 @@
     "code-runner.executorMap": {
         "cpp": "g++ $fileName -o $workspaceRoot/build/$fileNameWithoutExt.exe && $workspaceRoot/build/$fileNameWithoutExt.exe",
         // g++ $fileName -o build/$fileNameWithoutExt && .\\build\\$fileNameWithoutExt
-        "rust": "rustc $fileName -o $workspaceRoot/build/$fileNameWithoutExt &&RUST_BACKTRACE=1 cat $workspaceRoot/ini | $workspaceRoot/build/$fileNameWithoutExt",
+        "rust": "rustc $fileName -o $workspaceRoot/build/$fileNameWithoutExt -A unused_imports -A unused_macros &&cat $workspaceRoot/ini | RUST_BACKTRACE=1 $workspaceRoot/build/$fileNameWithoutExt",
+        "haskell": "ghc  $fileName -outputdir $workspaceRoot/build -o $workspaceRoot/build/$fileNameWithoutExt > /dev/null 2>&1  && cat $workspaceRoot/ini | $workspaceRoot/build/$fileNameWithoutExt",
     },
     "code-runner.saveFileBeforeRun": true,
     "code-runner.preserveFocus": true,
@@ -33,8 +34,6 @@
         "markdown": false
     },
     "rust-analyzer.showUnlinkedFileNotification": false,
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    },
     "python.formatting.provider": "none",
+    "debug.terminal.clearBeforeReusing": true,
 }

@@ -18,18 +18,44 @@ fn _gcd<T: Default + std::marker::Copy + std::ops::Rem<Output = T> + std::cmp::P
 }
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
     let n = sc.sc();
-    let ini = (0..n)
-        .map(|_| {
-            let (a, b, c) = (sc.sc::<String>(), sc.sc::<String>(), sc.sc::<String>());
-            (b, (a, c))
-        })
-        .collect::<HashMap<_, _>>();
-    let m = sc.sc();
-    (0..m).for_each(|_| {
-        let q = sc.sc::<String>();
-        let now = ini.get(&q).unwrap();
-        writeln!(out, "{} {}", now.0, now.1);
-    });
+    let ini = (0..n).map(|_| sc.sc()).collect::<Vec<i32>>();
+    let mut res = i32::MIN;
+    let mut l = 0;
+    let mut r = 0;
+    let mut now = 0;
+    let mut key = 0;
+    while r < n {
+        while (r == n - 1) || (r < n && ini[r].abs() % 2 != ini[r + 1].abs() % 2) {
+            now += ini[r];
+            if res < now {
+                key = r;
+                res = now;
+            }
+            if now < 0 {
+                break;
+            }
+            r += 1;
+        }
+        if now < 0 {
+            r += 1;
+        } else if r < n {
+            now += ini[r];
+            res = res.max(now);
+            r += 1;
+        }
+        now = res;
+        while l < r && l < n {
+            if l <= key {
+                now -= ini[l];
+            }
+            if l != r - 1 {
+                res = res.max(now);
+            }
+            l += 1;
+        }
+        now = 0;
+    }
+    writeln!(out, "{res}");
 }
 
 pub fn main() {
@@ -37,7 +63,10 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
-    solve(&mut sc, &mut out);
+    let t: i32 = sc.sc();
+    for _ in 0..t {
+        solve(&mut sc, &mut out);
+    }
 }
 pub struct Scanner<B> {
     reader: B,

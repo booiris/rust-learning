@@ -1,9 +1,9 @@
-#![allow(unused_imports, unused_must_use)]
+#![allow(unused_imports,unused_must_use)]
 use std::cmp::*;
 use std::collections::*;
+use std::io::{self, prelude::*};
 use std::io::StdinLock;
 use std::io::StdoutLock;
-use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
@@ -17,19 +17,7 @@ fn _gcd<T: Default + std::marker::Copy + std::ops::Rem<Output = T> + std::cmp::P
     _gcd(b, a % b)
 }
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
-    let n = sc.sc();
-    let ini = (0..n)
-        .map(|_| {
-            let (a, b, c) = (sc.sc::<String>(), sc.sc::<String>(), sc.sc::<String>());
-            (b, (a, c))
-        })
-        .collect::<HashMap<_, _>>();
-    let m = sc.sc();
-    (0..m).for_each(|_| {
-        let q = sc.sc::<String>();
-        let now = ini.get(&q).unwrap();
-        writeln!(out, "{} {}", now.0, now.1);
-    });
+
 }
 
 pub fn main() {
@@ -37,7 +25,10 @@ pub fn main() {
     let stdout = io::stdout();
     let mut sc = Scanner::new(stdin.lock());
     let mut out = io::BufWriter::new(stdout.lock());
-    solve(&mut sc, &mut out);
+    let t:i32 = sc.sc();
+    for _ in 0..t {
+        solve(&mut sc,&mut out);
+    }
 }
 pub struct Scanner<B> {
     reader: B,
@@ -68,3 +59,4 @@ impl<B: BufRead> Scanner<B> {
         }
     }
 }
+
