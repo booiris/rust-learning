@@ -17,27 +17,7 @@ echo "pub mod b;" >>$dir/mod.rs
 echo "pub mod c;" >>$dir/mod.rs
 echo "pub mod d;" >>$dir/mod.rs
 
-main_context=$'#![allow(dead_code, unused_imports, unused_macros)]
-use std::cmp::*;
-use std::collections::*;
-use std::ops::Bound::*;
-#[cfg(feature = "local")]
-struct Solution;
-
-macro_rules! hashmap {
-    ($( $key: expr => $val: expr ),*) => {{
-         let mut map = ::std::collections::HashMap::new();
-         $( map.insert($key, $val); )*
-         map
-    }}
-}
-
-#[cfg(feature = "local")]
-pub fn main() {
-    println!("res:");
-}
-
-'
+main_context=$(cat template)
 echo "$main_context" >$dir/a.rs
 echo "$main_context" >$dir/b.rs
 echo "$main_context" >$dir/c.rs

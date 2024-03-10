@@ -37,5 +37,6 @@
     "yaml": false,
     "plaintext": false,
     "markdown": false
-  }
+  },
+  "rust-analyzer.check.command": "clippy"
 }

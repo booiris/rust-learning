@@ -14,10 +14,7 @@ macro_rules! hashmap {
 }
 
 impl Solution {
-    pub fn prev_perm_opt1(mut arr: Vec<i32>) -> Vec<i32> {
-        let mut key = 
-        arr
-    }
+    // pub fn prev_perm_opt1(mut arr: Vec<i32>) -> Vec<i32> {}
 }
 
 #[cfg(feature = "local")]

@@ -33,9 +33,9 @@ macro_rules! hashmap {
 // }
 use std::cell::RefCell;
 use std::rc::Rc;
-impl Solution {
-    pub fn amount_of_time(root: Option<Rc<RefCell<TreeNode>>>, start: i32) -> i32 {}
-}
+// impl Solution {
+//     pub fn amount_of_time(root: Option<Rc<RefCell<TreeNode>>>, start: i32) -> i32 {}
+// }
 
 #[cfg(feature = "local")]
 pub fn main() {
