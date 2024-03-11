@@ -11,6 +11,7 @@ use std::collections::*;
 use std::fmt;
 use std::ops::Bound::*;
 use std::rc::Rc;
+
 #[cfg(feature = "local")]
 struct Solution;
 
@@ -176,7 +177,63 @@ fn get_inv(n: usize, p: i64) -> i64 {
     }
 }
 
-#[allow(dead_code)]
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+struct FindElements {
+    key: HashSet<i32>,
+}
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl FindElements {
+    fn new(mut root: Option<Rc<RefCell<TreeNode>>>) -> Self {
+        let mut key = HashSet::new();
+        if let Some(ref mut root) = root {
+            dfs(root, 0, &mut key);
+        }
+        Self { key }
+    }
+
+    fn find(&self, target: i32) -> bool {
+        self.key.get(&target).is_some()
+    }
+}
+
+fn dfs(now: &mut Rc<RefCell<TreeNode>>, v: i32, key: &mut HashSet<i32>) {
+    now.borrow_mut().val = v;
+    key.insert(v);
+    if let Some(left) = now.borrow_mut().left.as_mut() {
+        dfs(left, 2 * v + 1, key);
+    }
+    if let Some(right) = now.borrow_mut().right.as_mut() {
+        dfs(right, 2 * v + 2, key);
+    }
+}
+
+/**
+ * Your FindElements object will be instantiated and called as such:
+ * let obj = FindElements::new(root);
+ * let ret_1: bool = obj.find(target);
+ */
+
 #[cfg(feature = "local")]
 pub fn main() {
     println!("res:");
