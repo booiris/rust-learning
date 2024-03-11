@@ -204,9 +204,9 @@ struct FindElements {
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl FindElements {
-    fn new(mut root: Option<Rc<RefCell<TreeNode>>>) -> Self {
+    fn new(root: Option<Rc<RefCell<TreeNode>>>) -> Self {
         let mut key = HashSet::new();
-        if let Some(ref mut root) = root {
+        if let Some(ref root) = root {
             dfs(root, 0, &mut key);
         }
         Self { key }
@@ -217,13 +217,13 @@ impl FindElements {
     }
 }
 
-fn dfs(now: &mut Rc<RefCell<TreeNode>>, v: i32, key: &mut HashSet<i32>) {
+fn dfs(now: &Rc<RefCell<TreeNode>>, v: i32, key: &mut HashSet<i32>) {
     now.borrow_mut().val = v;
     key.insert(v);
-    if let Some(left) = now.borrow_mut().left.as_mut() {
+    if let Some(left) = now.borrow().left.as_ref() {
         dfs(left, 2 * v + 1, key);
     }
-    if let Some(right) = now.borrow_mut().right.as_mut() {
+    if let Some(right) = now.borrow().right.as_ref() {
         dfs(right, 2 * v + 2, key);
     }
 }
