@@ -21,12 +21,10 @@ impl Solution {
         for x in s {
             if x == '(' {
                 key.push(x);
+            } else if let Some(x) = key.last() {
+                key.pop();
             } else {
-                if let Some(x) = key.last() {
-                    key.pop();
-                } else {
-                    res += 1;
-                }
+                res += 1;
             }
         }
         res += key.len() as i32;

@@ -33,11 +33,9 @@ impl Solution {
                     q.push_back((i, j, 0, 0));
                     key.insert((i, j, 0), 0);
                 }
-                if grid[i][j].is_ascii_lowercase() {
-                    if key_id.get(&grid[i][j]).is_none() {
-                        key_id.insert(grid[i][j], cnt);
-                        cnt += 1;
-                    }
+                if grid[i][j].is_ascii_lowercase() && key_id.get(&grid[i][j]).is_none() {
+                    key_id.insert(grid[i][j], cnt);
+                    cnt += 1;
                 }
             }
         }
