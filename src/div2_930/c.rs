@@ -365,4 +365,40 @@ pub fn main() {
     flush!();
 }
 
-fn solve() {}
+fn q(q1: i32, q2: i32, q3: i32, q4: i32) -> char {
+    wln!("? {} {} {} {}", q1, q2, q3, q4);
+    flush!();
+    i!(char)
+}
+
+fn solve() {
+    let n = i!(i32);
+    let mut res1 = 0;
+    for i in 1..n {
+        let ans = q(res1, res1, i, i);
+        if ans == '<' {
+            res1 = i;
+        }
+    }
+    let mut key = vec![0];
+    let mut now = 0;
+    for i in 1..n {
+        let ans = q(now, res1, i, res1);
+        if ans == '=' {
+            key.push(i);
+        } else if ans == '<' {
+            now = i;
+            key.clear();
+            key.push(i)
+        }
+    }
+    let mut res2 = key[0];
+    for i in 1..key.len() {
+        if q(res2, res2, key[i], key[i]) == '>' {
+            res2 = key[i];
+        }
+    }
+
+    wln!("! {} {}", res1, res2);
+    flush!()
+}

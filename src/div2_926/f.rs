@@ -310,23 +310,68 @@ impl<B: BufRead> Scanner<B> {
     }
 }
 
-fn dfs(now: &TreeNode, key: &mut Vec<i64>) {
-    if let Some(l) = now.left() {
-        dfs(l, key);
+static mut OUT: *mut std::io::BufWriter<std::io::StdoutLock<'_>> = std::ptr::null_mut();
+#[allow(unused_macros)]
+macro_rules! w {
+    ($fmt:expr) => {
+    unsafe{ write!(*OUT, "{}", $fmt);}
+    };
+    ($fmt:expr, $($args:tt)*) => {
+    unsafe{  write!(*OUT, $fmt, $($args)*);}
+    };
+}
+#[allow(unused_macros)]
+macro_rules! wln {
+    () => {
+    unsafe{ writeln!(*OUT);}
+    };
+    ($fmt:expr) => {
+    unsafe{ writeln!(*OUT, "{}", $fmt);}
+    };
+    ($fmt:expr, $($args:tt)*) => {
+    unsafe{  writeln!(*OUT, $fmt, $($args)*);}
+    };
+}
+#[allow(unused_macros)]
+macro_rules! flush {
+    () => {
+        unsafe {
+            (*OUT).flush();
+        }
+    };
+}
+
+static mut IN: *mut Scanner<StdinLock<'static>> = std::ptr::null_mut();
+#[allow(unused_macros)]
+macro_rules! i {
+    () => {{
+        i!(i32)
+    }};
+    ($t:ty) => {{
+        unsafe { (*IN).sc::<$t>() }
+    }};
+}
+
+pub fn main() {
+    unsafe {
+        OUT = Box::leak(Box::new(io::BufWriter::new(io::stdout().lock())))
+            as *mut std::io::BufWriter<std::io::StdoutLock<'_>>;
+        IN = Box::leak(Box::new(Scanner::new(io::stdin().lock()))) as *mut Scanner<StdinLock<'_>>;
     }
-    key.push(now.val);
-    if let Some(r) = now.right() {
-        dfs(r, key);
+    let t = i!(i32);
+    for _ in 0..t {
+        solve();
     }
+    flush!();
 }
 
 const MODN: i64 = 998244353;
 
-fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
-    let (n, c) = (sc.sc(), sc.sc::<i64>());
+fn solve() {
+    let (n, c) = (i!(usize), i!(i64));
     let tree = Tree::new(n, 1);
     for i in 1..=n {
-        let (l, r, v) = (sc.sc::<isize>(), sc.sc::<isize>(), sc.sc());
+        let (l, r, v) = (i!(isize), i!(isize), i!(i64));
         let left = if l > 0 { Some(l as usize) } else { None };
         let right = if r > 0 { Some(r as usize) } else { None };
         tree.add_node(i, left, right, v)
@@ -350,16 +395,15 @@ fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
         lst = x;
         len = 0;
     }
-    writeln!(out, "{}", res % MODN);
+    wln!(res % MODN);
 }
 
-pub fn main() {
-    let stdin = io::stdin();
-    let stdout = io::stdout();
-    let mut sc = Scanner::new(stdin.lock());
-    let mut out = io::BufWriter::new(stdout.lock());
-    let t: i32 = sc.sc();
-    for _ in 0..t {
-        solve(&mut sc, &mut out);
+fn dfs(now: &TreeNode, key: &mut Vec<i64>) {
+    if let Some(l) = now.left() {
+        dfs(l, key);
+    }
+    key.push(now.val);
+    if let Some(r) = now.right() {
+        dfs(r, key);
     }
 }

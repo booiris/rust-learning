@@ -365,4 +365,30 @@ pub fn main() {
     flush!();
 }
 
-fn solve() {}
+fn solve() {
+    let n = i!(usize);
+    let mut l1 = i!(String).chars().collect::<Vec<char>>();
+    let l2 = i!(String).chars().collect::<Vec<char>>();
+    l1.push('2');
+    let mut res = l1[0].to_string();
+    let mut cnt = 1;
+    let mut down = false;
+    for i in 0..n {
+        if down {
+            res.push(l2[i]);
+            continue;
+        }
+        if l1[i + 1] == l2[i] {
+            cnt += 1;
+            res.push(l2[i]);
+        } else {
+            res.push(min(l1[i + 1], l2[i]));
+            if l2[i] > l1[i + 1] {
+                cnt = 1;
+            } else {
+                down = true;
+            }
+        }
+    }
+    wln!("{}\n{}", res, cnt);
+}

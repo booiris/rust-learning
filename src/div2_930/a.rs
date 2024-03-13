@@ -365,4 +365,12 @@ pub fn main() {
     flush!();
 }
 
-fn solve() {}
+fn solve() {
+    let a = i!(i32);
+    let mut now = 1;
+    while now * 2 <= a {
+        now *= 2;
+    }
+    wln!(now);
+}
+
