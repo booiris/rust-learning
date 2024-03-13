@@ -105,6 +105,10 @@ impl Tree {
     pub fn get(&self, p: usize) -> &mut TreeNode {
         unsafe { TREENODES[p].as_mut().unwrap() }
     }
+
+    pub fn root(&self) -> &mut TreeNode {
+        self.get(self.start_from)
+    }
 }
 
 impl fmt::Display for Tree {
@@ -328,7 +332,7 @@ fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
         tree.add_node(i, left, right, v)
     }
     let mut key = vec![];
-    dfs(tree.get(1), &mut key);
+    dfs(tree.root(), &mut key);
     let mut lst = 1;
     let mut len = 0;
     let mut res = 1;

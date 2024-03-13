@@ -105,6 +105,10 @@ impl Tree {
     pub fn get(&self, p: usize) -> &mut TreeNode {
         unsafe { TREENODES[p].as_mut().unwrap() }
     }
+
+    pub fn root(&self) -> &mut TreeNode {
+        self.get(self.start_from)
+    }
 }
 
 impl fmt::Display for Tree {
