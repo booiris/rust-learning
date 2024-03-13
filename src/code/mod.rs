@@ -113,6 +113,7 @@ pub mod l_2481_Minimum_Cuts_to_Divide_a_Circle;
 pub mod l_2485_Find_the_Pivot_Integer;
 pub mod l_2496_Maximum_Value_of_a_String_in_an_Array;
 pub mod l_2500_Delete_Greatest_Value_in_Each_Row;
+pub mod l_2789_Largest_Element_in_an_Array_after_Merge_Operations;
 pub mod l_2864_Maximum_Odd_Binary_Number;
 pub mod l_481_Magical_String;
 pub mod l_646_Maximum_Length_of_Pair_Chain;
