@@ -393,4 +393,36 @@ pub fn main() {
     flush!();
 }
 
-fn solve() {}
+fn f(dsum: &Vec<i64>, l: usize, u: i64, v: usize) -> i64 {
+    let t = dsum[v] - dsum[l - 1];
+    u * t - t * (t - 1) / 2
+}
+
+fn solve() {
+    let n = i!(usize);
+    let ini = (0..n).map(|_| i!(i64)).collect::<Vec<_>>();
+    let mut dsum = vec![0; n + 1];
+    for i in 1..=n {
+        dsum[i] = dsum[i - 1] + ini[i - 1];
+    }
+    let q = i!(usize);
+    for _ in 0..q {
+        let (l, u) = (i!(usize), i!(i64));
+        let g = curry4!(f)(&dsum)(l)(u);
+        let mut minn = l;
+        let mut maxn = n;
+        while minn < maxn - 1 {
+            let mid = (minn + maxn) / 2;
+            let lmid = mid - 1;
+            let rmid = mid + 1;
+            if g(lmid) < g(rmid) {
+                minn = mid;
+            } else {
+                maxn = mid;
+            }
+        }
+        let res = if g(maxn) > g(minn) { maxn } else { minn };
+        w!("{} ", res);
+    }
+    wln!();
+}

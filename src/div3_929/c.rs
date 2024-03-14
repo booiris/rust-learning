@@ -6,6 +6,7 @@ use std::io::StdinLock;
 use std::io::StdoutLock;
 use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
+use std::ops::Add;
 use std::ops::Bound::*;
 
 pub struct PathType {
@@ -352,34 +353,6 @@ macro_rules! i {
     }};
 }
 
-#[allow(unused_macros)]
-macro_rules! curry2 (
-    ($f:expr) => {
-        |a| move |b|  $f(a, b)
-    };
-);
-
-#[allow(unused_macros)]
-macro_rules! curry3 (
-    ($f:expr) => {
-        |a| move |b| move |c| $f(a, b, c)
-    };
-);
-
-#[allow(unused_macros)]
-macro_rules! curry4 (
-    ($f:expr) => {
-        |a| move |b| move |c| move |d| $f(a, b, c, d)
-    };
-);
-
-#[allow(unused_macros)]
-macro_rules! curry5 (
-    ($f:expr) => {
-        |a| move |b| move |c| move |d| move |e| $f(a, b, c, d, e)
-    };
-);
-
 pub fn main() {
     unsafe {
         OUT = Box::leak(Box::new(io::BufWriter::new(io::stdout().lock())))
@@ -393,4 +366,40 @@ pub fn main() {
     flush!();
 }
 
-fn solve() {}
+fn solve() {
+    let (a, b, l) = (i!(i64), i!(i64), i!(i64));
+    let mut nowa = 1;
+    let mut res: HashSet<i64> = HashSet::new();
+    while nowa <= l {
+        if l % nowa != 0 {
+            break;
+        }
+        let key = l / nowa;
+        let mut nowb = 1;
+        while nowb <= key {
+            if key % nowb != 0 {
+                break;
+            }
+            res.insert(l / nowb / nowa);
+            nowb *= b;
+        }
+        nowa *= a;
+    }
+    let mut nowb = 1;
+    while nowb <= l {
+        if l % nowb != 0 {
+            break;
+        }
+        let key = l / nowb;
+        let mut nowa = 1;
+        while nowa <= key {
+            if key % nowa != 0 {
+                break;
+            }
+            res.insert(l / nowb / nowa);
+            nowa *= a;
+        }
+        nowb *= b;
+    }
+    wln!(res.len());
+}

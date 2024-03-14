@@ -352,34 +352,6 @@ macro_rules! i {
     }};
 }
 
-#[allow(unused_macros)]
-macro_rules! curry2 (
-    ($f:expr) => {
-        |a| move |b|  $f(a, b)
-    };
-);
-
-#[allow(unused_macros)]
-macro_rules! curry3 (
-    ($f:expr) => {
-        |a| move |b| move |c| $f(a, b, c)
-    };
-);
-
-#[allow(unused_macros)]
-macro_rules! curry4 (
-    ($f:expr) => {
-        |a| move |b| move |c| move |d| $f(a, b, c, d)
-    };
-);
-
-#[allow(unused_macros)]
-macro_rules! curry5 (
-    ($f:expr) => {
-        |a| move |b| move |c| move |d| move |e| $f(a, b, c, d, e)
-    };
-);
-
 pub fn main() {
     unsafe {
         OUT = Box::leak(Box::new(io::BufWriter::new(io::stdout().lock())))
@@ -393,4 +365,19 @@ pub fn main() {
     flush!();
 }
 
-fn solve() {}
+fn solve() {
+    let n = i!(usize);
+    let mut ini = (0..n).map(|_| i!(i32)).collect::<Vec<_>>();
+    ini.sort_unstable();
+    if ini[0] != ini[1] {
+        wln!("YES");
+    } else {
+        for i in 2..ini.len() {
+            if ini[i] % ini[0] != 0 && ini[i] % ini[0] < ini[0] {
+                wln!("YES");
+                return;
+            }
+        }
+        wln!("NO");
+    }
+}
