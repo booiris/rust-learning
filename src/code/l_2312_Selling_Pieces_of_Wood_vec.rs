@@ -9,6 +9,7 @@ use std::cell::RefCell;
 use std::cmp::*;
 use std::collections::*;
 use std::fmt;
+use std::hash::Hash;
 use std::ops::Bound::*;
 use std::rc::Rc;
 #[cfg(feature = "local")]
@@ -204,8 +205,43 @@ macro_rules! curry5 (
     };
 );
 
+fn f(dp: &mut Vec<Vec<i64>>, mp: &Vec<Vec<i64>>, m: usize, n: usize) -> i64 {
+    if dp[m][n] != -1 {
+        return dp[m][n];
+    }
+    let mut res = mp[m][n];
+    for i in 1..m {
+        res = res.max(f(dp, mp, i, n) + f(dp, mp, m - i, n));
+    }
+    for i in 1..n {
+        res = res.max(f(dp, mp, m, i) + f(dp, mp, m, n - i));
+    }
+    dp[m][n] = res;
+    res
+}
+
 #[allow(dead_code)]
+impl Solution {
+    pub fn selling_wood(m: i32, n: i32, p: Vec<Vec<i32>>) -> i64 {
+        let mut dp = vec![vec![-1 as i64; (n + 1) as usize]; (m + 1) as usize];
+        let mut mp = vec![vec![0 as i64; (n + 1) as usize]; (m + 1) as usize];
+        for x in p {
+            mp[x[0] as usize][x[1] as usize] = x[2] as i64;
+        }
+        let g = curry4!(f)(&mut dp)(&mp);
+        g(m as usize)(n as usize);
+        dp[m as usize][n as usize]
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    let m = 3;
+    let n = 5;
+    let x = [[1, 4, 2], [2, 2, 7], [2, 1, 3]]
+        .iter()
+        .map(|x| x.iter().cloned().collect::<Vec<_>>())
+        .collect::<Vec<_>>();
+
+    println!("res:{}", Solution::selling_wood(m, n, x));
 }

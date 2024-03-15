@@ -9,6 +9,7 @@ use std::cell::RefCell;
 use std::cmp::*;
 use std::collections::*;
 use std::fmt;
+use std::hash::Hash;
 use std::ops::Bound::*;
 use std::rc::Rc;
 #[cfg(feature = "local")]
@@ -204,8 +205,44 @@ macro_rules! curry5 (
     };
 );
 
+fn f(dp: &mut HashMap<(i32, i32), i64>, mp: &HashMap<(i32, i32), i64>, m: i32, n: i32) -> i64 {
+    if let Some(v) = dp.get(&(m, n)) {
+        return *v;
+    }
+
+    let mut res = mp.get(&(m, n)).copied().unwrap_or_default();
+    for i in 1..m {
+        res = res.max(f(dp, mp, i, n) + f(dp, mp, m - i, n));
+    }
+    for i in 1..n {
+        res = res.max(f(dp, mp, m, i) + f(dp, mp, m, n - i));
+    }
+    dp.insert((m, n), res);
+    res
+}
+
 #[allow(dead_code)]
+impl Solution {
+    pub fn selling_wood(m: i32, n: i32, p: Vec<Vec<i32>>) -> i64 {
+        let mut dp: HashMap<(i32, i32), i64> = HashMap::with_capacity(((m + 1) * (n + 1)) as usize);
+        let mut mp: HashMap<(i32, i32), i64> = HashMap::new();
+        for x in p {
+            mp.insert((x[0], x[1]), x[2] as i64);
+        }
+        let g = curry4!(f)(&mut dp)(&mp);
+        g(m)(n);
+        *dp.get(&(m, n)).unwrap()
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    let m = 3;
+    let n = 5;
+    let x = [[1, 4, 2], [2, 2, 7], [2, 1, 3]]
+        .iter()
+        .map(|x| x.iter().cloned().collect::<Vec<_>>())
+        .collect::<Vec<_>>();
+
+    println!("res:{}", Solution::selling_wood(m, n, x));
 }
