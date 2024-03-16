@@ -209,7 +209,39 @@ macro_rules! curry5 (
 );
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn max_moves(grid: Vec<Vec<i32>>) -> i32 {
+        let mut valid = vec![vec![false; grid[0].len()]; grid.len()];
+        for i in 0..grid.len() {
+            valid[i][0] = true;
+        }
+        for i in 1..grid[0].len() {
+            let mut flag = false;
+            for j in 0..grid.len() {
+                if grid[j][i] > grid[j][i - 1] && valid[j][i - 1] {
+                    valid[j][i] = true;
+                    flag = true;
+                } else if j > 0 && grid[j][i] > grid[j - 1][i - 1] && valid[j - 1][i - 1] {
+                    valid[j][i] = true;
+                    flag = true;
+                } else if j + 1 < grid.len()
+                    && grid[j][i] > grid[j + 1][i - 1]
+                    && valid[j + 1][i - 1]
+                {
+                    valid[j][i] = true;
+                    flag = true;
+                }
+            }
+            if !flag {
+                return i as i32 - 1;
+            }
+        }
+        grid[0].len() as i32 - 1
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    let x = [[3, 2, 4], [2, 1, 9], [1, 1, 7]];
+    println!("res:{}", Solution::max_moves(to_2_vec(x)));
 }
