@@ -7,3 +7,10 @@ version = "0.1.0"
 
 [dependencies]
 text_io = "0.1.10"
+
+[dev-dependencies]
+criterion = "0.5"
+
+# [[bench]]
+# name = "my_benchmark"
+# harness = false

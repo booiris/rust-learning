@@ -24,7 +24,7 @@ pub fn main() {
     let mut out = io::BufWriter::new(stdout.lock());
     solve(&mut sc, &mut out);
 }
-pub struct Scanner<B> {
+struct Scanner<B> {
     reader: B,
     buf_str: Vec<u8>,
     buf_iter: std::str::SplitWhitespace<'static>,

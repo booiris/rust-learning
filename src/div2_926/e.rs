@@ -8,7 +8,7 @@ use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
-pub struct PathType {
+struct PathType {
     from: usize,
     to: usize,
     v: i64,
@@ -20,12 +20,13 @@ impl fmt::Display for PathType {
     }
 }
 
-pub struct Graph {
+struct Graph {
     pub paths: Vec<PathType>,
     pub p: Vec<Vec<usize>>,
     pub start_from: usize,
 }
 
+#[allow(dead_code)]
 impl Graph {
     pub fn new(p_size: usize, start_from: usize) -> Graph {
         Graph {
@@ -162,7 +163,7 @@ fn get_inv(n: usize, p: i64) -> i64 {
     }
 }
 
-pub struct Scanner<B> {
+struct Scanner<B> {
     reader: B,
     buf_str: Vec<u8>,
     buf_iter: std::str::SplitWhitespace<'static>,

@@ -19,7 +19,6 @@ fn _gcd<T: Default + std::marker::Copy + std::ops::Rem<Output = T> + std::cmp::P
 fn solve(sc: &mut Scanner<StdinLock>, out: &mut BufWriter<StdoutLock>) {
     let n: usize = sc.sc();
     let a = (0..n).map(|_| sc.sc()).collect::<Vec<i32>>();
-    let mut 
 }
 
 pub fn main() {
@@ -32,7 +31,7 @@ pub fn main() {
         solve(&mut sc, &mut out);
     }
 }
-pub struct Scanner<B> {
+struct Scanner<B> {
     reader: B,
     buf_str: Vec<u8>,
     buf_iter: std::str::SplitWhitespace<'static>,

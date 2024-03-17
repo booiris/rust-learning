@@ -37,7 +37,7 @@ pub fn main() {
         writeln!(out, "{}", res).unwrap();
     }
 }
-pub struct Scanner<B> {
+struct Scanner<B> {
     reader: B,
     buf_str: Vec<u8>,
     buf_iter: std::str::SplitWhitespace<'static>,

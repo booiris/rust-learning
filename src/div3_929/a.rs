@@ -8,7 +8,7 @@ use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
 
-pub struct PathType {
+struct PathType {
     from: usize,
     to: usize,
     v: i64,
@@ -20,12 +20,13 @@ impl fmt::Display for PathType {
     }
 }
 
-pub struct Graph {
+struct Graph {
     pub paths: Vec<PathType>,
     pub p: Vec<Vec<usize>>,
     pub start_from: usize,
 }
 
+#[allow(dead_code)]
 impl Graph {
     pub fn new(p_size: usize, start_from: usize) -> Graph {
         Graph {
@@ -73,14 +74,15 @@ impl fmt::Display for Graph {
 
 #[allow(dead_code)]
 static mut TREENODES: Vec<Option<TreeNode>> = vec![];
-pub struct Tree {
+struct Tree {
     start_from: usize,
 }
 
+#[allow(dead_code)]
 impl Tree {
     pub fn new(n: usize, start_from: usize) -> Tree {
         unsafe {
-            TREENODES.reserve((n + start_from).checked_sub(INV.capacity()).unwrap_or(0));
+            TREENODES.reserve((n + start_from).saturating_sub(INV.capacity()));
             TREENODES.clear();
             TREENODES.resize_with(n + start_from, Default::default)
         }
@@ -102,12 +104,16 @@ impl Tree {
         unsafe { TREENODES[p].as_mut() }
     }
 
-    pub fn get(&self, p: usize) -> &mut TreeNode {
+    pub fn get(&self, p: usize) -> &TreeNode {
         unsafe { TREENODES[p].as_mut().unwrap() }
     }
 
-    pub fn root(&self) -> &mut TreeNode {
-        self.get(self.start_from)
+    pub fn get_mut(&mut self, p: usize) -> &mut TreeNode {
+        unsafe { TREENODES[p].as_mut().unwrap() }
+    }
+
+    pub fn root(&mut self) -> &mut TreeNode {
+        self.get_mut(self.start_from)
     }
 }
 
@@ -172,7 +178,7 @@ impl fmt::Display for Tree {
     }
 }
 
-pub struct TreeNode {
+struct TreeNode {
     _left: Option<usize>,
     _right: Option<usize>,
     pub val: i64,
@@ -280,7 +286,7 @@ fn get_inv(n: usize, p: i64) -> i64 {
     }
 }
 
-pub struct Scanner<B> {
+struct Scanner<B> {
     reader: B,
     buf_str: Vec<u8>,
     buf_iter: std::str::SplitWhitespace<'static>,
