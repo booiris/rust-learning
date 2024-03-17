@@ -238,8 +238,58 @@ macro_rules! curry5 (
     };
 );
 
+fn dfs(
+    g: &Graph,
+    now_p: usize,
+    father: usize,
+    now_path: &mut Vec<usize>,
+    path: &mut Vec<usize>,
+    end_p: usize,
+) -> bool {
+    if now_p == end_p {
+        *path = now_path.clone();
+        return true;
+    }
+    for p in g.get(now_p) {
+        if p.to == father {
+            continue;
+        }
+        now_path.push(p.to);
+        if dfs(g, p.to, now_p, now_path, path, end_p) {
+            return true;
+        }
+        now_path.pop();
+    }
+    false
+}
+
 #[allow(dead_code)]
+impl Solution {
+    pub fn find_min_height_trees(n: i32, edges: Vec<Vec<i32>>) -> Vec<i32> {
+        let n = n as usize;
+        let mut g = Graph::new(n, 0);
+        for e in edges {
+            g.add_bi_path(e[0] as usize, e[1] as usize, 1);
+        }
+        let start = find_longest_p(&g, 0);
+        let end = find_longest_p(&g, start);
+        let mut path = vec![];
+        dfs(&g, start, start, &mut vec![start], &mut path, end);
+        // println!("{} {} {:?}", start, end, path);
+        if path.len() % 2 == 0 {
+            vec![
+                path[path.len() / 2] as i32,
+                path[(path.len() - 1) / 2] as i32,
+            ]
+        } else {
+            vec![path[path.len() / 2] as i32]
+        }
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    let n = 7;
+    let edges = to_2_vec([[0, 1], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6]]);
+    println!("res:{:?}", Solution::find_min_height_trees(n, edges));
 }

@@ -85,36 +85,6 @@ impl fmt::Display for Graph {
     }
 }
 
-fn find_longest_p(g: &Graph, now_p: usize) -> usize {
-    fn find_longest_p_inner(
-        g: &Graph,
-        now_p: usize,
-        father: usize,
-        depth: i32,
-        maxd: &mut i32,
-        start: &mut usize,
-    ) -> i32 {
-        let mut nowd = 0;
-        for p in g.get(now_p) {
-            if p.to == father {
-                continue;
-            }
-            nowd = nowd.max(find_longest_p_inner(g, p.to, now_p, depth + 1, maxd, start));
-        }
-        if *maxd < depth {
-            *maxd = depth;
-            *start = now_p;
-        }
-        nowd + 1
-    }
-    let mut start = usize::MAX;
-    find_longest_p_inner(g, now_p, now_p, 1, &mut 0, &mut start);
-    if start == usize::MAX {
-        panic!("can not find longest path")
-    }
-    start
-}
-
 pub trait Num:
     std::cmp::PartialEq
     + std::ops::MulAssign
@@ -239,6 +209,22 @@ macro_rules! curry5 (
 );
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn is_substring_present(s: String) -> bool {
+        let mut key = HashSet::new();
+        let s = s.chars().collect::<Vec<_>>();
+        for i in 1..s.len() {
+            key.insert((s[i - 1], s[i]));
+        }
+        for x in &key {
+            if key.contains(&(x.1, x.0)) {
+                return true;
+            }
+        }
+        false
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
     println!("res:");

@@ -85,36 +85,6 @@ impl fmt::Display for Graph {
     }
 }
 
-fn find_longest_p(g: &Graph, now_p: usize) -> usize {
-    fn find_longest_p_inner(
-        g: &Graph,
-        now_p: usize,
-        father: usize,
-        depth: i32,
-        maxd: &mut i32,
-        start: &mut usize,
-    ) -> i32 {
-        let mut nowd = 0;
-        for p in g.get(now_p) {
-            if p.to == father {
-                continue;
-            }
-            nowd = nowd.max(find_longest_p_inner(g, p.to, now_p, depth + 1, maxd, start));
-        }
-        if *maxd < depth {
-            *maxd = depth;
-            *start = now_p;
-        }
-        nowd + 1
-    }
-    let mut start = usize::MAX;
-    find_longest_p_inner(g, now_p, now_p, 1, &mut 0, &mut start);
-    if start == usize::MAX {
-        panic!("can not find longest path")
-    }
-    start
-}
-
 pub trait Num:
     std::cmp::PartialEq
     + std::ops::MulAssign
@@ -239,7 +209,96 @@ macro_rules! curry5 (
 );
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn minimum_moves(nums: Vec<i32>, k: i32, max_changes: i32) -> i64 {
+        let mut cnt = vec![0; nums.len() + 1];
+        let mut dis = vec![0; nums.len() + 1];
+        for i in 1..=nums.len() {
+            cnt[i] = cnt[i - 1] + nums[i - 1];
+            dis[i] = dis[i - 1] as i64 + nums[i - 1] as i64 * (i - 1) as i64;
+        }
+        let get_cnt1 = |mut l: i32, mut r: i32| -> i32 {
+            if l < 0 {
+                l = 0;
+            }
+            if r + 1 >= cnt.len() as i32 {
+                r = cnt.len() as i32 - 2;
+            }
+            if l > r {
+                return 0;
+            }
+            cnt[(r + 1) as usize] - cnt[l as usize]
+        };
+        let get_dis = |mut l: i32, mut r: i32| -> i64 {
+            if l < 0 {
+                l = 0;
+            }
+            if r + 1 >= dis.len() as i32 {
+                r = dis.len() as i32 - 2;
+            }
+            if l > r {
+                return 0;
+            }
+            dis[(r + 1) as usize] - dis[l as usize]
+        };
+        let mut res = i64::MAX;
+        for i in 0..nums.len() {
+            let mut k = k;
+            let mut sum = 0;
+            if nums[i] == 1 {
+                k -= 1;
+            }
+            if k == 0 {
+                res = res.min(sum);
+                continue;
+            }
+            if i + 1 < nums.len() && nums[i + 1] == 1 {
+                sum += 1;
+                k -= 1;
+            }
+            if k == 0 {
+                res = res.min(sum);
+                continue;
+            }
+            if i > 0 && nums[i - 1] == 1 {
+                sum += 1;
+                k -= 1;
+            }
+            if k == 0 {
+                res = res.min(sum);
+                continue;
+            }
+            if max_changes >= k {
+                res = res.min(sum + k as i64 * 2);
+                continue;
+            }
+            k -= max_changes;
+            sum += max_changes as i64 * 2;
+            let mut minn = 1;
+            let mut maxn = nums.len() as i32;
+            while minn < maxn - 1 {
+                let mid = (minn + maxn) / 2;
+                let i = i as i32;
+                if get_cnt1(i - mid, i - 2) + get_cnt1(i + 2, i + mid) >= k {
+                    maxn = mid;
+                } else {
+                    minn = mid;
+                }
+            }
+            let i = i as i32;
+            let r = maxn;
+            let cntl = get_cnt1(i - r, i - 2);
+            let cntr = get_cnt1(i + 2, i + r);
+            sum += i as i64 * cntl as i64 - get_dis(i - r, i - 2) + get_dis(i + 2, i + r)
+                - i as i64 * cntr as i64;
+            sum -= (cntl + cntr - k) as i64 * r as i64;
+            res = res.min(sum);
+        }
+        res
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    println!("res:{}", Solution::minimum_moves([1, 1].into(), 1, 2));
 }

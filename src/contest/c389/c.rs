@@ -85,36 +85,6 @@ impl fmt::Display for Graph {
     }
 }
 
-fn find_longest_p(g: &Graph, now_p: usize) -> usize {
-    fn find_longest_p_inner(
-        g: &Graph,
-        now_p: usize,
-        father: usize,
-        depth: i32,
-        maxd: &mut i32,
-        start: &mut usize,
-    ) -> i32 {
-        let mut nowd = 0;
-        for p in g.get(now_p) {
-            if p.to == father {
-                continue;
-            }
-            nowd = nowd.max(find_longest_p_inner(g, p.to, now_p, depth + 1, maxd, start));
-        }
-        if *maxd < depth {
-            *maxd = depth;
-            *start = now_p;
-        }
-        nowd + 1
-    }
-    let mut start = usize::MAX;
-    find_longest_p_inner(g, now_p, now_p, 1, &mut 0, &mut start);
-    if start == usize::MAX {
-        panic!("can not find longest path")
-    }
-    start
-}
-
 pub trait Num:
     std::cmp::PartialEq
     + std::ops::MulAssign
@@ -239,7 +209,51 @@ macro_rules! curry5 (
 );
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn minimum_deletions(word: String, k: i32) -> i32 {
+        let mut key = vec![0; 26];
+        for x in word.chars() {
+            key[(x as u8 - 'a' as u8) as usize] += 1;
+        }
+        let mut key = key.into_iter().filter(|&x| x != 0).collect::<Vec<_>>();
+        key.sort_unstable();
+        let mut sum = vec![0; key.len() + 1];
+        for i in 1..=key.len() {
+            sum[i] = sum[i - 1] + key[i - 1];
+        }
+        let mut res = i32::MAX;
+        for i in k / 2..1e5 as i32 {
+            let l = i - k / 2;
+            let mut rr = i + k / 2;
+            if k % 2 == 1 {
+                rr += 1;
+            }
+            // println!("{} {}", l, rr);
+            let l = key.partition_point(|&x| x < l);
+            let r = key.partition_point(|&x| x <= rr);
+            // println!(
+            //     "{} {} {} {} {} {}",
+            //     l,
+            //     r,
+            //     sum[l],
+            //     sum[r],
+            //     sum[key.len()],
+            //     sum[key.len()] - sum[r] - (key.len() as i32 - r as i32) * rr
+            // );
+            let temp = sum[l] + sum[key.len()] - sum[r] - (key.len() as i32 - r as i32) * rr;
+            res = res.min(temp);
+        }
+        if res == i32::MAX {
+            0
+        } else {
+            res
+        }
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    let s = "qqb".to_string();
+    let k = 1;
+    println!("res:{}", Solution::minimum_deletions(s, k));
 }
