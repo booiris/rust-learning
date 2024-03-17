@@ -72,6 +72,7 @@ impl fmt::Display for Graph {
     }
 }
 
+#[allow(dead_code)]
 fn find_longest_p(g: &Graph, now_p: usize) -> usize {
     fn find_longest_p_inner(
         g: &Graph,

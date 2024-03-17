@@ -1,4 +1,4 @@
-#![allow(unused_imports, unused_must_use)]
+#![allow(unused_imports, unused_must_use, clippy::redundant_closure_call)]
 use std::cmp::*;
 use std::collections::*;
 use std::fmt;
@@ -399,7 +399,7 @@ pub fn main() {
     flush!();
 }
 
-fn f(dsum: &Vec<i64>, l: usize, u: i64, v: usize) -> i64 {
+fn f(dsum: &[i64], l: usize, u: i64, v: usize) -> i64 {
     let t = dsum[v] - dsum[l - 1];
     u * t - t * (t - 1) / 2
 }

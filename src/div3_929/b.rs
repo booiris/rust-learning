@@ -377,9 +377,7 @@ fn solve() {
     let key = ini.iter().sum::<i32>();
     if key % 3 == 0 {
         wln!(0);
-    } else if key % 3 == 2 {
-        wln!(1);
-    } else if ini.iter().any(|x| *x % 3 == 1) {
+    } else if key % 3 == 2 || ini.iter().any(|x| *x % 3 == 1) {
         wln!(1);
     } else {
         wln!(2);
