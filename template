@@ -1,4 +1,4 @@
-#![allow(unused_imports, unused_must_use, clippy::redundant_closure_call)]
+#![allow(unused_imports, unused_must_use)]
 use std::cmp::*;
 use std::collections::*;
 use std::fmt;
@@ -19,54 +19,64 @@ impl fmt::Display for PathType {
         write!(f, "({}, {}, {})", self.from, self.to, self.v)
     }
 }
+static mut PATHS: Vec<PathType> = vec![];
+static mut POINT: Vec<Vec<usize>> = vec![];
 
 struct Graph {
-    pub paths: Vec<PathType>,
-    pub p: Vec<Vec<usize>>,
     pub start_from: usize,
 }
 
 #[allow(dead_code)]
 impl Graph {
     pub fn new(p_size: usize, start_from: usize) -> Graph {
-        Graph {
-            paths: vec![],
-            p: vec![vec![]; p_size + start_from],
-            start_from,
+        unsafe {
+            PATHS.clear();
+            POINT.reserve((p_size + start_from).saturating_sub(POINT.capacity()));
+            POINT.clear();
+            POINT.resize_with(p_size + start_from, || vec![]);
         }
+        Graph { start_from }
     }
 
     pub fn add_path(&mut self, from: usize, to: usize, v: i64) {
-        self.p[from].push(self.paths.len());
-        self.paths.push(PathType { from, to, v });
+        unsafe {
+            POINT[from].push(PATHS.len());
+            PATHS.push(PathType { from, to, v });
+        }
     }
 
     pub fn add_bi_path(&mut self, from: usize, to: usize, v: i64) {
-        self.p[from].push(self.paths.len());
-        self.paths.push(PathType { from, to, v });
-        self.p[to].push(self.paths.len());
-        self.paths.push(PathType {
-            from: to,
-            to: from,
-            v,
-        });
+        unsafe {
+            POINT[from].push(PATHS.len());
+            PATHS.push(PathType { from, to, v });
+            POINT[to].push(PATHS.len());
+            PATHS.push(PathType {
+                from: to,
+                to: from,
+                v,
+            });
+        }
     }
 
     pub fn get(&self, now_p: usize) -> impl Iterator<Item = &'_ PathType> {
-        self.p[now_p]
-            .iter()
-            .map(move |x| unsafe { self.paths.get_unchecked(*x) })
+        unsafe {
+            POINT[now_p]
+                .iter()
+                .map(move |x| unsafe { PATHS.get_unchecked(*x) })
+        }
     }
 }
 
 impl fmt::Display for Graph {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        for now_p in self.start_from..self.p.len() {
-            write!(f, "{} -- ", now_p);
-            for path in self.get(now_p) {
-                write!(f, "{} ", path)?
+        unsafe {
+            for now_p in self.start_from..POINT.len() {
+                write!(f, "{} -- ", now_p);
+                for path in self.get(now_p) {
+                    write!(f, "{} ", path)?
+                }
+                writeln!(f)?
             }
-            writeln!(f)?
         }
         Ok(())
     }
