@@ -188,3 +188,4 @@ pub mod l_310_Minimum_Height_Trees;
 pub mod l_303_Range_Sum_Query_Immutable;
 pub mod l_1793_Maximum_Score_of_a_Good_Subarray;
 pub mod l_1969_Minimum_No_Zero_Product_of_the_Array_Elements;
+pub mod l_2671_Frequency_Tracker;
