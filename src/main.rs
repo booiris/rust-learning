@@ -59,11 +59,7 @@ impl Graph {
     }
 
     pub fn get(&self, now_p: usize) -> impl Iterator<Item = &'_ PathType> {
-        unsafe {
-            POINT[now_p]
-                .iter()
-                .map(move |x| unsafe { PATHS.get_unchecked(*x) })
-        }
+        unsafe { POINT[now_p].iter().map(move |x| PATHS.get_unchecked(*x)) }
     }
 }
 
