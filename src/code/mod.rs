@@ -1,0 +1,4 @@
+pub mod c_1310d_tourism_new_every;
+pub mod c_1310d_tourism_new_once;
+pub mod c_1310d_tourism_new_every_one_dimen;
+pub mod c_1310d_tourism_new_every_fix_array;

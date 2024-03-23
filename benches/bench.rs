@@ -20,13 +20,13 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     let mut group = c.benchmark_group("test graph");
     for x in test_data {
         group.bench_with_input(BenchmarkId::new("safe", x.0), &x, |b, x| {
-            b.iter(|| safe_fn(x.0, &x.1));
+            b.iter(|| black_box(safe_fn(x.0, &x.1)));
         });
         group.bench_with_input(BenchmarkId::new("unsafe", x.0), &x, |b, x| {
-            b.iter(|| unsafe_fn(x.0, &x.1))
+            b.iter(|| black_box(unsafe_fn(x.0, &x.1)))
         });
         group.bench_with_input(BenchmarkId::new("unsafe_inline", x.0), &x, |b, x| {
-            b.iter(|| unsafe_inline_fn(x.0, &x.1))
+            b.iter(|| black_box(unsafe_inline_fn(x.0, &x.1)))
         });
     }
 

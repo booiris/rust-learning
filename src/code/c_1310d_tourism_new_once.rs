@@ -1,4 +1,4 @@
-#![allow(unused_imports, unused_must_use, clippy::redundant_closure_call)]
+#![allow(unused_imports, unused_must_use)]
 use std::cmp::*;
 use std::collections::*;
 use std::fmt;
@@ -7,6 +7,49 @@ use std::io::StdoutLock;
 use std::io::{self, prelude::*};
 use std::io::{stdin, stdout, BufWriter, Write};
 use std::ops::Bound::*;
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct Rand {
+    s: [u64; 4],
+}
+
+impl Rand {
+    pub fn new(mut state: u64) -> Self {
+        const PHI: u64 = 0x9e3779b97f4a7c15;
+        let mut seed = <[u64; 4]>::default();
+        for chunk in &mut seed {
+            state = state.wrapping_add(PHI);
+            let mut z = state;
+            z = (z ^ (z >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
+            z = (z ^ (z >> 27)).wrapping_mul(0x94d049bb133111eb);
+            z = z ^ (z >> 31);
+            *chunk = z;
+        }
+        Self { s: seed }
+    }
+
+    #[inline]
+    pub fn next_u32(&mut self) -> u32 {
+        (self.next_u64() >> 32) as u32
+    }
+
+    #[inline]
+    pub fn next_u64(&mut self) -> u64 {
+        let result_plusplus = self.s[0]
+            .wrapping_add(self.s[3])
+            .rotate_left(23)
+            .wrapping_add(self.s[0]);
+
+        let t = self.s[1] << 17;
+        self.s[2] ^= self.s[0];
+        self.s[3] ^= self.s[1];
+        self.s[1] ^= self.s[2];
+        self.s[0] ^= self.s[3];
+        self.s[2] ^= t;
+        self.s[3] = self.s[3].rotate_left(45);
+        result_plusplus
+    }
+}
 
 struct PathType {
     from: usize,
@@ -19,57 +62,94 @@ impl fmt::Display for PathType {
         write!(f, "({}, {}, {})", self.from, self.to, self.v)
     }
 }
+static mut PATHS: Vec<PathType> = vec![];
+static mut POINT: Vec<Vec<usize>> = vec![];
 
 struct Graph {
-    pub paths: Vec<PathType>,
-    pub p: Vec<Vec<usize>>,
     pub start_from: usize,
 }
 
 #[allow(dead_code)]
 impl Graph {
     pub fn new(p_size: usize, start_from: usize) -> Graph {
-        Graph {
-            paths: vec![],
-            p: vec![vec![]; p_size + start_from],
-            start_from,
+        unsafe {
+            PATHS.clear();
+            POINT.reserve((p_size + start_from).saturating_sub(POINT.capacity()));
+            POINT.clear();
+            POINT.resize_with(p_size + start_from, || vec![]);
         }
+        Graph { start_from }
     }
 
     pub fn add_path(&mut self, from: usize, to: usize, v: i64) {
-        self.p[from].push(self.paths.len());
-        self.paths.push(PathType { from, to, v });
+        unsafe {
+            POINT[from].push(PATHS.len());
+            PATHS.push(PathType { from, to, v });
+        }
     }
 
     pub fn add_bi_path(&mut self, from: usize, to: usize, v: i64) {
-        self.p[from].push(self.paths.len());
-        self.paths.push(PathType { from, to, v });
-        self.p[to].push(self.paths.len());
-        self.paths.push(PathType {
-            from: to,
-            to: from,
-            v,
-        });
+        unsafe {
+            POINT[from].push(PATHS.len());
+            PATHS.push(PathType { from, to, v });
+            POINT[to].push(PATHS.len());
+            PATHS.push(PathType {
+                from: to,
+                to: from,
+                v,
+            });
+        }
     }
 
     pub fn get(&self, now_p: usize) -> impl Iterator<Item = &'_ PathType> {
-        self.p[now_p]
-            .iter()
-            .map(move |x| unsafe { self.paths.get_unchecked(*x) })
+        unsafe { POINT[now_p].iter().map(move |x| PATHS.get_unchecked(*x)) }
     }
 }
 
 impl fmt::Display for Graph {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        for now_p in self.start_from..self.p.len() {
-            write!(f, "{} -- ", now_p);
-            for path in self.get(now_p) {
-                write!(f, "{} ", path)?
+        unsafe {
+            for now_p in self.start_from..POINT.len() {
+                write!(f, "{} -- ", now_p);
+                for path in self.get(now_p) {
+                    write!(f, "{} ", path)?
+                }
+                writeln!(f)?
             }
-            writeln!(f)?
         }
         Ok(())
     }
+}
+
+#[allow(dead_code)]
+fn find_longest_p(g: &Graph, now_p: usize) -> usize {
+    fn find_longest_p_inner(
+        g: &Graph,
+        now_p: usize,
+        father: usize,
+        depth: i32,
+        maxd: &mut i32,
+        start: &mut usize,
+    ) -> i32 {
+        let mut nowd = 0;
+        for p in g.get(now_p) {
+            if p.to == father {
+                continue;
+            }
+            nowd = nowd.max(find_longest_p_inner(g, p.to, now_p, depth + 1, maxd, start));
+        }
+        if *maxd < depth {
+            *maxd = depth;
+            *start = now_p;
+        }
+        nowd + 1
+    }
+    let mut start = usize::MAX;
+    find_longest_p_inner(g, now_p, now_p, 1, &mut 0, &mut start);
+    if start == usize::MAX {
+        panic!("can not find longest path")
+    }
+    start
 }
 
 #[allow(dead_code)]
@@ -358,49 +438,77 @@ macro_rules! i {
     }};
 }
 
+#[allow(unused_macros)]
+macro_rules! curry2 (
+    ($f:expr) => {
+        |a| move |b|  $f(a, b)
+    };
+);
+
+#[allow(unused_macros)]
+macro_rules! curry3 (
+    ($f:expr) => {
+        |a| move |b| move |c| $f(a, b, c)
+    };
+);
+
+#[allow(unused_macros)]
+macro_rules! curry4 (
+    ($f:expr) => {
+        |a| move |b| move |c| move |d| $f(a, b, c, d)
+    };
+);
+
+#[allow(unused_macros)]
+macro_rules! curry5 (
+    ($f:expr) => {
+        |a| move |b| move |c| move |d| move |e| $f(a, b, c, d, e)
+    };
+);
+
 pub fn main() {
     unsafe {
         OUT = Box::leak(Box::new(io::BufWriter::new(io::stdout().lock())))
             as *mut std::io::BufWriter<std::io::StdoutLock<'_>>;
         IN = Box::leak(Box::new(Scanner::new(io::stdin().lock()))) as *mut Scanner<StdinLock<'_>>;
     }
-    let t = i!(i32);
-    for _ in 0..t {
-        solve();
-    }
+    solve();
     flush!();
 }
 
-fn f(dsum: &[i64], l: usize, u: i64, v: usize) -> i64 {
-    let t = dsum[v] - dsum[l - 1];
-    u * t - t * (t - 1) / 2
-}
-
 fn solve() {
-    let n = i!(usize);
-    let ini = (0..n).map(|_| i!(i64)).collect::<Vec<_>>();
-    let mut dsum = vec![0; n + 1];
+    let (n, k) = (i!(usize), i!(usize));
+    let mut g = vec![vec![0; n + 1]; n + 1];
+    let mut color = vec![0; n + 1];
     for i in 1..=n {
-        dsum[i] = dsum[i - 1] + ini[i - 1];
+        for j in 1..=n {
+            g[i][j] = i!(i32);
+        }
     }
-    let q = i!(usize);
-    for _ in 0..q {
-        let (l, u) = (i!(usize), i!(i64));
-        let g = |x| f(&dsum, l, u, x);
-        let mut minn = l;
-        let mut maxn = n;
-        while minn < maxn - 1 {
-            let mid = (minn + maxn) / 2;
-            let lmid = mid - 1;
-            let rmid = mid + 1;
-            if g(lmid) < g(rmid) {
-                minn = mid;
-            } else {
-                maxn = mid;
+
+    let mut res = i32::MAX;
+    let mut rng = Rand::new(0);
+    let mut dp = vec![vec![0; n + 1]; k + 1];
+    for _ in 0..5000 as i32 {
+        for i in 1..=n {
+            color[i] = rng.next_u32() % 2;
+        }
+        for x in &mut dp {
+            for y in x {
+                *y = i32::MAX / 2;
             }
         }
-        let res = if g(maxn) > g(minn) { maxn } else { minn };
-        w!("{} ", res);
+        dp[0][1] = 0;
+        for step in 1..=k {
+            for i in 1..=n {
+                for j in 1..=n {
+                    if color[i] != color[j] {
+                        dp[step][i] = dp[step][i].min(dp[step - 1][j] + g[j][i]);
+                    }
+                }
+            }
+        }
+        res = res.min(dp[k][1]);
     }
-    wln!();
+    wln!(res);
 }
