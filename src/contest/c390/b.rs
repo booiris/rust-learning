@@ -218,6 +218,21 @@ fn to_2_vec<T: Clone, const M: usize, const N: usize>(data: [[T; M]; N]) -> Vec<
 }
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn min_operations(k: i32) -> i32 {
+        let mut res = i32::MAX;
+        for i in 1..=k {
+            let temp = i - 1;
+            let mut x = k / i;
+            if k % i == 0 && x > 0 {
+                x -= 1;
+            }
+            res = res.min(temp + x);
+        }
+        res
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
     println!("res:");

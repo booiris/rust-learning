@@ -217,8 +217,70 @@ fn to_2_vec<T: Clone, const M: usize, const N: usize>(data: [[T; M]; N]) -> Vec<
     data.iter().map(|x| x.to_vec()).collect()
 }
 
+#[derive(Default)]
+struct Trie {
+    children: [Option<Box<Trie>>; 26],
+    index: usize,
+    len: usize,
+}
+impl Trie {
+    fn add(&mut self, s: &str, index: usize) {
+        let len = s.len();
+        let mut node = self;
+        if (node.len > 0 && len < node.len) || (node.len == 0) {
+            node.index = index;
+            node.len = len;
+        }
+        for c in s.chars().rev() {
+            node =
+                node.children[(c as u8 - b'a') as usize].get_or_insert_with(Box::<Trie>::default);
+            if (node.len > 0 && len < node.len) || (node.len == 0) {
+                node.index = index;
+                node.len = len;
+            }
+        }
+    }
+
+    fn get(&self, s: &str) -> usize {
+        let mut node = self;
+        for c in s.chars().rev() {
+            if let Some(child) = &node.children[(c as u8 - b'a') as usize] {
+                if child.len == 0 {
+                    return node.index;
+                }
+                node = child;
+            } else {
+                return node.index;
+            }
+        }
+        node.index
+    }
+}
 #[allow(dead_code)]
+impl Solution {
+    pub fn string_indices(words_container: Vec<String>, words_query: Vec<String>) -> Vec<i32> {
+        let mut trie = Trie::default();
+        for x in words_container.into_iter().enumerate() {
+            trie.add(&x.1, x.0);
+        }
+        let mut res = vec![];
+        for x in words_query {
+            res.push(trie.get(&x) as i32);
+        }
+        res
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    let x = ["abcdefgh", "poiuygh", "ghghgh"];
+    let y = ["gh", "acbfgh", "acbfegh"];
+
+    println!(
+        "res:{:?}",
+        Solution::string_indices(
+            x.iter().map(|x| x.to_string()).collect(),
+            y.iter().map(|x| x.to_string()).collect()
+        )
+    );
 }

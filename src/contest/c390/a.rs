@@ -218,7 +218,37 @@ fn to_2_vec<T: Clone, const M: usize, const N: usize>(data: [[T; M]; N]) -> Vec<
 }
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn maximum_length_substring(s: String) -> i32 {
+        let mut cnt = HashMap::new();
+        let mut l = 0;
+        let mut r = 0;
+        let s = s.chars().collect::<Vec<_>>();
+        let mut res = 0;
+        while r < s.len() {
+            // println!("{:?}", cnt);
+            let num = cnt.entry(s[r]).or_insert(0);
+            *num += 1;
+            if *num > 2 {
+                // println!("{:?}", cnt);
+                while l < r {
+                    let x = cnt.get_mut(&s[l]).unwrap();
+                    *x -= 1;
+                    l += 1;
+                    if *x == 2 {
+                        break;
+                    }
+                }
+            } else {
+                res = res.max(r - l + 1);
+            }
+            r += 1;
+        }
+        res as i32
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    println!("res:{}", Solution::maximum_length_substring("aaaa".into()));
 }

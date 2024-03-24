@@ -218,6 +218,37 @@ fn to_2_vec<T: Clone, const M: usize, const N: usize>(data: [[T; M]; N]) -> Vec<
 }
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn most_frequent_i_ds(nums: Vec<i32>, freq: Vec<i32>) -> Vec<i64> {
+        let mut cnt = HashMap::new();
+        let mut erase = HashMap::new();
+        let mut key = BinaryHeap::new();
+        let mut res = vec![];
+        for i in 0..nums.len() {
+            let x = cnt.entry(nums[i]).or_insert(0);
+            if *x > 0 {
+                *erase.entry((*x, nums[i])).or_insert(0) += 1;
+            }
+            *x += freq[i] as i64;
+            key.push((*x, nums[i]));
+            while let Some(top) = key.peek() {
+                if let Some(x) = erase.get_mut(top) {
+                    if *x > 0 {
+                        key.pop();
+                        *x -= 1;
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            res.push(key.peek().unwrap().0);
+        }
+        res
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
     println!("res:");

@@ -218,6 +218,15 @@ fn to_2_vec<T: Clone, const M: usize, const N: usize>(data: [[T; M]; N]) -> Vec<
 }
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn distinct_integers(n: i32) -> i32 {
+        if n == 1 {
+            return 1;
+        }
+        n - 1
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
     println!("res:");

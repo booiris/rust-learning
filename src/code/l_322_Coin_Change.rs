@@ -218,7 +218,30 @@ fn to_2_vec<T: Clone, const M: usize, const N: usize>(data: [[T; M]; N]) -> Vec<
 }
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn coin_change(coins: Vec<i32>, amount: i32) -> i32 {
+        let mut dp = vec![[i32::MAX / 2; 10005]; 13];
+        dp[0][0] = 0;
+        let len = coins.len();
+        for (i, x) in coins.into_iter().enumerate() {
+            for j in 0..=amount {
+                dp[i + 1][j as usize] = dp[i][j as usize];
+            }
+            for j in x..=amount {
+                let j = j as usize;
+                dp[i + 1][j] = dp[i + 1][j].min(dp[i + 1][j - x as usize] + 1);
+            }
+        }
+        if dp[len][amount as usize] == i32::MAX / 2 {
+            return -1;
+        }
+        dp[len][amount as usize]
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
-    println!("res:");
+    let x = [2];
+    let y = 3;
+    println!("res:{}", Solution::coin_change(x.to_vec(), y));
 }

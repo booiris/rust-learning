@@ -190,3 +190,5 @@ pub mod l_offer59;
 pub mod l_temp;
 pub mod loffer_55_I;
 pub mod tree_struct;
+pub mod l_2549_Count_Distinct_Numbers_on_Board;
+pub mod l_322_Coin_Change;
