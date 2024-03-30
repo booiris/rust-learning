@@ -194,3 +194,7 @@ pub mod l_2549_Count_Distinct_Numbers_on_Board;
 pub mod l_322_Coin_Change;
 pub mod l_518_Coin_Change_II;
 pub mod l_2642_Design_Graph_With_Shortest_Path_Calculator;
+pub mod l_2580_Count_Ways_to_Group_Overlapping_Ranges;
+pub mod l_1997_First_Day_Where_You_Have_Been_in_All_the_Rooms;
+pub mod l_2908_Minimum_Sum_of_Mountain_Triplets_I;
+pub mod l_2952_Minimum_Number_of_Coins_to_be_Added;
