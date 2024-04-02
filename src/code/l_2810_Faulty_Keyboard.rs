@@ -232,6 +232,61 @@ impl Solution {
     }
 }
 
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
+
+fn new_tree(val: i32) -> Rc<RefCell<TreeNode>> {
+    Rc::new(RefCell::new(TreeNode {
+        val,
+        left: None,
+        right: None,
+    }))
+}
+
+impl Solution {
+    pub fn all_possible_fbt(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
+        if n % 2 == 0 {
+            return vec![];
+        }
+        let n = n as usize;
+        let mut dp: Vec<Vec<Option<Rc<RefCell<TreeNode>>>>> = vec![vec![]; n + 1];
+        dp[1] = vec![Some(new_tree(0))];
+        for i in (3..=n).step_by(2) {
+            let mut tree_forms = vec![];
+            for j in (1..i).step_by(2) {
+                for l in &dp[j] {
+                    for r in &dp[i - 1 - j] {
+                        let root = Rc::new(RefCell::new(TreeNode {
+                            val: 0,
+                            left: l.clone(),
+                            right: r.clone(),
+                        }));
+                        tree_forms.push(Some(root));
+                    }
+                }
+            }
+            dp[i] = tree_forms;
+        }
+        dp.remove(n)
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
     println!("res:");
