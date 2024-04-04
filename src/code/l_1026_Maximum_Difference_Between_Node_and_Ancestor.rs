@@ -245,19 +245,20 @@ impl Solution {
 }
 
 fn dfs(root: Rc<RefCell<TreeNode>>, res: &mut i32) -> (i32, i32) {
-    let mut now_minn = root.borrow().val;
-    let mut now_maxn = root.borrow().val;
-    if let Some(l) = root.borrow().left.clone() {
+    let root = root.borrow();
+    let mut now_minn = root.val;
+    let mut now_maxn = root.val;
+    if let Some(l) = root.left.clone() {
         let (minn, maxn) = dfs(l, res);
-        *res = max(*res, i32::abs(root.borrow().val - minn));
-        *res = max(*res, i32::abs(root.borrow().val - maxn));
+        *res = max(*res, i32::abs(root.val - minn));
+        *res = max(*res, i32::abs(root.val - maxn));
         now_minn = now_minn.min(minn);
         now_maxn = now_maxn.max(maxn);
     }
-    if let Some(r) = root.borrow().right.clone() {
+    if let Some(r) = root.right.clone() {
         let (minn, maxn) = dfs(r, res);
-        *res = max(*res, i32::abs(root.borrow().val - minn));
-        *res = max(*res, i32::abs(root.borrow().val - maxn));
+        *res = max(*res, i32::abs(root.val - minn));
+        *res = max(*res, i32::abs(root.val - maxn));
         now_minn = now_minn.min(minn);
         now_maxn = now_maxn.max(maxn);
     }
