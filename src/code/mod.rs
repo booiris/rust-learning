@@ -202,3 +202,5 @@ pub mod l_331_Verify_Preorder_Serialization_of_a_Binary_Tree;
 pub mod l_2810_Faulty_Keyboard;
 pub mod l_2192_All_Ancestors_of_a_Node_in_a_Directed_Acyclic_Graph;
 pub mod l_1026_Maximum_Difference_Between_Node_and_Ancestor;
+pub mod l_1483_Kth_Ancestor_of_a_Tree_Node;
+pub mod l_1600_Throne_Inheritance;
