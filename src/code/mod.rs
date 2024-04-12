@@ -206,3 +206,5 @@ pub mod l_1483_Kth_Ancestor_of_a_Tree_Node;
 pub mod l_1600_Throne_Inheritance;
 pub mod l_2529_Maximum_Count_of_Positive_Integer_and_Negative_Integer;
 pub mod l_1702_Maximum_Binary_String_After_Change;
+pub mod l_2923_Find_Champion_I;
+pub mod l_1766_Tree_of_Coprimes;
