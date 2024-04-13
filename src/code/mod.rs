@@ -208,3 +208,4 @@ pub mod l_2529_Maximum_Count_of_Positive_Integer_and_Negative_Integer;
 pub mod l_1702_Maximum_Binary_String_After_Change;
 pub mod l_2923_Find_Champion_I;
 pub mod l_1766_Tree_of_Coprimes;
+pub mod l_2924_Find_Champion_II;
