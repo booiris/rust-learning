@@ -209,3 +209,4 @@ pub mod l_1702_Maximum_Binary_String_After_Change;
 pub mod l_2923_Find_Champion_I;
 pub mod l_1766_Tree_of_Coprimes;
 pub mod l_2924_Find_Champion_II;
+pub mod l_705_Design_HashSet;
