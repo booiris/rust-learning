@@ -211,3 +211,4 @@ pub mod l_1766_Tree_of_Coprimes;
 pub mod l_2924_Find_Champion_II;
 pub mod l_705_Design_HashSet;
 pub mod l_706_Design_HashMap;
+pub mod l_924_Minimize_Malware_Spread;
