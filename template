@@ -217,6 +217,58 @@ fn to_2_vec<T: Clone, const M: usize, const N: usize>(data: [[T; M]; N]) -> Vec<
     data.iter().map(|x| x.to_vec()).collect()
 }
 
+#[derive(Clone, Debug)]
+struct Dsu {
+    pub pa: Vec<usize>,
+    pub size: Vec<usize>,
+}
+
+impl Dsu {
+    pub fn new(n: usize) -> Self {
+        let data = (0..n).map(|i| i).collect();
+        let size = vec![1; n];
+        Self { pa: data, size }
+    }
+
+    pub fn find(&mut self, x: usize) -> usize {
+        if self.pa[x] == x {
+            return x;
+        }
+        self.pa[x] = self.find(self.pa[x]);
+        self.pa[x]
+    }
+
+    pub fn unit(&mut self, x: usize, y: usize) {
+        let mut x = self.find(x);
+        let mut y = self.find(y);
+        if x == y {
+            return;
+        }
+        if self.size[x] < self.size[y] {
+            swap(&mut x, &mut y);
+        }
+        self.pa[y] = x;
+        self.size[x] += self.size[y];
+    }
+
+    pub fn erase(&mut self, x: usize) {
+        let x = self.find(x);
+        self.size[x] -= 1;
+        self.pa[x] = x;
+    }
+
+    pub fn move_(&mut self, x: usize, y: usize) {
+        let fx = self.find(x);
+        let fy = self.find(y);
+        if fx == fy {
+            return;
+        }
+        self.pa[x] = fy;
+        self.size[fx] -= 1;
+        self.size[fy] += 1;
+    }
+}
+
 #[allow(dead_code)]
 #[cfg(feature = "local")]
 pub fn main() {
