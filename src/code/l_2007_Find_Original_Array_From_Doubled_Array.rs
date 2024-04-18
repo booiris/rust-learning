@@ -270,6 +270,33 @@ impl Dsu {
 }
 
 #[allow(dead_code)]
+impl Solution {
+    pub fn find_original_array(mut changed: Vec<i32>) -> Vec<i32> {
+        changed.sort_unstable();
+        let mut key = changed.iter().fold(HashMap::new(), |mut cur, x| {
+            *cur.entry(*x).or_insert(0) += 1;
+            cur
+        });
+        let mut res = vec![];
+        for x in changed {
+            if key.get(&x).unwrap_or(&0) == &0 {
+                continue;
+            }
+            if key.get(&(x * 2)).unwrap_or(&0) == &0 {
+                return vec![];
+            }
+            *key.get_mut(&(x * 2)).unwrap() -= 1;
+            *key.get_mut(&(x)).unwrap() -= 1;
+            if key.get(&(x * 2)).unwrap() < &0 || key.get(&x).unwrap() < &0 {
+                return vec![];
+            }
+
+            res.push(x);
+        }
+        res
+    }
+}
+
 #[cfg(feature = "local")]
 pub fn main() {
     println!("res:");
