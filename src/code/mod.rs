@@ -216,3 +216,5 @@ pub mod l_928_Minimize_Malware_Spread_II;
 pub mod l_2007_Find_Original_Array_From_Doubled_Array;
 pub mod l_39_Combination_Sum;
 pub mod l_216_Combination_Sum_III;
+pub mod l_377_Combination_Sum_IV;
+pub mod l_1052_Grumpy_Bookstore_Owner;
