@@ -220,3 +220,4 @@ pub mod l_377_Combination_Sum_IV;
 pub mod l_1052_Grumpy_Bookstore_Owner;
 pub mod l_2385_Amount_of_Time_for_Binary_Tree_to_Be_Infected;
 pub mod l_2739_Total_Distance_Traveled;
+pub mod l_2639_Find_the_Width_of_Columns_of_a_Grid;
