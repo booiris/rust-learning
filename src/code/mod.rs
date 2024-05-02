@@ -223,3 +223,4 @@ pub mod l_2739_Total_Distance_Traveled;
 pub mod l_2639_Find_the_Width_of_Columns_of_a_Grid;
 pub mod l_1017_Convert_to_Base_2;
 pub mod l_2798_Number_of_Employees_Who_Met_the_Target;
+pub mod l_1491_Average_Salary_Excluding_the_Minimum_and_Maximum_Salary;
