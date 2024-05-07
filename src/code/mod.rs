@@ -226,3 +226,4 @@ pub mod l_2798_Number_of_Employees_Who_Met_the_Target;
 pub mod l_1491_Average_Salary_Excluding_the_Minimum_and_Maximum_Salary;
 pub mod l_741_Cherry_Pickup;
 pub mod l_1463_Cherry_Pickup_II;
+pub mod l_2079_Watering_Plants;
