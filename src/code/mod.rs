@@ -229,3 +229,4 @@ pub mod l_1463_Cherry_Pickup_II;
 pub mod l_2079_Watering_Plants;
 pub mod l_2105_Watering_Plants_II;
 pub mod l_2960_Count_Tested_Devices_After_Test_Operations;
+pub mod l_2391_Minimum_Amount_of_Time_to_Collect_Garbage;
