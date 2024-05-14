@@ -232,3 +232,4 @@ pub mod l_2960_Count_Tested_Devices_After_Test_Operations;
 pub mod l_2391_Minimum_Amount_of_Time_to_Collect_Garbage;
 pub mod l_1553_Minimum_Number_of_Days_to_Eat_N_Oranges;
 pub mod l_994_Rotting_Orangss;
+pub mod l_2244_Minimum_Rounds_to_Complete_All_Tasks;
