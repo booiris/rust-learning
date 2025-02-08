@@ -3,7 +3,7 @@ use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
 use std::process::id;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -116,7 +116,7 @@ impl OrderedStream {
     }
 }
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     let mut obj = OrderedStream::new(5);
     let ret_1: Vec<String> = obj.insert(3, "c".to_string());

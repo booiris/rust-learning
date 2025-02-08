@@ -2,7 +2,7 @@
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -45,7 +45,7 @@ impl Solution {
     }
 }
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     let n = vec![2, 4, 8, 2];
     println!("res:{}", Solution::minimum_size(n, 4));

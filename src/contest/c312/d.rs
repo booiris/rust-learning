@@ -2,7 +2,7 @@
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -76,7 +76,7 @@ impl Solution {
     }
 }
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     let _a = vec![2, 4, 1, 2, 2, 5, 3, 4, 4];
     println!("res:");

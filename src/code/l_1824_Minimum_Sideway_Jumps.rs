@@ -2,7 +2,7 @@
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -41,7 +41,7 @@ impl Solution {
     }
 }
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     let a = [0, 1, 2, 3, 0];
     println!("res:{}", Solution::min_side_jumps(a.into()));

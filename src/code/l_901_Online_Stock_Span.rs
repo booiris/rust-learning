@@ -2,7 +2,7 @@
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -46,7 +46,7 @@ impl StockSpanner {
  * let ret_1: i32 = obj.next(price);
  */
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     println!("res:");
 }

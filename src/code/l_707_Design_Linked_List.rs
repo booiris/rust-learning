@@ -5,7 +5,7 @@ use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
 use std::rc::Rc;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -86,7 +86,7 @@ impl MyLinkedList {
  * obj.delete_at_index(index);
  */
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     println!("res:");
 }

@@ -1,7 +1,10 @@
 #![allow(dead_code, unused_imports, unused_macros, unused_must_use)]
 
-#[cfg(feature = "local")]
+#[cfg(feature = "local_build")]
 extern crate data;
+#[cfg(feature = "local_build")]
+use crate::data::TreeNode;
+
 #[cfg(feature = "local")]
 use crate::data::TreeNode;
 
@@ -12,7 +15,7 @@ use std::fmt;
 use std::hash::Hash;
 use std::ops::Bound::*;
 use std::rc::Rc;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -235,7 +238,7 @@ impl Solution {
     }
 }
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     let m = 3;
     let n = 5;

@@ -4,7 +4,7 @@ use std::collections::*;
 use std::f32::consts::E;
 use std::ops::AddAssign;
 use std::ops::Bound::*;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -139,7 +139,7 @@ impl MajorityChecker {
  * let ret_1: i32 = obj.query(left, right, threshold);
  */
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     let arr = [1, 1, 2, 2, 1, 1];
     let obj = MajorityChecker::new(arr.into());

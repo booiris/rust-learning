@@ -4,7 +4,7 @@ use std::collections::*;
 use std::mem::swap;
 use std::ops::Bound::*;
 use std::str::SplitAsciiWhitespace;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -39,7 +39,7 @@ impl Solution {
     }
 }
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     // "of"
     // "A lot of words"

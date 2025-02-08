@@ -4,7 +4,7 @@ use std::collections::*;
 use std::ops::Bound::*;
 use std::slice::Iter;
 use std::str::Chars;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -39,7 +39,7 @@ impl Solution {
     }
 }
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     let q = [
         "FooBar",

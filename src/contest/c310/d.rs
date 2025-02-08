@@ -5,7 +5,7 @@ use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
 use std::rc::Rc;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 pub struct Bitree {
@@ -76,7 +76,7 @@ impl Solution {
     }
 }
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     let a = vec![1, 1, 5];
     println!("res:{}", Solution::length_of_lis(a, 1));

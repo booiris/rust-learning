@@ -2,7 +2,7 @@
 use std::cmp::*;
 use std::collections::*;
 use std::ops::Bound::*;
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
 macro_rules! hashmap {
@@ -17,7 +17,7 @@ macro_rules! hashmap {
 //     pub fn sum_prefix_scores(words: Vec<String>) -> Vec<i32> {}
 // }
 
-#[cfg(feature = "local")]
+#[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
     println!("res:{}", i32::max(1, 2));
 }

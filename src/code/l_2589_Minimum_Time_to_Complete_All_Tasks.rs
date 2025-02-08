@@ -274,38 +274,7 @@ impl Dsu {
 
 #[allow(dead_code)]
 impl Solution {
-    pub fn max_satisfied(customers: Vec<i32>, grumpy: Vec<i32>, minutes: i32) -> i32 {
-        let sum = customers.iter().sum::<i32>();
-        let sub = customers
-            .iter()
-            .zip(grumpy.iter())
-            .map(|(x, y)| if y == &1 { *x } else { 0 })
-            .sum::<i32>();
-        let mut l = 0;
-        let mut r = 0;
-        let mut now = 0;
-        let minutes = minutes as usize;
-        while r < minutes {
-            if grumpy[r] == 1 {
-                now += customers[r];
-            }
-            r += 1;
-        }
-        let mut maxn = now;
-        while r < customers.len() {
-            if grumpy[l] == 1 {
-                now -= customers[l];
-            }
-            l += 1;
-            if grumpy[r] == 1 {
-                now += customers[r];
-                maxn = maxn.max(now);
-            }
-            r += 1;
-        }
-
-        sum - sub + maxn
-    }
+    pub fn find_minimum_time(tasks: Vec<Vec<i32>>) -> i32 {}
 }
 
 #[cfg(any(feature = "local_build", feature = "local"))]

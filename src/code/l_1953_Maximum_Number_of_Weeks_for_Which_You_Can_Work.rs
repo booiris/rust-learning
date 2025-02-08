@@ -274,37 +274,38 @@ impl Dsu {
 
 #[allow(dead_code)]
 impl Solution {
-    pub fn max_satisfied(customers: Vec<i32>, grumpy: Vec<i32>, minutes: i32) -> i32 {
-        let sum = customers.iter().sum::<i32>();
-        let sub = customers
-            .iter()
-            .zip(grumpy.iter())
-            .map(|(x, y)| if y == &1 { *x } else { 0 })
-            .sum::<i32>();
+    pub fn number_of_weeks(mut milestones: Vec<i32>) -> i64 {
+        milestones.sort_unstable_by(|a, b| b.cmp(a));
         let mut l = 0;
         let mut r = 0;
-        let mut now = 0;
-        let minutes = minutes as usize;
-        while r < minutes {
-            if grumpy[r] == 1 {
-                now += customers[r];
+        let len = milestones.len();
+        let mut res = 0;
+        while r < len {
+            if l == r {
+                r += 1;
             }
-            r += 1;
+            if r >= len {
+                break;
+            }
+            if milestones[l] > milestones[r] {
+                res += milestones[r] as i64 * 2;
+                milestones[l] -= milestones[r];
+                r += 1;
+            } else {
+                res += milestones[l] as i64 * 2;
+                milestones[r] -= milestones[l];
+                l = r;
+                r += 1;
+            }
+            if milestones[l] == 0 {
+                l = r;
+                r += 1;
+            }
         }
-        let mut maxn = now;
-        while r < customers.len() {
-            if grumpy[l] == 1 {
-                now -= customers[l];
-            }
-            l += 1;
-            if grumpy[r] == 1 {
-                now += customers[r];
-                maxn = maxn.max(now);
-            }
-            r += 1;
+        if l < len && milestones[l] != 0 {
+            res += 1;
         }
-
-        sum - sub + maxn
+        res
     }
 }
 
