@@ -1,4 +1,10 @@
-#![allow(dead_code, unused_imports, unused_macros, unused_must_use)]
+#![allow(
+    dead_code,
+    unused_imports,
+    unused_macros,
+    unused_must_use,
+    static_mut_refs
+)]
 
 #[cfg(feature = "local_build")]
 extern crate data;

@@ -16,3 +16,4 @@ pub mod c322;
 pub mod cc126;
 pub mod c389;
 pub mod c390;
+pub mod c430;

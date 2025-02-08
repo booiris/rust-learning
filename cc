@@ -2,7 +2,7 @@
 
 # build leetcode contest
 
-dir=src/contest/$1
+dir=src/contest/c$1
 
 if test -f $dir/mod.rs; then
     echo "$dir exist"
@@ -23,4 +23,4 @@ echo "$main_context" >$dir/b.rs
 echo "$main_context" >$dir/c.rs
 echo "$main_context" >$dir/d.rs
 
-echo "pub mod $1;" >>src/contest/mod.rs
+echo "pub mod c$1;" >>src/contest/mod.rs
