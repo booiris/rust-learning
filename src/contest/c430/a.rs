@@ -278,8 +278,44 @@ impl Dsu {
     }
 }
 
+macro_rules! p {
+    ($arg:expr) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!("{} = {:?}", stringify!($arg), $arg)
+    };
+
+    ($($arg:expr),+ $(,)?) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!(
+            concat!($(stringify!($arg), " = {:?}, ",)+),
+            $($arg,)+
+        )
+    };
+}
+
 #[allow(dead_code)]
 #[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
-    println!("res:");
+    let d = [[3, 2], [1, 3], [3, 4], [0, 1]];
+
+    println!("res:{}", Solution::minimum_operations(to_2_vec(d)));
+}
+
+impl Solution {
+    pub fn minimum_operations(grid: Vec<Vec<i32>>) -> i32 {
+        let mut res = 0;
+        for i in 0..grid[0].len() {
+            let mut pre = grid[0][i] + 1;
+            for j in 1..grid.len() {
+                if pre >= grid[j][i] {
+                    res += pre - grid[j][i];
+                    pre += 1;
+                    p!(pre, i, j);
+                } else {
+                    pre = grid[j][i] + 1;
+                }
+            }
+        }
+        res
+    }
 }

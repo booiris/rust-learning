@@ -278,8 +278,64 @@ impl Dsu {
     }
 }
 
+macro_rules! p {
+    ($arg:expr) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!("{} = {:?}", stringify!($arg), $arg)
+    };
+
+    ($($arg:expr),+ $(,)?) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!(
+            concat!($(stringify!($arg), " = {:?}, ",)+),
+            $($arg,)+
+        )
+    };
+}
+
+impl Solution {
+    pub fn answer_string(word: String, k: i32) -> String {
+        if k == 1 {
+            return word;
+        }
+        let k = k as usize;
+        let w = word.as_bytes();
+        let n = w.len();
+        let maxn = n - k + 1;
+        let mut index = 0;
+        let mut i = 0;
+        while i < n {
+            p!(w[index], w[i], index, i);
+            if w[index] < w[i] {
+                index = i;
+            } else if w[index] == w[i] {
+                for j in 0..maxn {
+                    if i + j >= n {
+                        break;
+                    }
+                    if w[i + j] > w[i] {
+                        index = i + j;
+                        i = i + j;
+                        break;
+                    } else if w[index + j] > w[i + j] {
+                        break;
+                    } else if w[index + j] < w[i + j] {
+                        index = i;
+                        i = i + j;
+                        break;
+                    }
+                }
+            }
+            i += 1;
+        }
+        word[index..n.min(index + maxn)].into()
+    }
+}
+
 #[allow(dead_code)]
 #[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
-    println!("res:");
+    let w = "jcooek";
+    let n = 4;
+    println!("res: {}", Solution::answer_string(w.into(), n));
 }

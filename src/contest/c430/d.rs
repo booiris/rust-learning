@@ -162,7 +162,8 @@ macro_rules! impl_num {
 impl_num! {i32 u32 i64 u64 usize}
 
 #[allow(dead_code)]
-fn qpow<U: Num>(mut x: i64, mut n: U, p: i64) -> i64 {
+fn qpow<U: Num>(x: impl Into<i64>, mut n: U, p: i64) -> i64 {
+    let mut x: i64 = x.into();
     let mut res = 1;
     while n != U::default() {
         if n & U::one() != U::default() {
@@ -278,8 +279,49 @@ impl Dsu {
     }
 }
 
+macro_rules! p {
+    ($arg:expr) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!("{} = {:?}", stringify!($arg), $arg)
+    };
+
+    ($($arg:expr),+ $(,)?) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!(
+            concat!($(stringify!($arg), " = {:?}, ",)+),
+            $($arg,)+
+        )
+    };
+}
+
+const MOD: i64 = 1e9 as i64 + 7;
+
+fn comb(n: impl Into<i64>, m: impl Into<i64>, modn: i64) -> i64 {
+    let n: i64 = n.into();
+    let m = m.into();
+    let mut res = 1;
+    let mut down = 1;
+    for i in 0..m {
+        down = (down * (i + 1)) % modn;
+        res = (res * (n - i)) % modn;
+    }
+    let down = exgcd(down, modn);
+    down * res % modn
+}
+
+impl Solution {
+    pub fn count_good_arrays(n: i32, m: i32, k: i32) -> i32 {
+        let non = qpow(m - 1, n - 1 - k, MOD);
+        p!(n, m, k, non);
+        (((non * m as i64) % MOD * comb(n - 1, k, MOD)) % MOD) as i32
+    }
+}
+
 #[allow(dead_code)]
 #[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
-    println!("res:");
+    let n = 3;
+    let m = 2;
+    let k = 1;
+    println!("res:{}", Solution::count_good_arrays(n, m, k));
 }

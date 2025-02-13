@@ -3,7 +3,8 @@
     unused_imports,
     unused_macros,
     unused_must_use,
-    static_mut_refs
+    static_mut_refs,
+    unexpected_cfgs
 )]
 
 #[cfg(feature = "local_build")]
@@ -18,6 +19,7 @@ use std::cell::RefCell;
 use std::cmp::*;
 use std::collections::*;
 use std::fmt;
+use std::hash::{Hash, Hasher};
 use std::ops::Bound::*;
 use std::rc::Rc;
 #[cfg(any(feature = "local_build", feature = "local"))]
@@ -278,8 +280,63 @@ impl Dsu {
     }
 }
 
+macro_rules! p {
+    ($arg:expr) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!("{} = {:?}", stringify!($arg), $arg)
+    };
+
+    ($($arg:expr),+ $(,)?) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!(
+            concat!($(stringify!($arg), " = {:?}, ",)+),
+            $($arg,)+
+        )
+    };
+}
+
+impl Solution {
+    pub fn number_of_subsequences(nums: Vec<i32>) -> i64 {
+        let mut key: HashMap<u32, usize> = HashMap::new();
+        let mut res = 0;
+        for i in 4..nums.len() - 2 {
+            for j in 0..i - 3 {
+                let pre = nums[j] as f32 / nums[i - 2] as f32;
+                *key.entry(pre.to_bits()).or_default() += 1;
+            }
+
+            for j in i + 2..nums.len() {
+                let now = nums[j] as f32 / nums[i] as f32;
+                res += *key.get(&now.to_bits()).unwrap_or(&0) as i64;
+            }
+        }
+        res
+    }
+}
+
+#[cfg(feature = "solution_1")]
+impl Solution {
+    pub fn number_of_subsequences(nums: Vec<i32>) -> i64 {
+        let mut key: HashMap<(i32, i32), usize> = HashMap::new();
+        let mut res = 0;
+        for i in 4..nums.len() - 2 {
+            for j in 0..i - 3 {
+                let pre = gcd(nums[j], nums[i - 2]);
+                *key.entry((nums[j] / pre, nums[i - 2] / pre)).or_default() += 1;
+            }
+
+            for j in i + 2..nums.len() {
+                let now = gcd(nums[j], nums[i]);
+                res += *key.get(&(nums[j] / now, nums[i] / now)).unwrap_or(&0) as i64;
+            }
+        }
+        res
+    }
+}
+
 #[allow(dead_code)]
 #[cfg(any(feature = "local_build", feature = "local"))]
 pub fn main() {
-    println!("res:");
+    let x = [6, 5, 18, 6, 16, 16, 3, 16];
+    println!("res: {}", Solution::number_of_subsequences(x.into()));
 }

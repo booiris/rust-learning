@@ -3,7 +3,8 @@
     unused_imports,
     unused_macros,
     unused_must_use,
-    static_mut_refs
+    static_mut_refs,
+    unexpected_cfgs
 )]
 
 #[cfg(feature = "local_build")]
@@ -162,7 +163,8 @@ macro_rules! impl_num {
 impl_num! {i32 u32 i64 u64 usize}
 
 #[allow(dead_code)]
-fn qpow<U: Num>(mut x: i64, mut n: U, p: i64) -> i64 {
+fn qpow<U: Num>(x: impl Into<i64>, mut n: U, p: i64) -> i64 {
+    let mut x: i64 = x.into();
     let mut res = 1;
     while n != U::default() {
         if n & U::one() != U::default() {
@@ -276,6 +278,34 @@ impl Dsu {
         self.size[fx] -= 1;
         self.size[fy] += 1;
     }
+}
+
+fn comb(n: impl Into<i64>, m: impl Into<i64>, modn: i64) -> i64 {
+    let n: i64 = n.into();
+    let m = m.into();
+    let mut res = 1;
+    let mut down = 1;
+    for i in 0..m {
+        down = (down * (i + 1)) % modn;
+        res = (res * (n - i)) % modn;
+    }
+    let down = exgcd(down, modn);
+    down * res % modn
+}
+
+macro_rules! p {
+    ($arg:expr) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!("{} = {:?}", stringify!($arg), $arg)
+    };
+
+    ($($arg:expr),+ $(,)?) => {
+        #[cfg(any(feature = "local_build", feature = "local"))]
+        println!(
+            concat!($(stringify!($arg), " = {:?}, ",)+),
+            $($arg,)+
+        )
+    };
 }
 
 #[allow(dead_code)]
