@@ -39,5 +39,15 @@
     "markdown": false
   },
   "rust-analyzer.check.command": "clippy",
-  "rust-analyzer.showUnlinkedFileNotification": false
+  "rust-analyzer.showUnlinkedFileNotification": false,
+  "cSpell.words": [
+    "exgcd",
+    "maxd",
+    "maxn",
+    "modn",
+    "nowd",
+    "nums",
+    "qpow",
+    "subarray"
+  ]
 }
