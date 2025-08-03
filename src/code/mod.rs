@@ -237,3 +237,5 @@ pub mod l_2589_Minimum_Time_to_Complete_All_Tasks;
 pub mod l_1953_Maximum_Number_of_Weeks_for_Which_You_Can_Work;
 pub mod l_2419_Longest_Subarray_With_Maximum_Bitwise_AND;
 pub mod l_2683_Neighboring_Bitwise_XOR;
+pub mod l_118_Pascals_Triangle;
+pub mod l_2561_Rearranging_Fruits;
