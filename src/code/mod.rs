@@ -240,3 +240,4 @@ pub mod l_2683_Neighboring_Bitwise_XOR;
 pub mod l_118_Pascals_Triangle;
 pub mod l_2561_Rearranging_Fruits;
 pub mod l_2106_Maximum_Fruits_Harvested_After_at_Most_K_Steps;
+pub mod l_3479_Fruits_Into_Baskets_III;
