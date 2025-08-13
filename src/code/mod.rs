@@ -242,3 +242,4 @@ pub mod l_2561_Rearranging_Fruits;
 pub mod l_2106_Maximum_Fruits_Harvested_After_at_Most_K_Steps;
 pub mod l_3479_Fruits_Into_Baskets_III;
 pub mod l_2787_Ways_to_Express_an_Integer_as_Sum_of_Powers;
+pub mod l_326_Power_of_Three;
