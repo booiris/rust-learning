@@ -244,3 +244,4 @@ pub mod l_3479_Fruits_Into_Baskets_III;
 pub mod l_2787_Ways_to_Express_an_Integer_as_Sum_of_Powers;
 pub mod l_326_Power_of_Three;
 pub mod l_1780_Check_if_Number_is_a_Sum_of_Powers_of_Three;
+pub mod l_1323_Maximum_69_Number;
