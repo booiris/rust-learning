@@ -245,3 +245,4 @@ pub mod l_2787_Ways_to_Express_an_Integer_as_Sum_of_Powers;
 pub mod l_326_Power_of_Three;
 pub mod l_1780_Check_if_Number_is_a_Sum_of_Powers_of_Three;
 pub mod l_1323_Maximum_69_Number;
+pub mod l_2348_Number_of_Zero_Filled_Subarrays;
