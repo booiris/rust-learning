@@ -249,3 +249,6 @@ pub mod l_2348_Number_of_Zero_Filled_Subarrays;
 pub mod l_1277_Count_Square_Submatrices_with_All_Ones;
 pub mod l_3195_Find_the_Minimum_Area_to_Cover_All_Ones_I;
 pub mod l_1493_Longest_Subarray_of_1s_After_Deleting_One_Element;
+pub mod l_37_Sudoku_Solver;
+pub mod l_1792_Maximum_Average_Pass_Ratio;
+pub mod l_3025_Find_the_Number_of_Ways_to_Place_People_I;
