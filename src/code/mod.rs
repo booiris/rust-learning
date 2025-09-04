@@ -252,3 +252,4 @@ pub mod l_1493_Longest_Subarray_of_1s_After_Deleting_One_Element;
 pub mod l_37_Sudoku_Solver;
 pub mod l_1792_Maximum_Average_Pass_Ratio;
 pub mod l_3025_Find_the_Number_of_Ways_to_Place_People_I;
+pub mod l_3516_Find_Closest_Person;
