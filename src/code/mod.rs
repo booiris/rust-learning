@@ -254,3 +254,4 @@ pub mod l_1792_Maximum_Average_Pass_Ratio;
 pub mod l_3025_Find_the_Number_of_Ways_to_Place_People_I;
 pub mod l_3516_Find_Closest_Person;
 pub mod l_3495_Minimum_Operations_to_Make_Array_Elements_Zero;
+pub mod l_1304_Find_N_Unique_Integers_Sum_up_to_Zero;
