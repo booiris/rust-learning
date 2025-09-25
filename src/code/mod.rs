@@ -268,3 +268,4 @@ pub mod l_3508_Implement_Router;
 pub mod l_3005_Count_Elements_With_Maximum_Frequency;
 pub mod l_165_Compare_Version_Numbers;
 pub mod l_166_Fraction_to_Recurring_Decimal;
+pub mod l_120_Triangle;
