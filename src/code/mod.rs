@@ -270,3 +270,4 @@ pub mod l_165_Compare_Version_Numbers;
 pub mod l_166_Fraction_to_Recurring_Decimal;
 pub mod l_120_Triangle;
 pub mod l_611_Valid_Triangle_Number;
+pub mod l_812_Largest_Triangle_Area;
