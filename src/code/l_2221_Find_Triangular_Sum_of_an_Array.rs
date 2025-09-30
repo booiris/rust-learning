@@ -21,6 +21,7 @@ use std::collections::*;
 use std::fmt;
 use std::ops::Bound::*;
 use std::rc::Rc;
+use std::sync::OnceLock;
 #[cfg(any(feature = "local_build", feature = "local"))]
 struct Solution;
 
@@ -315,13 +316,62 @@ pub fn main() {
 }
 
 impl Solution {
-    pub fn triangular_sum(mut nums: Vec<i32>) -> i32 {
-        let len = nums.len();
-        for i in (0..len - 1).rev() {
-            for j in 0..i {
-                nums[j] = (nums[j] + nums[j + 1]) % 10;
-            }
-        }
-        nums[0]
+    pub fn triangular_sum(nums: Vec<i32>) -> i32 {
+        let n = nums.len() as i32 - 1;
+        nums.into_iter()
+            .enumerate()
+            .map(|(i, x)| comb_ex(i as i32, n as i32) as i32 * x % 10)
+            .sum::<i32>()
+            % 10
     }
+}
+
+fn comb_ex(i: i32, n: i32) -> i32 {
+    const MAXN: usize = 1001;
+    static ONCE: OnceLock<([i32; MAXN], [i32; MAXN], [i32; MAXN], [i32; MAXN])> = OnceLock::new();
+    let (pow, inv, factor2, factor5) = ONCE.get_or_init(|| {
+        let mut pow = [0; MAXN];
+        let mut inv = [0; MAXN];
+        let mut factor2 = [0; MAXN];
+        let mut factor5 = [0; MAXN];
+
+        pow[0] = 1;
+        inv[0] = 1;
+        for i in 1..MAXN {
+            let mut x = i as i32;
+            let mut e2 = 0;
+            while x % 2 == 0 {
+                x /= 2;
+                e2 += 1;
+            }
+            let mut e5 = 0;
+            while x % 5 == 0 {
+                x /= 5;
+                e5 += 1;
+            }
+            pow[i] = pow[i - 1] * x % 10;
+            inv[i] = pow[i] * pow[i] % 10 * pow[i] % 10;
+            factor2[i] = factor2[i - 1] + e2;
+            factor5[i] = factor5[i - 1] + e5;
+        }
+
+        (pow, inv, factor2, factor5)
+    });
+    let i = i as usize;
+    let n = n as usize;
+    const KEY: [i32; 4] = [2, 4, 8, 6];
+    let k2 = factor2[n] - factor2[i] - factor2[n - i];
+    pow[n]
+        * inv[i]
+        * inv[n - i]
+        * if k2 == 0 {
+            1
+        } else {
+            KEY[(k2 as usize - 1) % 4]
+        }
+        * if (factor5[n] - factor5[i] - factor5[n - i]) == 0 {
+            1
+        } else {
+            5
+        }
 }
