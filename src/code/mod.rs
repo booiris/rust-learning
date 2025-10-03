@@ -275,3 +275,5 @@ pub mod l_976_Largest_Perimeter_Triangle;
 pub mod l_2221_Find_Triangular_Sum_of_an_Array;
 pub mod l_1518_Water_Bottles;
 pub mod l_3100_Water_Bottles_II;
+pub mod l_407_Trapping_Rain_Water_II;
+pub mod l_42_Trapping_Rain_Water;
