@@ -231,14 +231,12 @@ fn to_2_vec<T: Clone, const M: usize, const N: usize>(data: [[T; M]; N]) -> Vec<
 #[derive(Clone, Debug)]
 struct Dsu {
     pub pa: Vec<usize>,
-    pub size: Vec<usize>,
 }
 
 impl Dsu {
     pub fn new(n: usize) -> Self {
-        let data = (0..n).map(|i| i).collect();
-        let size = vec![1; n];
-        Self { pa: data, size }
+        let data = (0..n).collect();
+        Self { pa: data }
     }
 
     pub fn find(&mut self, x: usize) -> usize {
@@ -256,23 +254,6 @@ impl Dsu {
             return;
         }
         self.pa[y] = x;
-    }
-
-    pub fn erase(&mut self, x: usize) {
-        let x = self.find(x);
-        self.size[x] -= 1;
-        self.pa[x] = x;
-    }
-
-    pub fn move_(&mut self, x: usize, y: usize) {
-        let fx = self.find(x);
-        let fy = self.find(y);
-        if fx == fy {
-            return;
-        }
-        self.pa[x] = fy;
-        self.size[fx] -= 1;
-        self.size[fy] += 1;
     }
 }
 
@@ -315,34 +296,24 @@ pub fn main() {
 
 impl Solution {
     pub fn avoid_flood(rains: Vec<i32>) -> Vec<i32> {
-        let n = rains.len();
-        let mut res = vec![1; rains.len()];
+        let mut res = vec![-1; rains.len()];
         let mut key = Dsu::new(res.len() + 1);
-        let mut pull_times = vec![n; rains.len() + 5];
         let mut occur = HashMap::new();
         for i in 0..rains.len() {
-            if rains[i] > 0 {
-                if i > 0 && rains[i - 1] > 0 {
-                    key.unit(i, i - 1);
-                }
-                if let Some(pre) = occur.remove(&rains[i]) {
-                    let part = key.find(pre);
-                    let pull_water = pull_times[part];
-                    p!(pull_water, pull_times, i, part, pre, key.pa);
-                    if pull_water >= i {
-                        return vec![];
-                    }
-                    res[pull_water] = rains[i];
-                    pull_times[part] += 1;
-                    if pull_water + 1 < rains.len() && rains[pull_water + 1] > 0 {
-                        key.unit(pull_water + 1, pre);
-                    }
-                }
-                occur.insert(rains[i], i);
-                res[i] = -1;
-            } else if i > 0 && rains[i - 1] > 0 {
-                pull_times[key.find(i - 1)] = i;
+            if rains[i] == 0 {
+                res[i] = 1;
+                continue;
             }
+            if let Some(pre) = occur.remove(&rains[i]) {
+                let dry_day = key.find(pre + 1);
+                if dry_day >= i {
+                    return vec![];
+                }
+                res[dry_day] = rains[i];
+                key.unit(dry_day + 1, pre);
+            }
+            occur.insert(rains[i], i);
+            key.unit(i + 1, i);
         }
         res
     }
