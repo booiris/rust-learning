@@ -282,3 +282,4 @@ pub mod l_417_Pacific_Atlantic_Water_Flow;
 pub mod l_778_Swim_in_Rising_Water;
 pub mod l_1488_Avoid_Flood_in_The_City;
 pub mod l_2300_Successful_Pairs_of_Spells_and_Potions;
+pub mod l_3494_Find_the_Minimum_Amount_of_Time_to_Brew_Potions;
