@@ -286,3 +286,5 @@ pub mod l_3494_Find_the_Minimum_Amount_of_Time_to_Brew_Potions;
 pub mod l_3147_Taking_Maximum_Energy_From_the_Mystic_Dungeon;
 pub mod l_3186_Maximum_Total_Damage_With_Spell_Casting;
 pub mod l_2273_Find_Resultant_Array_After_Removing_Anagrams;
+pub mod l_3539_Find_Sum_of_Array_Product_of_Magical_Sequences;
+pub mod l_3349_Adjacent_Increasing_Subarrays_Detection_I;
