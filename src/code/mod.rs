@@ -289,3 +289,4 @@ pub mod l_2273_Find_Resultant_Array_After_Removing_Anagrams;
 pub mod l_3539_Find_Sum_of_Array_Product_of_Magical_Sequences;
 pub mod l_3349_Adjacent_Increasing_Subarrays_Detection_I;
 pub mod l_3350_Adjacent_Increasing_Subarrays_Detection_II;
+pub mod l_2598_Smallest_Missing_Non_negative_Integer_After_Operations;
