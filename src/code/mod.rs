@@ -290,3 +290,7 @@ pub mod l_3539_Find_Sum_of_Array_Product_of_Magical_Sequences;
 pub mod l_3349_Adjacent_Increasing_Subarrays_Detection_I;
 pub mod l_3350_Adjacent_Increasing_Subarrays_Detection_II;
 pub mod l_2598_Smallest_Missing_Non_negative_Integer_After_Operations;
+pub mod l_3003_Maximize_the_Number_of_Partitions_After_Operations;
+pub mod l_3346_Maximum_Frequency_of_an_Element_After_Performing_Operations_I;
+pub mod l_1716_Calculate_Money_in_Leetcode_Bank;
+pub mod l_2043_Simple_Bank_System;
